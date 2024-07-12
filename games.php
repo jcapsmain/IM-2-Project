@@ -8,10 +8,7 @@
     $gamerow = mysqli_fetch_assoc($gamequery);
     $imageSrc = $gamerow['image_path'];
     $gameDescription = $gamerow['gameDescription'];
-    
 ?>
-
-<!-- Bayot ka franz -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +24,7 @@
 <body>
 
 <!-- Main Carousel -->
-<div class="container-fluid p-0">
+    <div class="container-fluid p-0">
         <div id="HeadCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
