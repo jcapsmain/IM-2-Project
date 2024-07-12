@@ -1,0 +1,40 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+.contact {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.contact:hover {
+    background-color: #e9ecef;
+}
+.contact-info h5 {
+    margin: 0;
+}
+.contact-info p {
+    margin: 0;
+    color: rgb(255, 255, 255);
+}
+.message-header {
+    display: flex;
+    align-items: center;
+}
+.message-body {
+    height: calc(100vh - 150px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff; /* Text color for contrast */
+}
+.user-info {
+    margin-top: 10px;
+}
+.user-info p {
+    margin: 5px 0;
+}
+.action-buttons button {
+    width: 100px;
+}

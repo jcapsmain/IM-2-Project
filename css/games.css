@@ -1,0 +1,88 @@
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    background-image: url("images/Background option3.jpg");
+    background-repeat: no-repeat;
+    background-size: 100% 200%;
+}
+
+h2{
+    color: #fcf5f5;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.game-box {
+    border: 2px solid #ccc; 
+    padding: 15px; 
+    border-radius: 8px; 
+    background-color: #0c0c0c; 
+    margin-bottom: 20px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+.coach-details {
+    border: 1px solid #ddd; 
+    padding: 10px; 
+    border-radius: 5px; 
+    background-color: #d8cbcb; 
+    margin-top: 10px; 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+.coach-details div {
+    margin-bottom: 8px; 
+}
+.coach-details div strong {
+    display: inline-block;
+    width: 140px; 
+}
+
+.full-height {
+    height: 100%;
+    min-height: calc(100vh - 300px); /* Adjust for the remaining height after header image */
+}
+
+.header-image {
+    margin-top: 10px;
+    background-image: url('your-image.jpg'); /* Replace 'your-image.jpg' with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 50%; /* Adjust height as needed */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.header-image img {
+    flex-shrink: 0;
+    min-width: 90%;
+    height: 100%
+}
+
+#HeadCarousel .carousel-item img {
+    height: 400px;
+    object-fit: cover;
+}
+
+#HeadCarousel .carousel-content {
+    position: absolute;
+    text-align: left;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Add a higher z-index if necessary */
+    z-index: 100;
+}
+
+#containfluid{
+    margin-bottom: 20px;
+    margin-top: 10px;
+    background: transparent;
+}
+
+.row {
+    background: transparent;
+}
