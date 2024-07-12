@@ -8,10 +8,10 @@
     $gamerow = mysqli_fetch_assoc($gamequery);
     $imageSrc = $gamerow['image_path'];
     $gameDescription = $gamerow['gameDescription'];
-    $TESTTESTtest;
+    $TESTTEST;
 ?>
 
-
+<!-- Bayot ka franz -->
 
 <!DOCTYPE html>
 <html lang="en">
