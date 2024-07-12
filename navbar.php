@@ -70,6 +70,8 @@
                     var logout = document.getElementById('logout');
                     var profile = document.getElementById('text-profile');
                     var inbox = document.getElementById('text-inbox');
+                    var schedule = document.getElementById('text-schedule');
+                    schedule.style.display = 'none';
                     inbox.style.display = 'none';
                     profileImg.style.display = 'none';
                     logout.style.display = 'none';
@@ -104,9 +106,11 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="profile.php" id="text-profile">Profile</a></li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="calendar.php" id="text-calendar">
-                        <img src="resources/calendar.svg" alt="Calendar" id="calendar" style="width: 20px; height: 20px;"> Calendar
+                    <li><a class="dropdown-item" href="schedule.php" id="text-schedule">
+                        <img src="resources/calendar.svg" alt="schedule" id="schedule" style="width: 20px; height: 20px;"> Schedule
+                    </a></li>
+                    <li><a class="dropdown-item" href="inbox.php" id="text-inbox">
+                        <img src="resources/inbox.svg" alt="Inbox" id="inbox"> Inbox
                     </a></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#signInModal" id="login">Login</button></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" onclick="location.href='logout.php';" id="logout"><a>logout</a></button></li>
