@@ -10,8 +10,6 @@
     $gameDescription = $gamerow['gameDescription'];
 ?>
 
-<!-- Bayot ka franz -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
