@@ -43,6 +43,9 @@
         ";
     }
 
+    $gamequery = mysqli_query($conn ,"SELECT * FROM game");
+
+
 
     ob_end_flush();
 ?>
@@ -126,16 +129,10 @@
                                     <label for="game" class="form-label">Game</label>
                                     <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
                                         <option disabled selected>Choose a game</option>
-                                        <option value="League of Legends">League of Legends</option>    
-                                        <option value="Rocket League">Rocket League</option>
-                                        <option value="Fortnite">Fortnite</option>
-                                        <option value="Valorant">Valorant</option>
-                                        <option value="Counter Strike 2">Counter Strike 2</option>
-                                        <option value="Dota 2">Dota 2</option>
-                                        <option value="Chess">Chess</option>
-                                        <option value="Tom Clancy''s Rainbow Six Siege">Tom Clancy's Rainbow Six Siege</option>
-                                        <option value="Overwatch 2">Overwatch 2</option>
-                                        <option value="Tekken 8">Tekken 8</option>
+                                        <?php while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                        } ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
