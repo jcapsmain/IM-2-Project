@@ -100,9 +100,19 @@
             <?php
                 if(!empty($_SESSION["client_ID"])){
                     $sessionID = $_SESSION["client_ID"];
-                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
+                    $clientRegionQuery = "SELECT region FROM client WHERE client_ID = '$sessionID'";
+                    $regionResult = $conn->query($clientRegionQuery);
+                    $clientRegion = $regionResult->fetch_assoc()["region"];
+
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN 
+                    game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' GROUP BY cb.client_booster_id 
+                    ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC, c.region = '$clientRegion' DESC";
+
                 } else {
-                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game_info gi ON cb.gamerank = gi.gameRank WHERE game = '$games' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC";
+
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game_info gi ON cb.gamerank = gi.gameRank WHERE game = 
+                    '$games' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
+
                 }
                 $result = $conn->query($gamesQuerry);
 
@@ -121,7 +131,7 @@
                                 <img src="css/images/peakpx.jpg" alt="Logo" style="height: 150px;">
                                 </div>
                                 <p><strong>Rating:</strong> 4.5 / 5</p>
-                                <p><strong>Region:</strong> Asia</p>
+                                <p><strong>Region:</strong> <?php echo $row["region"]; ?></p>
                                 <p><strong>Email:</strong> <?php echo $row["email"]; ?></p>
                             </div>
                             <!-- Hire Button -->
