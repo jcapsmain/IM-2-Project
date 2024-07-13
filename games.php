@@ -4,7 +4,6 @@
 
     $games = $_GET['game'];
     $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-
     $gamerow = mysqli_fetch_assoc($gamequery);
     $imageSrc = $gamerow['image_path'];
     $gameDescription = $gamerow['gameDescription'];
