@@ -1,4 +1,6 @@
 <?php
+
+    ob_start();
     require 'config.php';
     include 'navbar.php';
 
@@ -50,6 +52,7 @@
             </script>
         ";
     }
+    ob_end_flush();
 ?>
 
 <!DOCTYPE html>
