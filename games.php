@@ -7,6 +7,45 @@
     $gamerow = mysqli_fetch_assoc($gamequery);
     $imageSrc = $gamerow['image_path'];
     $gameDescription = $gamerow['gameDescription'];
+
+    if(isset($_POST["coach-register"])) {
+        $coachIGN = $_POST["coachIGN"];
+        $coachGame = $_POST["coachGame"];
+        $coachGameRank = $_POST["coachGameRank"];
+        $coachUid = $_POST["coachUid"];
+        $coachClientid = $_SESSION["client_ID"];
+        $coachResult = mysqli_query($conn ,"SELECT * FROM client_booster WHERE client_id = '$coachClientid' AND game = '$coachGame'");
+        $coachRow = mysqli_fetch_assoc($coachResult);
+    
+        if($coachGame == $coachRow["game"]) {
+            echo"<script> alert('You already have this game registered as a Coach'); </script>";
+        }
+        else {
+            $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank')";
+            mysqli_query($conn,$query);
+            header("location: Redirect.php");
+        }
+    }
+
+    if(!empty($_SESSION["client_ID"])){
+        echo "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var createAccount = document.getElementById('start_now');
+                    createAccount.style.display = 'none';
+                });
+            </script>
+        ";
+    } else  {
+        echo "
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var coachRegister = document.getElementById('register_as_coach');
+                    coachRegister.style.display = 'none';
+                });
+            </script>
+        ";
+    }
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +64,18 @@
 <!-- Main Carousel -->
     <div class="container-fluid p-0">
         <div id="HeadCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-content text-start transparent-background">
+                <div class="carousel-caption">
+                    <h1>These are our available games for coaching</h1>
+                    <p>If you wish to become a coach or become a trainee
+                    to cultivate your skills<br></br> in the game of your choice 
+                    then feel free to join our program here.</p>
+                </div>
+                <div class="carousel-buttons">
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createAccountModal" id="start_now">Start Now</button>
+                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#CoachRegisterModal" id="register_as_coach">Register as Coach</button>
+                </div>
+            </div>
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <?php echo '<img src="' . $imageSrc . '" class="d-block w-100" alt="' . htmlspecialchars($gameDescription) . '">'; ?>
@@ -82,6 +133,78 @@
                     ?>
         </div>
     </div>
+        
+        <!-- Modals -->
+        <!-- Coach Registration Modal -->
+        <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Coach</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form method="post" autocomplete="off" name="coach-signup">
+                                <!-- <div class="mb-3 text-center">
+                                    <div class="image-preview position-relative" style="cursor: pointer;">
+                                        <img id="imagePreview" src="https://via.placeholder.com/150" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
+                                        Hidden file input to trigger file selection 
+                                        <input type="file" class="form-control" id="imageUpload" name="imageUpload" accept="image/*" required style="display: none;">
+                                        Button styled as a link to appear as text 
+                                        <label for="imageUpload" class="btn btn-link position-absolute top-50 start-50 translate-middle p-0">
+                                            Upload Profile Image
+                                        </label>
+                                    </div>
+                                </div> -->
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">IGN</label>
+                                    <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="UID" class="form-label">UID</label>
+                                    <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="game" class="form-label">Game</label>
+                                    <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
+                                        <?php 
+                                            $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
+                                            while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                                $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                                echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="gameRank" class="form-label">Game Rank</label>
+                                    <select class="form-select" id="gameRank" name="coachGameRank" required>
+                                        <option disabled selected>Select your rank</option>
+                                        <?php 
+                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                            if ($gamerankquery) {
+                                                $options = '';
+                                                while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                    $gameinfoRank = $gameinfoRow['gameRank'];
+                                                    $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                                }
+                                                echo $options; // Output all options for dropdown
+                                            } else {
+                                                echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                            }
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Student Registration Modal -->
         <div class="modal fade" id="StudentRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

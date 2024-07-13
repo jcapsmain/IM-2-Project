@@ -219,7 +219,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-4"></div>
-                                    <div class="col-4">
+                                    <div class="col-4 text-center">
                                         <button type="submit" class="submit-button" name="user-register">Sign up</button>
                                     </div>
                                     <div class="col-4"></div>

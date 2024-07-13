@@ -77,6 +77,46 @@ h2{
     z-index: 100;
 }
 
+#HeadCarousel .carousel-buttons {
+    margin-top: 35%;
+    margin-left: 13%;
+}
+
+.transparent-background {
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+    padding: 20px; /* Optional: add some padding */
+    color: white; /* Ensure text is readable */
+    height: 100%;
+    width: 50%;
+}
+
+#HeadCarousel .carousel-caption {
+    margin-bottom: 10%;
+    text-align: left;
+    font-family: 'Techno Race', sans-serif;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-group label {
+    width: 40%;
+    text-align: left;
+    margin-right: 10px;
+}
+
+.form-group input,
+.form-group select {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
 #containfluid{
     margin-bottom: 20px;
     margin-top: 10px;
