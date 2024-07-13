@@ -43,7 +43,7 @@
         ";
     }
 
-    $gamequery = mysqli_query($conn ,"SELECT * FROM game");
+    
 
 
 
@@ -129,16 +129,32 @@
                                     <label for="game" class="form-label">Game</label>
                                     <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
                                         <option disabled selected>Choose a game</option>
-                                        <?php while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
-                                        } ?>
+                                        <?php 
+                                            $gamequery = mysqli_query($conn ,"SELECT * FROM game");
+                                            while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                                $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                                echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label for="gameRank" class="form-label">Game Rank</label>
                                     <select class="form-select" id="gameRank" name="coachGameRank" required>
                                         <option disabled selected>Select game first</option>
+                                        <?php 
+                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID");
+                                            if ($gamerankquery) {
+                                                $options = '';
+                                                while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                    $gameinfoRank = $gameinfoRow['gameRank'];
+                                                    $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                                }
+                                                echo $options;
+                                            } else {
+                                                echo "Error: " . mysqli_error($conn);
+                                            }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="text-center">
