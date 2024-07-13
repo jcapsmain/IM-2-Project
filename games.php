@@ -16,6 +16,10 @@
         $coachGameRank = $_POST["coachGameRank"];
         $coachUid = $_POST["coachUid"];
         $coachClientid = $_SESSION["client_ID"];
+        $gameUidScreenshot = "";
+        $gameRankScreenshot = "";
+        $uploadDir = "clientBooster/" . $coachIGN . "/";
+        $coachgamePrice = $_POST["price"];
         $coachResult = mysqli_query($conn ,"SELECT * FROM client_booster WHERE client_id = '$coachClientid' AND game = '$coachGame'");
         $coachRow = mysqli_fetch_assoc($coachResult);
     
@@ -23,7 +27,14 @@
             echo"<script> alert('You already have this game registered as a Coach'); </script>";
         }
         else {
-            $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank')";
+            if (!file_exists($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $gameUidScreenshot = $_FILES['gameUidScreenshots']['name'];
+            $gameRankScreenshot = $_FILES['gameRankScreenshots']['name'];
+            move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
+            move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
+            $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', '$gameRankScreenshot', '$coachgamePrice', '')";
             mysqli_query($conn,$query);
             header("location: Redirect.php");
         }
@@ -161,7 +172,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            <form method="post" autocomplete="off" name="coach-signup">
+                            <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
                                 <!-- <div class="mb-3 text-center">
                                     <div class="image-preview position-relative" style="cursor: pointer;">
                                         <img id="imagePreview" src="https://via.placeholder.com/150" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
@@ -196,7 +207,6 @@
                                 <div class="mb-3">
                                     <label for="gameRank" class="form-label">Game Rank</label>
                                     <select class="form-select" id="gameRank" name="coachGameRank" required>
-                                        <option disabled selected>Select your rank</option>
                                         <?php 
                                             $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
                                             if ($gamerankquery) {
@@ -219,6 +229,13 @@
                                 <div class="mb-3">
                                     <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
                                     <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="price" class="form-label">Hourly Coach Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
+                                    </div>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
@@ -275,6 +292,10 @@
             </div>
         </div>
     
-
-
+        <script>
+            // Ensure input is rounded to two decimal places on input change
+            document.getElementById('price').addEventListener('input', function() {
+                this.value = parseFloat(this.value).toFixed(2);
+            });
+        </script>
 </body>
