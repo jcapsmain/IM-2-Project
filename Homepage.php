@@ -155,128 +155,30 @@
         <!-- List of Available Games -->
         <div class="container mt-5">
             <div class="row">
+                <?php
+                    $gameQuerry = mysqli_query($conn ,"SELECT * FROM game");
+                    while ($gameRows = mysqli_fetch_assoc($gameQuerry)) {
+                        // Process each row of game data here
+                        $gameName = urlencode($gameRows['gameDescription']);
+                        // Generate HTML or perform operations with $gameRows data
+                        $imageSrc = $gameRows['image_path'];
+                ?>
                 <div class="col-md-3 mb-4">
-                    <a href="games.php?game=League of Legends">            
+                    <a href="games.php?game=<?php echo htmlspecialchars($gameName); ?>">            
                         <div class="card text-white">
-                            <img src="resources/Main_Content/League of Legends.jpg" class="card-img" alt="...">
+                        <?php echo '<img src="' . $imageSrc . '" class="card-img" alt="' . htmlspecialchars($gameName) . '">'; ?>
                             <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">League of Legends</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Rocket League">            
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Rocket League.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Rocket League</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
 
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Fortnite">           
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Fortnite.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Fortnite</h5>
+                                <h5 class="card-title"><?php echo $gameRows["gameDescription"]; ?></h5>
                                 <p class="card-text">Available Coaches:</p>
                             </div>
                         </div>
                     </a>
                 </div>
-
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Valorant">           
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Valorant.webp" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Valorant</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Counter Strike 2">            
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Counter Strike 2.jpeg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Counter Strike 2</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Dota 2">              
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Dota 2.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Dota 2</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Chess">              
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Chess.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Chess</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Tom Clancy''s Rainbow Six Siege">       
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/R6.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Tom Clancy's Rainbow Six Siege</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Overwatch 2">              <!-- Insert URL here -->
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Overwatch 2.jpg" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Overwatch 2</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
-                <div class="col-md-3 mb-4">
-                    <a href="games.php?game=Tekken 8">              <!-- Insert URL here -->
-                        <div class="card text-white">
-                            <img src="resources/Main_Content/Tekken 8.webp" class="card-img" alt="...">
-                            <div class="card-img-overlay transparent-background">
-                                <h5 class="card-title">Tekken 8</h5>
-                                <p class="card-text">Available Coaches:</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
+                <?php
+                    }
+                ?>
+                
                 <!-- Add Game -->
                                 
                 <div class="col-md-3 mb-4">

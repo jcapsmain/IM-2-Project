@@ -2,7 +2,7 @@
     require 'config.php';
     include 'navbar.php';
 
-    $games = $_GET['game'];
+    $games = htmlspecialchars($_GET['game']);
     $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
     $gamerow = mysqli_fetch_assoc($gamequery);
     $imageSrc = $gamerow['image_path'];
@@ -79,7 +79,6 @@
                     echo "0 results";
                 }
 
-                    $conn->close();
                     ?>
         </div>
     </div>
