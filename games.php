@@ -42,6 +42,11 @@
                 document.addEventListener('DOMContentLoaded', function() {
                     var coachRegister = document.getElementById('register_as_coach');
                     coachRegister.style.display = 'none';
+                    var hirebtns = document.getElementsByClassName('btn btn-primary');
+                    // Loop through each matched element and hide it
+                    for (var i = 0; i < hirebtns.length; i++) {
+                        hirebtns[i].style.display = 'none';
+                    }
                 });
             </script>
         ";
