@@ -225,7 +225,6 @@
             </div>
         </div>
         
-        <!-- Bootstrap -->
         <script src="js/Homepage.js"></script>
     </body>
     <footer class="footer">
