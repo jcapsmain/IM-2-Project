@@ -42,9 +42,9 @@
             <?php
                 if(!empty($_SESSION["client_ID"])){
                     $sessionID = $_SESSION["client_ID"];
-                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID WHERE game = '$games' AND c.client_ID != '$sessionID'";
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
                 } else {
-                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID WHERE game = '$games'";
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game_info gi ON cb.gamerank = gi.gameRank WHERE game = '$games' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC";
                 }
                 $result = $conn->query($gamesQuerry);
 
@@ -55,7 +55,7 @@
                 ?>
                     <div class="col-md-4">
                         <div class="game-box">
-                            <h2><?php echo $row["username"]; ?></h2>
+                            <h2><?php echo $row["IGN"]; ?></h2>
                             <div class="coach-details position-relative">
                                 <p><strong>Game Rank:</strong> <?php echo $row["gamerank"]; ?></p>
                                 <!-- Logo (Absolute Positioning) -->
