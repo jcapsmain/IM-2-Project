@@ -213,6 +213,14 @@
                                         ?>
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
+                                    <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
+                                    <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
                                 </div>
