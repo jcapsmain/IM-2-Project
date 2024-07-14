@@ -69,7 +69,7 @@
         <div class="container mt-5">
             <div class="row">
                 <?php
-                    $gameQuerry = mysqli_query($conn ,"SELECT * FROM game");
+                    $gameQuerry = mysqli_query($conn ,"SELECT g.gameDescription, COUNT(client_booster_id) AS availCoach, g.image_path FROM game g JOIN client_booster cb ON g.gameDescription = cb.game GROUP BY g.gameDescription");
                     while ($gameRows = mysqli_fetch_assoc($gameQuerry)) {
                         // Process each row of game data here
                         $gameName = urlencode($gameRows['gameDescription']);
@@ -81,9 +81,8 @@
                         <div class="card text-white">
                         <?php echo '<img src="' . $imageSrc . '" class="card-img" alt="' . htmlspecialchars($gameName) . '">'; ?>
                             <div class="card-img-overlay transparent-background">
-
                                 <h5 class="card-title"><?php echo $gameRows["gameDescription"]; ?></h5>
-                                <p class="card-text">Available Coaches:</p>
+                                <p class="card-text">Available Coaches: <?php echo $gameRows["availCoach"]; ?></p>
                             </div>
                         </div>
                     </a>
