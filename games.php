@@ -3,6 +3,7 @@
     ob_start();
     require 'config.php';
     include 'navbar.php';
+    include 'messagepopup.php';
 
     $games = htmlspecialchars($_GET['game']);
     $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
@@ -22,9 +23,14 @@
         $coachgamePrice = $_POST["price"];
         $coachResult = mysqli_query($conn ,"SELECT * FROM client_booster WHERE client_id = '$coachClientid' AND game = '$coachGame'");
         $coachRow = mysqli_fetch_assoc($coachResult);
+        $maxFileSize = 20 * 1024 * 1024;
     
         if($coachGame == $coachRow["game"]) {
-            echo"<script> alert('You already have this game registered as a Coach'); </script>";
+            echo '<script type="text/javascript">
+                $(document).ready(function(){
+                    $("#messageModal").modal("show");
+                });
+                </script>';
         }
         else {
 
@@ -34,7 +40,8 @@
             }
 
             if (!empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
-            !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name'])) {
+                !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
+                ($_FILES['gameUidScreenshots']['size'] > $maxFileSize && $_FILES['gameRankScreenshots']['size'] > $maxFileSize)) {
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
                 }
@@ -48,7 +55,11 @@
                 header("location: Redirect.php");
             }
             else {
-                echo"<script> alert('File is not an image'); </script>";
+                echo '<script type="text/javascript">
+                    $(document).ready(function(){
+                        $("#messageModal").modal("show");
+                    });
+                    </script>';
             }
         }
     }
