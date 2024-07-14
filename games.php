@@ -27,16 +27,29 @@
             echo"<script> alert('You already have this game registered as a Coach'); </script>";
         }
         else {
-            if (!file_exists($uploadDir)) {
-                mkdir($uploadDir, 0777, true);
+
+            function is_image_file($filename) {
+                $image_info = @getimagesize($filename);
+                return $image_info !== false && strpos($image_info['mime'], 'image/') === 0;
             }
-            $gameUidScreenshot = $_FILES['gameUidScreenshots']['name'];
-            $gameRankScreenshot = $_FILES['gameRankScreenshots']['name'];
-            move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
-            move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
-            $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', '$gameRankScreenshot', '$coachgamePrice', '')";
-            mysqli_query($conn,$query);
-            header("location: Redirect.php");
+
+            if (!empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
+            !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name'])) {
+                if (!file_exists($uploadDir)) {
+                    mkdir($uploadDir, 0777, true);
+                }
+                $gameUidScreenshot = $_FILES['gameUidScreenshots']['name'];
+                $gameRankScreenshot = $_FILES['gameRankScreenshots']['name'];
+                move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
+                move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
+                $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', 
+                '$gameRankScreenshot', '$coachgamePrice')";
+                mysqli_query($conn,$query);
+                header("location: Redirect.php");
+            }
+            else {
+                echo"<script> alert('File is not an image'); </script>";
+            }
         }
     }
 
