@@ -99,7 +99,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home Page</title>
+    <title>SKBD | <?php echo"$games";?></title>
     <!-- Bootstrap CSS link -->
     <!-- Custom CSS link -->
     <link rel="stylesheet" href="css/games.css">
