@@ -31,6 +31,8 @@
                     $("#messageModal").modal("show");
                 });
                 </script>';
+                unset($_POST["coachGame"]);
+                unset($coachRow);
         }
         else {
 
@@ -60,6 +62,8 @@
                         $("#messageModal").modal("show");
                     });
                     </script>';
+                    unset($_POST["coachGame"]);
+                    unset($coachRow);
             }
         }
     }
