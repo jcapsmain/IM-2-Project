@@ -1,229 +1,201 @@
-<?php
-    require 'config.php';
-    include 'navbar.php'
-?>
+<!-- Nicezel naay problem sa navbar when ato include so wala pa nako gi add -->
+<!-- mag add rakos design after guru -->
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Table</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Pickr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/@simonwep/pickr/2.0.7/pickr.min.css" integrity="sha512-G48OBoB7D+5X1M4f7I9C7M2JWZI8nUJ2OTdx6fsHrhKbZvslXPAOK4y2YIsqUHkWx1xR05R5mZlJ3G43d4JrVA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        th, td {
-            text-align: left;
-        }
-        .center-text {
-            text-align: center;
-        }
-        .highlight {
-            background-color: yellow; /* Default highlight color */
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .table-container {
+      margin: 20px;
+    }
+    th, td {
+      text-align: center;
+    }
+  </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Coach Schedules</h1>
-        <div class="mb-4">
-            <form id="planForm">
-                <div class="form-group">
-                    <label>Day:</label><br>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="monday" value="1">
-                        <label class="form-check-label" for="monday">Monday</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="tuesday" value="2">
-                        <label class="form-check-label" for="tuesday">Tuesday</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="wednesday" value="3" checked>
-                        <label class="form-check-label" for="wednesday">Wednesday</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="thursday" value="4">
-                        <label class="form-check-label" for="thursday">Thursday</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" id="friday" value="5">
-                        <label class="form-check-label" for="friday">Friday</label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="startTime">Start Time:</label>
-                    <input type="time" class="form-control" id="startTime" value="07:30">
-                </div>
-                <div class="form-group">
-                    <label for="endTime">End Time:</label>
-                    <input type="time" class="form-control" id="endTime" value="09:30">
-                </div>
-                <!-- Color picker button -->
-                <div class="form-group">
-                    <label for="highlightColor">Highlight Color:</label>
-                    <input type="color" class="form-control" id="highlightColorPicker" value="#ffff00">
-                </div>
-                <button type="button" class="btn btn-primary" onclick="highlightPlan()">Highlight Plan</button>
-            </form>
-        </div>
+    <div class="container table-container">
+        <h2 class="text-center">Schedule</h2>
         <table class="table table-bordered">
-            <thead class="thead-dark">
-                <tr>
-                    <th class="center-text">Time</th>
-                    <th class="center-text">Monday</th>
-                    <th class="center-text">Tuesday</th>
-                    <th class="center-text">Wednesday</th>
-                    <th class="center-text">Thursday</th>
-                    <th class="center-text">Friday</th>
-                </tr>
-            </thead>
-            <tbody id="dynamicTableBody">
-                <!-- Rows will be inserted here by JavaScript -->
+        <thead>
+            <tr>
+            <th>Time</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+            </tr>
+        </thead>
+            <tbody>
+                <tr><td>7:30-8:00 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>8:00-8:30 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>8:30-9:00 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>9:00-9:30 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>9:30-10:00 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>10:00-10:30 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>10:30-11:00 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>11:00-11:30 AM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>11:30-12:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>12:00-12:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>12:30-1:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>1:00-1:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>1:30-2:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>2:00-2:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>2:30-3:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>3:00-3:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>3:30-4:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>4:00-4:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>4:30-5:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>5:00-5:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>5:30-6:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>6:00-6:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>6:30-7:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>7:00-7:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>7:30-8:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>8:00-8:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>8:30-9:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>9:00-9:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>9:30-10:00 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td>10:00-10:30 PM</td><td></td><td></td><td></td><td></td><td></td></tr>
             </tbody>
         </table>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- Pickr JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/@simonwep/pickr/2.0.7/pickr.min.js" integrity="sha512-YNrX70hFJdCtH5XFRHhMNW6i4Y1GYYv7J66I1UaHLO3s0J2h9/8Z4Ac8/ggCAw+bktZy8x0EX7xKiP7m4yRzGg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const tableBody = document.getElementById("dynamicTableBody");
+    <!-- Modal for Hiring -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#HireModal">Hire</button>
 
-            const formatTimeRange = (startHour, startMinute, endHour, endMinute) => {
-                const formatTime = (hours, minutes) => {
-                    const ampm = hours >= 12 ? 'PM' : 'AM';
-                    hours = hours % 12;
-                    hours = hours ? hours : 12; // the hour '0' should be '12'
-                    minutes = minutes < 10 ? '0' + minutes : minutes;
-                    return hours + ':' + minutes + ' ' + ampm;
-                };
-
-                const startTime = formatTime(startHour, startMinute);
-                const endTime = formatTime(endHour, endMinute);
-                return startTime + '-' + endTime;
-            };
-
-            for (let i = 0; i < 48; i++) { // Changed to 48 rows
-                const newRow = tableBody.insertRow();
-                const startHour = Math.floor(i / 2);
-                const startMinute = (i % 2) * 30;
-                const endHour = Math.floor((i + 1) / 2);
-                const endMinute = ((i + 1) % 2) * 30;
-                const timeRange = formatTimeRange(startHour, startMinute, endHour, endMinute);
-                
-                const timeCell = newRow.insertCell(0);
-                timeCell.appendChild(document.createTextNode(timeRange));
-                timeCell.dataset.time = timeRange;
-
-                for (let j = 1; j < 6; j++) {
-                    const newCell = newRow.insertCell(j);
-                    newCell.dataset.day = j;
-                    newCell.dataset.time = timeRange;
-                    newCell.appendChild(document.createTextNode(''));
-                }
-            }
-
-            // Initialize Pickr for color selection
-            const pickr = Pickr.create({
-                el: '#highlightColorPicker',
-                theme: 'classic', // Choose your preferred theme
-                default: document.getElementById('highlightColorPicker').value,
-                swatches: [
-                    'rgba(244, 67, 54, 1)',
-                    'rgba(233, 30, 99, 0.95)',
-                    'rgba(156, 39, 176, 0.9)',
-                    'rgba(103, 58, 183, 0.85)',
-                    'rgba(63, 81, 181, 0.8)',
-                    'rgba(33, 150, 243, 0.75)',
-                    'rgba(3, 169, 244, 0.7)',
-                    'rgba(0, 188, 212, 0.7)',
-                    'rgba(0, 150, 136, 0.75)',
-                    'rgba(76, 175, 80, 0.8)',
-                    'rgba(139, 195, 74, 0.85)',
-                    'rgba(205, 220, 57, 0.9)',
-                    'rgba(255, 235, 59, 0.95)',
-                    'rgba(255, 193, 7, 1)'
-                ],
-                components: {
-                    preview: true,
-                    opacity: true,
-                    hue: true,
-
-                    interaction: {
-                        hex: true,
-                        rgba: true,
-                        hsla: true,
-                        hsva: true,
-                        input: true,
-                        clear: true,
-                        save: true
+    <div class="modal fade" id="HireModal" tabindex="-1" aria-labelledby="HireModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="HireModalLabel">Hire a Coach</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            <form id="hireForm">
+                <div class="form-group">
+                <label for="checkOptions">Options</label><br>
+                <div class="form-check"><input class="form-check-input" type="checkbox" value="Monday" id="checkOption1"><label class="form-check-label" for="checkOption1">Monday</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" value="Tuesday" id="checkOption2"><label class="form-check-label" for="checkOption2">Tuesday</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" value="Wednesday" id="checkOption3"><label class="form-check-label" for="checkOption3">Wednesday</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" value="Thursday" id="checkOption4"><label class="form-check-label" for="checkOption4">Thursday</label></div>
+                <div class="form-check"><input class="form-check-input" type="checkbox" value="Friday" id="checkOption5"><label class="form-check-label" for="checkOption5">Friday</label></div>
+                </div>
+                <div class="form-group">
+                <label for="StudentIGN">IGN</label>
+                <input type="text" class="form-control" id="StudentIGN" placeholder="Enter text here">
+                </div>
+                <div class="form-group">
+                <label for="StudentUID">UID</label>
+                <input type="text" class="form-control" id="StudentUID" placeholder="Enter text here">
+                </div>
+                <div class="form-group">
+                <label for="dropdownBox1">Starting Time</label>
+                <select class="form-control" id="dropdownBox1">
+                    <?php
+                    $start_time = strtotime("7:30 AM");
+                    $end_time = strtotime("10:30 PM");
+                    while($start_time <= $end_time) {
+                        echo '<option>'.date("g:i A", $start_time).'</option>';
+                        $start_time = strtotime('+30 minutes', $start_time);
                     }
+                    ?>
+                </select>
+                </div>
+                <div class="form-group">
+                <label for="dropdownBox2">End Time</label>
+                <select class="form-control" id="dropdownBox2">
+                    <?php
+                    $start_time = strtotime("7:30 AM");
+                    $end_time = strtotime("10:30 PM");
+                    while($start_time <= $end_time) {
+                        echo '<option>'.date("g:i A", $start_time).'</option>';
+                        $start_time = strtotime('+30 minutes', $start_time);
+                    }
+                    ?>
+                </select>
+                </div>
+                <div class="form-group">
+                <label for="colorPicker">Choose Color</label>
+                <input type="color" class="form-control" id="colorPicker">
+                </div>
+            </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="changeCellColor()">Submit</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function changeCellColor() {
+        let selectedDays = [];
+        document.querySelectorAll('.form-check-input:checked').forEach((checkbox) => {
+            selectedDays.push(checkbox.value);
+        });
+        let startTime = document.getElementById('dropdownBox1').value;
+        let endTime = document.getElementById('dropdownBox2').value;
+        let chosenColor = document.getElementById('colorPicker').value;
+
+        let timeSlots = {
+        '7:30-8:00 AM': '7:30 AM',
+        '8:00-8:30 AM': '8:00 AM',
+        '8:30-9:00 AM': '8:30 AM',
+        '9:00-9:30 AM': '9:00 AM',
+        '9:30-10:00 AM': '9:30 AM',
+        '10:00-10:30 AM': '10:00 AM',
+        '10:30-11:00 AM': '10:30 AM',
+        '11:00-11:30 AM': '11:00 AM',
+        '11:30-12:00 PM': '11:30 AM',
+        '12:00-12:30 PM': '12:00 PM',
+        '12:30-1:00 PM': '12:30 PM',
+        '1:00-1:30 PM': '1:00 PM',
+        '1:30-2:00 PM': '1:30 PM',
+        '2:00-2:30 PM': '2:00 PM',
+        '2:30-3:00 PM': '2:30 PM',
+        '3:00-3:30 PM': '3:00 PM',
+        '3:30-4:00 PM': '3:30 PM',
+        '4:00-4:30 PM': '4:00 PM',
+        '4:30-5:00 PM': '4:30 PM',
+        '5:00-5:30 PM': '5:00 PM',
+        '5:30-6:00 PM': '5:30 PM',
+        '6:00-6:30 PM': '6:00 PM',
+        '6:30-7:00 PM': '6:30 PM',
+        '7:00-7:30 PM': '7:00 PM',
+        '7:30-8:00 PM': '7:30 PM',
+        '8:00-8:30 PM': '8:00 PM',
+        '8:30-9:00 PM': '8:30 PM',
+        '9:00-9:30 PM': '9:00 PM',
+        '9:30-10:00 PM': '9:30 PM',
+        '10:00-10:30 PM': '10:00 PM'
+        };
+
+
+        let table = document.querySelector('.table tbody');
+        table.querySelectorAll('tr').forEach((row) => {
+            let timeCell = row.cells[0];
+            if (startTime <= timeSlots[timeCell.textContent] && timeSlots[timeCell.textContent] < endTime) {
+            selectedDays.forEach((day) => {
+                let dayIndex = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].indexOf(day) + 1;
+                if (dayIndex > 0) {
+                row.cells[dayIndex].style.backgroundColor = chosenColor;
                 }
             });
+            }
         });
 
-        function highlightPlan() {
-        const days = [];
-        if (document.getElementById('monday').checked) days.push(1);
-        if (document.getElementById('tuesday').checked) days.push(2);
-        if (document.getElementById('wednesday').checked) days.push(3);
-        if (document.getElementById('thursday').checked) days.push(4);
-        if (document.getElementById('friday').checked) days.push(5);
-
-        const startTime = document.getElementById('startTime').value;
-        const endTime = document.getElementById('endTime').value;
-        const highlightColor = document.getElementById('highlightColorPicker').value;
-        const rows = document.querySelectorAll('#dynamicTableBody tr');
-
-        const startHour = parseInt(startTime.split(':')[0], 10);
-        const startMinute = parseInt(startTime.split(':')[1], 10);
-        const endHour = parseInt(endTime.split(':')[0], 10);
-        const endMinute = parseInt(endTime.split(':')[1], 10);
-
-        const startTimeTotal = startHour * 60 + startMinute;
-        const endTimeTotal = endHour * 60 + endMinute;
-
-        rows.forEach(row => {
-            const timeRange = row.cells[0].dataset.time;
-            const [start, end] = timeRange.split('-');
-            let [startHourCell, startMinuteCell] = start.split(':');
-            let [endHourCell, endMinuteCell] = end.split(':');
-            // Convert startHourCell and endHourCell to integers
-            startHourCell = parseInt(startHourCell);
-            endHourCell = parseInt(endHourCell);
-
-            // Adjust for PM times in 12-hour format
-            if (start.includes('PM') && startHourCell !== 12) {
-                startHourCell += 12;
-            }
-            if (end.includes('PM') && endHourCell !== 12) {
-                endHourCell += 12;
-            }
-
-            const rowStartTimeTotal = startHourCell * 60 + parseInt(startMinuteCell, 10);
-            const rowEndTimeTotal = endHourCell * 60 + parseInt(endMinuteCell, 10);
-
-            days.forEach(day => {
-                if (
-                    (startTimeTotal >= rowStartTimeTotal && startTimeTotal < rowEndTimeTotal) ||
-                    (endTimeTotal > rowStartTimeTotal && endTimeTotal <= rowEndTimeTotal) ||
-                    (startTimeTotal <= rowStartTimeTotal && endTimeTotal >= rowEndTimeTotal)
-                ) {
-                    row.cells[day].style.backgroundColor = highlightColor;
-                } else {
-                    row.cells[day].style.backgroundColor = ''; // Reset background color
-                }
-            });
-        });
-    }
-
+        var myModalEl = document.getElementById('HireModal');
+        var modal = bootstrap.Modal.getInstance(myModalEl);
+        modal.hide();
+        }
     </script>
 </body>
 </html>
