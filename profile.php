@@ -154,5 +154,18 @@
             return false;
         }
     </script>
+
+                                        <!-- <div class="mb-3 text-center">
+                                    <div class="image-preview position-relative" style="cursor: pointer;">
+                                        <img id="imagePreview" src="https://via.placeholder.com/150" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
+                                        Hidden file input to trigger file selection 
+                                        <input type="file" class="form-control" id="imageUpload" name="imageUpload" accept="image/*" required style="display: none;">
+                                        Button styled as a link to appear as text 
+                                        <label for="imageUpload" class="btn btn-link position-absolute top-50 start-50 translate-middle p-0">
+                                            Upload Profile Image
+                                        </label>
+                                    </div>
+                                </div> -->
+
 </body>
 </html>

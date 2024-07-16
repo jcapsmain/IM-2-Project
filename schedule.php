@@ -1,3 +1,9 @@
+<?php 
+
+    require 'config.php';
+    include 'navbar.php';
+?>
+
 <!-- Nicezel naay problem sa navbar when ato include so wala pa nako gi add -->
 <!-- mag add rakos design after guru -->
 

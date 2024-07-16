@@ -91,6 +91,25 @@
             </script>
         ";
     }
+
+    if(isset($_POST["session-register"])) {
+        $sessionGameRank = $_POST["gameRank"];
+        $sessionStartDate = $_POST["startDate"];
+        $sessionEndDate = $_POST["endDate"];
+        $sessionStartTime = $_POST["startTime"];
+        $sessionEndTime = $_POST["endTime"];
+        $sessiontrainerID = $_SESSION["client_ID"];
+        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session bs JOIN client_booster cb ON bs.trainerID = cb.client_booster_id JOIN client c ON cb.client_booster_id = c.client_ID WHERE bs.trainerID = '$sessiontrainerID' OR cb.client_id = '$sessiontrainerID'");
+        if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
+            echo "<script> alert('You already have a coach'); </script>";
+        }
+        else{
+            
+            $sessionRegisterQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion')";
+            mysqli_query($conn,$registerQuery);
+            echo"<script> alert('Registration Succesful'); </script>";
+        }
+    }
     ob_end_flush();
 ?>
 
@@ -201,17 +220,6 @@
                     <div class="modal-body">
                         <div class="container">
                             <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
-                                <!-- <div class="mb-3 text-center">
-                                    <div class="image-preview position-relative" style="cursor: pointer;">
-                                        <img id="imagePreview" src="https://via.placeholder.com/150" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
-                                        Hidden file input to trigger file selection 
-                                        <input type="file" class="form-control" id="imageUpload" name="imageUpload" accept="image/*" required style="display: none;">
-                                        Button styled as a link to appear as text 
-                                        <label for="imageUpload" class="btn btn-link position-absolute top-50 start-50 translate-middle p-0">
-                                            Upload Profile Image
-                                        </label>
-                                    </div>
-                                </div> -->
                                 <div class="mb-3">
                                     <label for="name" class="form-label">IGN</label>
                                     <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
@@ -285,7 +293,7 @@
                     </div>
                     <div class="modal-body">
                         <div class="container">
-                            <form>
+                            <form method="post" autocomplete="off" name="session-register">
                                 <div class="form-group">
                                     <label class="form-label" for="gameRank">Game Rank</label>
                                     <input class="form-control" placeholder="Enter Game Rank" type="text" id="gameRank" name="gameRank" required>
