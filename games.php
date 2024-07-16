@@ -93,20 +93,20 @@
     }
 
     if(isset($_POST["session-register"])) {
-        $sessionGameRank = $_POST["gameRank"];
+        $sessionBoosterID = $_POST["boosterID"];
+        $sessionGameRank = $_POST["sessiongameRank"];
         $sessionStartDate = $_POST["startDate"];
         $sessionEndDate = $_POST["endDate"];
         $sessionStartTime = $_POST["startTime"];
         $sessionEndTime = $_POST["endTime"];
         $sessiontrainerID = $_SESSION["client_ID"];
-        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session bs JOIN client_booster cb ON bs.trainerID = cb.client_booster_id JOIN client c ON cb.client_booster_id = c.client_ID WHERE bs.trainerID = '$sessiontrainerID' OR cb.client_id = '$sessiontrainerID'");
+        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session WHERE trainerID = '$sessiontrainerID'");
         if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
             echo "<script> alert('You already have a coach'); </script>";
         }
         else{
-            
-            $sessionRegisterQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion')";
-            mysqli_query($conn,$registerQuery);
+            $sessionRegisterQuery = "INSERT INTO boosting_session VALUES ('', '$sessiontrainerID', '$sessionBoosterID', '$games', '$sessionGameRank', '$sessionStartDate', '$sessionEndDate', '$sessionStartTime',  '$sessionEndTime')";
+            mysqli_query($conn,$sessionRegisterQuery);
             echo"<script> alert('Registration Succesful'); </script>";
         }
     }
@@ -194,7 +194,8 @@
                             </div>
                             <!-- Hire Button -->
                             <div class="mt-3 d-flex justify-content-end">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#StudentRegisterModal">Hire</button>
+                                <button class="btn btn-primary hire-button" data-bs-toggle="modal" data-bs-target="#StudentRegisterModal" data-booster-id="<?php echo $row["client_booster_id"]; ?>">
+                                Hire</button>
                             </div>
                         </div>
                     </div>  
@@ -208,130 +209,165 @@
         </div>
     </div>
         
-        <!-- Modals -->
-        <!-- Coach Registration Modal -->
-        <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Coach</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">IGN</label>
-                                    <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="UID" class="form-label">UID</label>
-                                    <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="game" class="form-label">Game</label>
-                                    <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
-                                        <?php 
-                                            $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-                                            while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                                $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                                echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+    <!-- Modals -->
+    <!-- Coach Registration Modal -->
+    <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Coach</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">IGN</label>
+                                <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="UID" class="form-label">UID</label>
+                                <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="game" class="form-label">Game</label>
+                                <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
+                                    <?php 
+                                        $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
+                                        while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gameRank" class="form-label">Game Rank</label>
+                                <select class="form-select" id="gameRank" name="coachGameRank" required>
+                                    <?php 
+                                        $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                        if ($gamerankquery) {
+                                            $options = '';
+                                            while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                $gameinfoRank = $gameinfoRow['gameRank'];
+                                                $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
                                             }
-                                        ?>
-                                    </select>
+                                            echo $options; // Output all options for dropdown
+                                        } else {
+                                            echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
+                                <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
+                                <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Hourly Coach Price</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
                                 </div>
-                                <div class="mb-3">
-                                    <label for="gameRank" class="form-label">Game Rank</label>
-                                    <select class="form-select" id="gameRank" name="coachGameRank" required>
-                                        <?php 
-                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
-                                            if ($gamerankquery) {
-                                                $options = '';
-                                                while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
-                                                    $gameinfoRank = $gameinfoRow['gameRank'];
-                                                    $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
-                                                }
-                                                echo $options; // Output all options for dropdown
-                                            } else {
-                                                echo "Error: " . mysqli_error($conn); // Display error message if query fails
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
-                                    <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
-                                    <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="price" class="form-label">Hourly Coach Price</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">$</span>
-                                        <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
-                                    </div>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
-                                </div>
-                            </form>
-                        </div>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Student Registration Modal -->
-        <div class="modal fade" id="StudentRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Student</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="container">
-                            <form method="post" autocomplete="off" name="session-register">
-                                <div class="form-group">
-                                    <label class="form-label" for="gameRank">Game Rank</label>
-                                    <input class="form-control" placeholder="Enter Game Rank" type="text" id="gameRank" name="gameRank" required>
+    <!-- Student Registration Modal -->
+    <div class="modal fade" id="StudentRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Student</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form method="post" autocomplete="off" name="session-signup">
+
+                            <div class="form-group d-none">
+                                <label class="form-label" for="boosterID">BoosterID</label>
+                                <input class="form-control" placeholder="BoosterID" type="number" id="boosterID" name="boosterID" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="gameRank">Game Rank</label>
+                                <select class="form-select" id="sessiongameRank" name="sessiongameRank" required>
+                                    <?php 
+                                        $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                        if ($gamerankquery) {
+                                            $options = '';
+                                            while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                $gameinfoRank = $gameinfoRow['gameRank'];
+                                                $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                            }
+                                            echo $options; // Output all options for dropdown
+                                        } else {
+                                            echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="startdate">Enter Start Date Session</label>
+                                <input class="form-control" placeholder="Enter Start Date" type="date" id="startdate" name="startDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="enddate">Enter End Date Session</label>
+                                <input class="form-control" placeholder="Enter End Date" type="date" id="enddate" name="endDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="starttime">Enter Start Time Session (HH-MM-AM/PM)</label>
+                                <input class="form-control" type="time" id="starttime" name="startTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="endtime">Enter End Time Session (HH-MM-AM/PM)</label>
+                                <input class="form-control" type="time" id="endtime" name="endTime" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4 text-center">
+                                    <button type="submit" class="submit-button" name="session-register">Submit</button>
                                 </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="startdate">Enter Start Date Session</label>
-                                    <input class="form-control" placeholder="Enter Start Date" type="date" id="startdate" name="startDate" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="enddate">Enter End Date Session</label>
-                                    <input class="form-control" placeholder="Enter End Date" type="date" id="enddate" name="endDate" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="starttime">Enter Start Time Session (HH-MM-AM/PM)</label>
-                                    <input class="form-control" type="time" id="starttime" name="startTime" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label" for="endtime">Enter End Time Session (HH-MM-AM/PM)</label>
-                                    <input class="form-control" type="time" id="endtime" name="endTime" required>
-                                </div>
-                                <div class="row">
-                                    <div class="col-4"></div>
-                                    <div class="col-4 text-center">
-                                        <button type="submit" class="submit-button">Submit</button>
-                                    </div>
-                                    <div class="col-4"></div>
-                                </div>
-                            </form>
-                        </div>
+                                <div class="col-4"></div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-    
-        <script>
-            // Ensure input is rounded to two decimal places on input change
-            document.getElementById('price').addEventListener('input', function() {
-                this.value = parseFloat(this.value).toFixed(2);
+    </div>
+
+    <script>
+        // Ensure input is rounded to two decimal places on input change
+        document.getElementById('price').addEventListener('input', function() {
+            this.value = parseFloat(this.value).toFixed(2);
+        });
+    </script>
+
+            <!-- JavaScript to set modal form values -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var hireButtons = document.querySelectorAll('.hire-button');
+            
+            hireButtons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var booster_id = this.getAttribute('data-booster-id');
+                    
+                    document.getElementById('boosterID').value = booster_id;
+                });
             });
-        </script>
+        });
+    </script>
 </body>
