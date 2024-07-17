@@ -130,7 +130,7 @@
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
-                        <!-- <td><img src="profile1.jpg" alt="JohnDoe123" class="profile-pic"></td> -->
+                        <td><img src="profile1.jpg" alt="JohnDoe123" class="profile-pic"></td>
                         <td>JohnDoe123</td>
                         <td>Spam</td>
                         <td>2024-07-06</td>
@@ -138,7 +138,7 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <!-- <td><img src="profile2.jpg" alt="JaneSmith456" class="profile-pic"></td> -->
+                        <td><img src="profile2.jpg" alt="JaneSmith456" class="profile-pic"></td>
                         <td>JaneSmith456</td>
                         <td>Harassment</td>
                         <td>2024-07-05</td>
@@ -176,6 +176,8 @@
                         $game = $boosterRows['game'];
                         $gameRank = $boosterRows['gamerank'];
                         $status = $boosterRows['status'];
+                        $price = $boosterRows['price'];
+                        $bio = $boosterRows['bio'];
                         $applicationDate = $boosterRows['upload_Date'];
                         $uidScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_uid_screenshot'];
                         $gameRankScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_rank_screenshot'];
@@ -188,8 +190,40 @@
                         <td class="text-center"><?php echo $applicationDate ?></td>
                         <td class="text-center"><?php echo $game ?></td>
                         <td class="text-center"><?php echo $gameRank ?></td>
-                        <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal1">View Info</button></td>
+                        <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal<?php echo $rowNumber; ?>">View Info</button></td>
                     </tr>
+
+                        <!-- Review Modal 1 -->
+                        <div class="modal fade" id="reviewModal<?php echo $rowNumber; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabel">Review Details: <?php echo $boosterIGN; ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body text-center">
+                                        <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
+                                        <p><strong>Coach ID:</strong> <?php echo $boosterRows['client_booster_id'] ?></p>
+                                        <p><strong>Client ID:</strong> <?php echo $boosterRows['client_id']  ?></p>
+                                        <p><strong>Coach Name:</strong> <?php echo $boosterIGN; ?></p>
+                                        <p><strong>Application Date:</strong> <?php echo $applicationDate; ?></p>
+                                        <p><strong>Game:</strong> <?php echo $game; ?></p>
+                                        <p><strong>Game Rank:</strong> <?php echo $gameRank; ?></p>
+                                        <p><strong>Price:</strong> <?php echo $price; ?></p>
+                                        <p><strong>Game UID Screenshot:</strong> </p>
+                                        <p><strong>Game Rank Screenshot:</strong> </p>
+                                        <p><strong>Status:</strong> <?php echo $status; ?></p>
+                                        <p><strong>Bio:</strong> <?php echo $bio; ?></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger">Take Action</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     <?php
                     }
                 ?>
@@ -230,7 +264,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <!-- <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic"> -->
+                    <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
                     <p><strong>Reported Account:</strong> JohnDoe123</p>
                     <p><strong>Report Type:</strong> Spam</p>
                     <p><strong>Date:</strong> 2024-07-06</p>
@@ -255,39 +289,11 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <!-- <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic"> -->
+                    <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
                     <p><strong>Reported Account:</strong> JaneSmith456</p>
                     <p><strong>Report Type:</strong> Harassment</p>
                     <p><strong>Date:</strong> 2024-07-05</p>
                     <p><strong>Details:</strong> User has been reported for sending threatening messages to other users.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Take Action</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Review Modal 1 -->
-    <div class="modal fade" id="reviewModal1" tabindex="-1" aria-labelledby="reviewModal1Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="reviewModal1Label">Review Details: CoachOne</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
-                    <p><strong>Coach Name:</strong> CoachOne</p>
-                    <p><strong>Application Date:</strong> 2024-07-06</p>
-                    <p><strong>Experience:</strong> 5 years</p>
-                    <p><strong>Skills:</strong> Strategy, Communication</p>
-                    <p><strong>Qualifications:</strong> Certified Professional Coach, Former Team Leader</p>
-                    <p><strong>References:</strong> Available upon request</p>
-                    <p><strong>Cover Letter:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

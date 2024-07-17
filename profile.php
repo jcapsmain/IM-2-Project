@@ -26,7 +26,23 @@
         }
     }
 
+    if(isset($_POST["edit-bio"])) {
+        $editFirstname = $_POST["bio"];
+    
+        $query = "UPDATE client SET bio = '$editFirstname' WHERE client_id = '$id'";
+        mysqli_query($conn,$query);
+        if($query) {
+            echo"<script> alert('Edit Succesful'); </script>";
+            header("location: profile.php");
+        }
+        else {
+            echo"<script> alert('Edit Not Succesful'); </script>";
+        }
+    }
+
     ob_end_flush()
+
+    
 
 ?>
 
@@ -59,7 +75,7 @@
         </div>
         <div class="bio p-4 rounded mb-4">
             <h2>About Me</h2>
-            <p id="bio-text">(Text here)</p>
+            <p id="bio-text"><?php echo $row["bio"]; ?></p>
             <button class="btn edit-bio-btn" onclick="openEditBioOverlay()">Edit Bio</button>
         </div>
     </div>
@@ -72,30 +88,30 @@
             <form id="edit-form" class="edit-form" method="post" autocomplete="off" name="edit-register">
                 <div class="form-group">
                     <label for="edit-name">First Name:</label>
-                    <input type="text" id="edit-fname" name="fname" class="form-control" required>
+                    <input type="text" id="edit-fname" name="fname" class="form-control" value="<?php echo $row["fname"]; ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="edit-name">Last Name:</label>
-                    <input type="text" id="edit-lname" name="lname" class="form-control" required>
+                    <input type="text" id="edit-lname" name="lname" class="form-control" value="<?php echo $row["lname"];?>" required>
                 </div>
                 <div class="form-group">
                     <label for="edit-age">Contact Number:</label>
-                    <input type="number" id="edit-phoneNumber" name="contact" class="form-control">
+                    <input type="number" id="edit-phoneNumber" name="contact" class="form-control" value="<?php echo $row["phoneNumber"];?>" required>
                 </div>
                 <div class="form-group">
                     <label for="edit-gender">Birthdate:</label>
-                    <input type="date" id="edit-birthday" name="date" class="form-control">
+                    <input type="date" id="edit-birthday" name="date" class="form-control" value="<?php echo $row["dateofbirth"];?>" required>
                 </div>
                 <div class="form-group">
                     <label for="edit-region">Region:</label>
-                    <select id="edit-region" name="region" class="form-control">
+                    <select id="edit-region" name="region" class="form-control" required>
                         <option value="North America">North America</option>
                         <option value="South America">South America</option>
                         <option value="Europe">Europe</option>
                         <option value="Asia">Asia</option>
                         <option value="Oceania">Oceania</option>
-                        <option value="Africa">Africa</option>
-                        <option value="Australia">Australia</option>
+                        <option value="Africa">Antartica</option>
+                        <option value="Australia">Africa</option>
                     </select>
                 </div>
                 <button type="submit" class="btn save-profile-btn" name="edit-submit">Save Profile</button>
@@ -108,12 +124,12 @@
         <div class="overlay-content p-4 rounded text-center">
             <span class="close-btn" onclick="closeEditBioOverlay()">&times;</span>
             <h2>Edit Bio</h2>
-            <form id="edit-bio-form" class="edit-form" onsubmit="return updateBio()">
+            <form id="edit-bio-form" class="edit-form" method="post" autocomplete="off" name="edit-bio"">
                 <div class="form-group">
                     <label for="edit-bio-text">Bio:</label>
                     <textarea id="edit-bio-text" name="bio" class="form-control" rows="4" required></textarea>
                 </div>
-                <button type="submit" class="btn save-bio-btn">Save Bio</button>
+                <button type="submit" class="btn save-bio-btn" name="edit-bio">Save Bio</button>
             </form>
         </div>
     </div>
@@ -127,17 +143,6 @@
             document.getElementById('edit-profile-overlay').classList.remove('active');
         }
 
-        function updateProfile(event) {
-            event.preventDefault();
-            document.getElementById('profile-name').textContent = document.getElementById('edit-name').value;
-            document.getElementById('profile-age').textContent = 'Age: ' + document.getElementById('edit-age').value;
-            document.getElementById('profile-gender').textContent = 'Gender: ' + document.getElementById('edit-gender').value;
-            document.getElementById('profile-birthday').textContent = 'Birthday: ' + document.getElementById('edit-birthday').value;
-            document.getElementById('profile-region').textContent = 'Region: ' + document.getElementById('edit-region').value;
-            closeEditProfileOverlay();
-            return false;
-        }
-
         function openEditBioOverlay() {
             document.getElementById('edit-bio-text').value = document.getElementById('bio-text').textContent.trim();
             document.getElementById('edit-bio-overlay').classList.add('active');
@@ -147,12 +152,6 @@
             document.getElementById('edit-bio-overlay').classList.remove('active');
         }
 
-        function updateBio(event) {
-            event.preventDefault();
-            document.getElementById('bio-text').textContent = document.getElementById('edit-bio-text').value;
-            closeEditBioOverlay();
-            return false;
-        }
     </script>
 
                                         <!-- <div class="mb-3 text-center">
