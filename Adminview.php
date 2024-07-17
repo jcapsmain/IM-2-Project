@@ -1,3 +1,11 @@
+<?php
+
+    ob_start();
+    require 'config.php';
+    ob_end_flush();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -122,7 +130,7 @@
                 <tbody>
                     <tr>
                         <th scope="row">1</th>
-                        <td><img src="profile1.jpg" alt="JohnDoe123" class="profile-pic"></td>
+                        <!-- <td><img src="profile1.jpg" alt="JohnDoe123" class="profile-pic"></td> -->
                         <td>JohnDoe123</td>
                         <td>Spam</td>
                         <td>2024-07-06</td>
@@ -130,7 +138,7 @@
                     </tr>
                     <tr>
                         <th scope="row">2</th>
-                        <td><img src="profile2.jpg" alt="JaneSmith456" class="profile-pic"></td>
+                        <!-- <td><img src="profile2.jpg" alt="JaneSmith456" class="profile-pic"></td> -->
                         <td>JaneSmith456</td>
                         <td>Harassment</td>
                         <td>2024-07-05</td>
@@ -149,34 +157,42 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Profile Picture</th>
-                        <th>Coach Name</th>
-                        <th>Application Date</th>
-                        <th>Experience</th>
-                        <th>Skills</th>
-                        <th>Actions</th>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Profile Picture</th>
+                        <th class="text-center">Coach IGN</th>
+                        <th class="text-center">Application Date</th>
+                        <th class="text-center">Game</th>
+                        <th class="text-center">Game Rank</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                <?php
+                    $rowNumber = 0;
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster");
+                    while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
+                        $boosterIGN = $boosterRows['IGN'];
+                        $boosterUID = $boosterRows['coach_uid'];
+                        $game = $boosterRows['game'];
+                        $gameRank = $boosterRows['gamerank'];
+                        $status = $boosterRows['status'];
+                        $applicationDate = $boosterRows['upload_Date'];
+                        $uidScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_uid_screenshot'];
+                        $gameRankScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_rank_screenshot'];
+                        $rowNumber += 1;
+                ?>
                     <tr>
-                        <th scope="row">1</th>
-                        <td><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
-                        <td>CoachOne</td>
-                        <td>2024-07-06</td>
-                        <td>5 years</td>
-                        <td>Strategy, Communication</td>
-                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal1">View Info</button></td>
+                        <th scope="row" class="text-center"><?php echo $boosterRows['client_booster_id'] ?></th>
+                        <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td class="text-center"><?php echo $boosterIGN; ?></td>
+                        <td class="text-center"><?php echo $applicationDate ?></td>
+                        <td class="text-center"><?php echo $game ?></td>
+                        <td class="text-center"><?php echo $gameRank ?></td>
+                        <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal1">View Info</button></td>
                     </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td><img src="coach2.jpg" alt="CoachTwo" class="profile-pic"></td>
-                        <td>CoachTwo</td>
-                        <td>2024-07-05</td>
-                        <td>3 years</td>
-                        <td>Team Management, Leadership</td>
-                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal2">View Info</button></td>
-                    </tr>
+                    <?php
+                    }
+                ?>
                 </tbody>
             </table>
         </div>
@@ -214,7 +230,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
+                    <!-- <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic"> -->
                     <p><strong>Reported Account:</strong> JohnDoe123</p>
                     <p><strong>Report Type:</strong> Spam</p>
                     <p><strong>Date:</strong> 2024-07-06</p>
@@ -239,7 +255,7 @@
                     </button>
                 </div>
                 <div class="modal-body text-center">
-                    <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
+                    <!-- <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic"> -->
                     <p><strong>Reported Account:</strong> JaneSmith456</p>
                     <p><strong>Report Type:</strong> Harassment</p>
                     <p><strong>Date:</strong> 2024-07-05</p>
