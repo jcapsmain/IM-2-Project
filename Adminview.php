@@ -213,18 +213,19 @@
                                         <p><strong>Game:</strong> <?php echo $game; ?></p>
                                         <p><strong>Game Rank:</strong> <?php echo $gameRank; ?></p>
                                         <p><strong>Price:</strong> <?php echo $price; ?></p>
-                                        <p><strong>Game UID Screenshot:</strong> </p>
-                                        <p><strong>Game Rank Screenshot:</strong> </p>
                                         <p><strong>Status:</strong> <?php echo $status; ?></p>
+                                        <p><strong>UID Screenshot:</strong></p>
+                                        <img src="<?php echo $uidScreenshot ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <p><strong>Game Rank Screenshot:</strong></p>
+                                        <img src="<?php echo $gameRankScreenshot ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger">Take Action</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    <?php
+                <?php
                     }
                 ?>
                 </tbody>
@@ -235,108 +236,90 @@
     <div class="content" id="modifyGame" style="display:none;">
         <div class="header">
             <h1>Modify Game</h1>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
         <div class="mt-4">
-            <!-- Game boxes representing current games -->
             <div class="game-box">
-                <img src="game1.jpg" alt="Game 1">
-                <h3>Game Title 1</h3>
-                <p>Game Description 1</p>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modifyGameModal1">Edit</button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game1.jpg" alt="League of Legends">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>League of Legends</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
             </div>
             <div class="game-box">
-                <img src="game2.jpg" alt="Game 2">
-                <h3>Game Title 2</h3>
-                <p>Game Description 2</p>
-                <button class="btn btn-primary" data-toggle="modal" data-target="#modifyGameModal2">Edit</button>
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game2.jpg" alt="Dota 2">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>Dota 2</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Report Modal 1 -->
-    <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModal1Label" aria-hidden="true">
+    <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModal1Label">Report Details: JohnDoe123</h5>
+                    <h5 class="modal-title" id="reportModalLabel">Report Details: JohnDoe123</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
                     <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
-                    <p><strong>Reported Account:</strong> JohnDoe123</p>
+                    <p><strong>Reported User:</strong> JohnDoe123</p>
                     <p><strong>Report Type:</strong> Spam</p>
-                    <p><strong>Date:</strong> 2024-07-06</p>
-                    <p><strong>Details:</strong> User has been reported for sending unsolicited messages repeatedly.</p>
+                    <p><strong>Report Date:</strong> 2024-07-06</p>
+                    <p><strong>Reason:</strong> User was spamming messages in chat.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Take Action</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Report Modal 2 -->
-    <div class="modal fade" id="reportModal2" tabindex="-1" aria-labelledby="reportModal2Label" aria-hidden="true">
+    <div class="modal fade" id="reportModal2" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reportModal2Label">Report Details: JaneSmith456</h5>
+                    <h5 class="modal-title" id="reportModalLabel">Report Details: JaneSmith456</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body text-center">
                     <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
-                    <p><strong>Reported Account:</strong> JaneSmith456</p>
+                    <p><strong>Reported User:</strong> JaneSmith456</p>
                     <p><strong>Report Type:</strong> Harassment</p>
-                    <p><strong>Date:</strong> 2024-07-05</p>
-                    <p><strong>Details:</strong> User has been reported for sending threatening messages to other users.</p>
+                    <p><strong>Report Date:</strong> 2024-07-05</p>
+                    <p><strong>Reason:</strong> User was harassing others in chat.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Take Action</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Review Modal 2 -->
-    <div class="modal fade" id="reviewModal2" tabindex="-1" aria-labelledby="reviewModal2Label" aria-hidden="true">
+    <!-- Add Game Modal -->
+    <div class="modal fade" id="addGameModal" tabindex="-1" aria-labelledby="addGameModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reviewModal2Label">Review Details: CoachTwo</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <img src="coach2.jpg" alt="CoachTwo" class="modal-profile-pic">
-                    <p><strong>Coach Name:</strong> CoachTwo</p>
-                    <p><strong>Application Date:</strong> 2024-07-05</p>
-                    <p><strong>Experience:</strong> 3 years</p>
-                    <p><strong>Skills:</strong> Team Management, Leadership</p>
-                    <p><strong>Qualifications:</strong> Certified Leadership Coach, Former Captain</p>
-                    <p><strong>References:</strong> Available upon request</p>
-                    <p><strong>Cover Letter:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger">Take Action</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modify Game Modal 1 -->
-    <div class="modal fade" id="modifyGameModal1" tabindex="-1" aria-labelledby="modifyGameModal1Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modifyGameModal1Label">Modify Game: Game Title 1</h5>
+                    <h5 class="modal-title" id="addGameModalLabel">Add New Game</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -344,57 +327,18 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="gameTitle1">Game Title</label>
-                            <input type="text" class="form-control" id="gameTitle1" value="Game Title 1">
+                            <label for="gameName">Game Name</label>
+                            <input type="text" class="form-control" id="gameName" placeholder="Enter game name">
                         </div>
                         <div class="form-group">
-                            <label for="gameDescription1">Game Description</label>
-                            <textarea class="form-control" id="gameDescription1" rows="3">Game Description 1</textarea>
+                            <label for="gameImage">Game Image</label>
+                            <input type="file" class="form-control" id="gameImage">
                         </div>
                         <div class="form-group">
-                            <label for="gameStats1">Game Stats</label>
-                            <textarea class="form-control" id="gameStats1" rows="3">Game Stats 1</textarea>
+                            <label for="gameDescription">Game Description</label>
+                            <textarea class="form-control" id="gameDescription" rows="3" placeholder="Enter game description"></textarea>
                         </div>
-                        <div class="form-group">
-                            <label for="gameImage1">Game Image</label>
-                            <input type="file" class="form-control-file" id="gameImage1">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modify Game Modal 2 -->
-    <div class="modal fade" id="modifyGameModal2" tabindex="-1" aria-labelledby="modifyGameModal2Label" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modifyGameModal2Label">Modify Game: Game Title 2</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="form-group">
-                            <label for="gameTitle2">Game Title</label>
-                            <input type="text" class="form-control" id="gameTitle2" value="Game Title 2">
-                        </div>
-                        <div class="form-group">
-                            <label for="gameDescription2">Game Description</label>
-                            <textarea class="form-control" id="gameDescription2" rows="3">Game Description 2</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="gameStats2">Game Stats</label>
-                            <textarea class="form-control" id="gameStats2" rows="3">Game Stats 2</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="gameImage2">Game Image</label>
-                            <input type="file" class="form-control-file" id="gameImage2">
-                        </div>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Add Game</button>
                     </form>
                 </div>
             </div>
@@ -405,16 +349,22 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('.sidebar a').on('click', function() {
-                $('.content').hide();
-                const target = $(this).attr('href');
-                $(target).show();
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('.sidebar a');
+            var sections = document.querySelectorAll('.content');
 
-            // Show the default content
-            $('#accountReports').show();
+            links.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    var targetId = link.getAttribute('href').substring(1);
+                    sections.forEach(function (section) {
+                        section.style.display = section.getAttribute('id') === targetId ? 'block' : 'none';
+                    });
+                });
+            });
         });
     </script>
 </body>
 </html>
+
+
+
