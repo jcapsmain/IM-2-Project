@@ -204,7 +204,7 @@
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body text-center">
+                                    <div class="modal-body">
                                         <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
                                         <p><strong>Coach ID:</strong> <?php echo $boosterRows['client_booster_id'] ?></p>
                                         <p><strong>Client ID:</strong> <?php echo $boosterRows['client_id']  ?></p>
@@ -276,7 +276,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center">
+                <div class="modal-body">
                     <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
                     <p><strong>Reported User:</strong> JohnDoe123</p>
                     <p><strong>Report Type:</strong> Spam</p>
@@ -300,7 +300,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body text-center">
+                <div class="modal-body">
                     <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
                     <p><strong>Reported User:</strong> JaneSmith456</p>
                     <p><strong>Report Type:</strong> Harassment</p>
@@ -365,6 +365,7 @@
     </script>
 </body>
 </html>
+
 
 
 
