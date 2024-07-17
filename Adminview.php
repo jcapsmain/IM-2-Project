@@ -216,7 +216,6 @@
                                         <p><strong>Game UID Screenshot:</strong> </p>
                                         <p><strong>Game Rank Screenshot:</strong> </p>
                                         <p><strong>Status:</strong> <?php echo $status; ?></p>
-                                        <p><strong>Bio:</strong> <?php echo $bio; ?></p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
