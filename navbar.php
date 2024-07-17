@@ -12,8 +12,9 @@
         $registerDate = $_POST["user-register-date"];
         $registerRegion = $_POST["user-register-region"];
         $registerDuplicate = mysqli_query($conn ,"SELECT * FROM client WHERE email = '$registerEmail' OR username = '$registerUsername'");
+        $registerAdminDuplicate = mysqli_query($conn ,"SELECT * FROM moderator WHERE email = '$registerEmail'");
         $registerEncpassword = md5($registerPassword);
-        if(mysqli_num_rows($registerDuplicate) > 0) {
+        if((mysqli_num_rows($registerDuplicate) > 0) || (mysqli_num_rows($registerAdminDuplicate) > 0)) {
             echo "<script> alert('Email or Username has already taken'); </script>";
         }
         else{
@@ -33,15 +34,22 @@
         $loginPassword = $_POST["signInPassword"];
         $loginEncpassword = md5($loginPassword);
         $loginResult = mysqli_query($conn ,"SELECT * FROM client WHERE email = '$loginUserEmail' OR username = '$loginUserEmail'");
+        $loginAdminResult = mysqli_query($conn ,"SELECT * FROM moderator WHERE email = '$loginUserEmail'");
         $loginRow = mysqli_fetch_assoc($loginResult);
-        if(mysqli_num_rows($loginResult) > 0) {
+        $loginAdminRow = mysqli_fetch_assoc($loginAdminResult);
+        if((mysqli_num_rows($loginResult) > 0) || (mysqli_num_rows($loginAdminResult) > 0)) {
             if($loginEncpassword == $loginRow["password"]) {
-                $_SESSION["login"] = true;
+                $_SESSION["login"] = true;  
                 $_SESSION["client_ID"] = $loginRow["client_ID"];
                 header("location: Homepage.php");
             }
+            else if($loginPassword == $loginAdminRow["password"]){
+                $_SESSION["login"] = true;  
+                $_SESSION["moderator_id"] = $loginAdminRow["moderator_id"];
+                header("location: Adminview.php");
+            }
             else {
-                echo "<script> alert('Wrong Password'); </script>";
+                echo "<script> alert('Incorrect password'); </script>";
             }
         }
         else {
