@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 13, 2024 at 07:27 PM
+-- Generation Time: Jul 17, 2024 at 04:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,25 +28,16 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `boosting_session` (
-  `boosting_session_id` int(11) NOT NULL,
-  `client_player_id` int(11) DEFAULT NULL,
-  `client_booster_id` int(11) DEFAULT NULL,
-  `game` varchar(50) DEFAULT NULL,
-  `start_time` datetime DEFAULT NULL,
-  `end_time` datetime DEFAULT NULL,
-  `duration` float DEFAULT NULL,
-  `rating` float DEFAULT NULL,
-  `feedback` varchar(100) DEFAULT NULL
+  `boostSessionID` int(11) NOT NULL,
+  `trainerID` int(11) NOT NULL,
+  `boosterID` int(11) NOT NULL,
+  `game` varchar(255) NOT NULL,
+  `gameRank` varchar(255) NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `boosting_session`
---
-
-INSERT INTO `boosting_session` (`boosting_session_id`, `client_player_id`, `client_booster_id`, `game`, `start_time`, `end_time`, `duration`, `rating`, `feedback`) VALUES
-(1, 2, 1, 'Rocket League', '2024-06-11 14:00:00', '2024-06-11 19:00:00', 5, 3.5, 'Excellent Effort'),
-(2, 3, 1, 'League of Legend', '2024-04-30 15:00:00', '2024-04-30 20:00:00', 5, 4.2, 'Communicative'),
-(3, 3, 2, 'Dota', '2024-05-26 16:00:00', '2024-05-26 21:00:00', 5, 5, 'Positive Attitude');
 
 -- --------------------------------------------------------
 
@@ -87,70 +78,72 @@ CREATE TABLE `client` (
   `phoneNumber` varchar(20) NOT NULL,
   `email` varchar(100) NOT NULL,
   `dateofbirth` date NOT NULL,
-  `region` enum('North America','South America','Europe','Asia','Oceania','Antartica','Africa') DEFAULT NULL
+  `region` enum('North America','South America','Europe','Asia','Oceania','Antartica','Africa') DEFAULT NULL,
+  `bio` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client`
 --
 
-INSERT INTO `client` (`client_ID`, `username`, `fname`, `lname`, `password`, `phoneNumber`, `email`, `dateofbirth`, `region`) VALUES
-(1, 'johnCapoy123', 'Jonh', 'Capoy', '202cb962ac59075b964b07152d234b70', '9823423421', 'johncapoy@gmail.com', '1999-05-03', 'Africa'),
-(2, 'skibidi', 'Skib', 'Idi', '202cb962ac59075b964b07152d234b70', '0923421241', 'skibidi@mail.com', '2015-10-26', 'Asia'),
-(3, 'user', 'user', 'user', '202cb962ac59075b964b07152d234b70', '3251551', 'user@mail.com', '2002-07-18', 'Asia'),
-(4, 'user1', 'John', 'Smith', 'pass1', '123-456-7890', 'user1@example.com', '1990-01-01', 'North America'),
-(5, 'user2', 'Emily', 'Johnson', 'pass2', '234-567-8901', 'user2@example.com', '1991-02-02', 'South America'),
-(6, 'user3', 'Michael', 'Williams', 'pass3', '345-678-9012', 'user3@example.com', '1992-03-03', 'Europe'),
-(7, 'user4', 'Jessica', 'Jones', 'pass4', '456-789-0123', 'user4@example.com', '1993-04-04', 'Asia'),
-(8, 'user5', 'Daniel', 'Brown', 'pass5', '567-890-1234', 'user5@example.com', '1994-05-05', 'Oceania'),
-(9, 'user6', 'Sarah', 'Miller', 'pass6', '678-901-2345', 'user6@example.com', '1995-06-06', 'Antartica'),
-(10, 'user7', 'David', 'Davis', 'pass7', '789-012-3456', 'user7@example.com', '1996-07-07', 'Africa'),
-(11, 'user8', 'Lisa', 'Martinez', 'pass8', '890-123-4567', 'user8@example.com', '1997-08-08', 'North America'),
-(12, 'user9', 'Kevin', 'Garcia', 'pass9', '901-234-5678', 'user9@example.com', '1998-09-09', 'South America'),
-(13, 'user10', 'Rachel', 'Rodriguez', 'pass10', '012-345-6789', 'user10@example.com', '1999-10-10', 'Europe'),
-(14, 'user11', 'Andrew', 'Lopez', 'pass11', '987-654-3210', 'user11@example.com', '1980-11-11', 'Asia'),
-(15, 'user12', 'Jessica', 'Wilson', 'pass12', '876-543-2109', 'user12@example.com', '1981-12-12', 'Oceania'),
-(16, 'user13', 'Matthew', 'Gonzalez', 'pass13', '765-432-1098', 'user13@example.com', '1982-01-13', 'Antartica'),
-(17, 'user14', 'Amanda', 'Perez', 'pass14', '654-321-0987', 'user14@example.com', '1983-02-14', 'Africa'),
-(18, 'user15', 'Christopher', 'Robinson', 'pass15', '543-210-9876', 'user15@example.com', '1984-03-15', 'North America'),
-(19, 'user16', 'Ashley', 'Hernandez', 'pass16', '432-109-8765', 'user16@example.com', '1985-04-16', 'South America'),
-(20, 'user17', 'Justin', 'Moore', 'pass17', '321-098-7654', 'user17@example.com', '1986-05-17', 'Europe'),
-(21, 'user18', 'Stephanie', 'Young', 'pass18', '210-987-6543', 'user18@example.com', '1987-06-18', 'Asia'),
-(22, 'user19', 'Ryan', 'King', 'pass19', '109-876-5432', 'user19@example.com', '1988-07-19', 'Oceania'),
-(23, 'user20', 'Brittany', 'Scott', 'pass20', '098-765-4321', 'user20@example.com', '1989-08-20', 'Antartica'),
-(24, 'user21', 'Jonathan', 'Nguyen', 'pass21', '987-654-3210', 'user21@example.com', '1970-09-21', 'Africa'),
-(25, 'user22', 'Nicole', 'Hill', 'pass22', '876-543-2109', 'user22@example.com', '1971-10-22', 'North America'),
-(26, 'user23', 'Brandon', 'Flores', 'pass23', '765-432-1098', 'user23@example.com', '1972-11-23', 'South America'),
-(27, 'user24', 'Melissa', 'Green', 'pass24', '654-321-0987', 'user24@example.com', '1973-12-24', 'Europe'),
-(28, 'user25', 'Victoria', 'Adams', 'pass25', '543-210-9876', 'user25@example.com', '1974-01-25', 'Asia'),
-(29, 'user26', 'Eric', 'Baker', 'pass26', '432-109-8765', 'user26@example.com', '1975-02-26', 'Oceania'),
-(30, 'user27', 'Samantha', 'Nelson', 'pass27', '321-098-7654', 'user27@example.com', '1976-03-27', 'Antartica'),
-(31, 'user28', 'Alex', 'Carter', 'pass28', '210-987-6543', 'user28@example.com', '1977-04-28', 'Africa'),
-(32, 'user29', 'Joshua', 'Mitchell', 'pass29', '109-876-5432', 'user29@example.com', '1978-05-29', 'North America'),
-(33, 'user30', 'Michelle', 'Perez', 'pass30', '098-765-4321', 'user30@example.com', '1979-06-30', 'South America'),
-(34, 'user31', 'Daniel', 'Harris', 'pass31', '987-654-3210', 'user31@example.com', '1960-07-31', 'Europe'),
-(35, 'user32', 'Kimberly', 'Gonzales', 'pass32', '876-543-2109', 'user32@example.com', '1961-08-01', 'Asia'),
-(36, 'user33', 'Tyler', 'Cook', 'pass33', '765-432-1098', 'user33@example.com', '1962-09-02', 'Oceania'),
-(37, 'user34', 'Katherine', 'Bailey', 'pass34', '654-321-0987', 'user34@example.com', '1963-10-03', 'Antartica'),
-(38, 'user35', 'Austin', 'Rivera', 'pass35', '543-210-9876', 'user35@example.com', '1964-11-04', 'Africa'),
-(39, 'user36', 'Megan', 'Cooper', 'pass36', '432-109-8765', 'user36@example.com', '1965-12-05', 'North America'),
-(40, 'user37', 'Benjamin', 'Richardson', 'pass37', '321-098-7654', 'user37@example.com', '1966-01-06', 'South America'),
-(41, 'user38', 'Laura', 'Torres', 'pass38', '210-987-6543', 'user38@example.com', '1967-02-07', 'Europe'),
-(42, 'user39', 'Gabriel', 'Morris', 'pass39', '109-876-5432', 'user39@example.com', '1968-03-08', 'Asia'),
-(43, 'user40', 'Alyssa', 'Ward', 'pass40', '098-765-4321', 'user40@example.com', '1969-04-09', 'Oceania'),
-(44, 'user41', 'Zachary', 'James', 'pass41', '987-654-3210', 'user41@example.com', '1950-05-10', 'Antartica'),
-(45, 'user42', 'Julia', 'Watson', 'pass42', '876-543-2109', 'user42@example.com', '1951-06-11', 'Africa'),
-(46, 'user43', 'Kyle', 'Brooks', 'pass43', '765-432-1098', 'user43@example.com', '1952-07-12', 'North America'),
-(47, 'user44', 'Hannah', 'Sanders', 'pass44', '654-321-0987', 'user44@example.com', '1953-08-13', 'South America'),
-(48, 'user45', 'Jacob', 'Bennett', 'pass45', '543-210-9876', 'user45@example.com', '1954-09-14', 'Europe'),
-(49, 'user46', 'Olivia', 'Perry', 'pass46', '432-109-8765', 'user46@example.com', '1955-10-15', 'Asia'),
-(50, 'user47', 'Nathan', 'Long', 'pass47', '321-098-7654', 'user47@example.com', '1956-11-16', 'Oceania'),
-(51, 'user48', 'Emma', 'Reed', 'pass48', '210-987-6543', 'user48@example.com', '1957-12-17', 'Antartica'),
-(52, 'user49', 'Alexander', 'Kim', 'pass49', '109-876-5432', 'user49@example.com', '1958-01-18', 'Africa'),
-(53, 'user50', 'Madison', 'Evans', 'pass50', '098-765-4321', 'user50@example.com', '1959-02-19', 'North America'),
-(54, 'Johnn', 'Cpooyy', 'SADAW', '202cb962ac59075b964b07152d234b70', '98234281234', 'john@mail.com', '2005-08-29', 'Asia'),
-(55, 'Jaczyo', 'Kiwoi', 'JAXWRer', '202cb962ac59075b964b07152d234b70', '09783327242', 'jawx@gmail.com', '1997-10-26', 'Oceania'),
-(56, 'example', 'exam', 'ple', '202cb962ac59075b964b07152d234b70', '213512322', 'example@mail.com', '2003-10-29', 'Europe');
+INSERT INTO `client` (`client_ID`, `username`, `fname`, `lname`, `password`, `phoneNumber`, `email`, `dateofbirth`, `region`, `bio`) VALUES
+(1, 'johnCapoy123', 'John', 'Capoy', '202cb962ac59075b964b07152d234b70', '9823423421', 'johncapoy@gmail.com', '1999-05-03', 'North America', 'hello123'),
+(2, 'skibidi', 'Skib', 'Idi', '202cb962ac59075b964b07152d234b70', '0923421241', 'skibidi@mail.com', '2015-10-26', 'Asia', 'hello'),
+(3, 'user', 'user', 'user', '202cb962ac59075b964b07152d234b70', '3251551', 'user@mail.com', '2002-07-18', 'Asia', 'hello'),
+(4, 'user1', 'John', 'Smith', 'pass1', '123-456-7890', 'user1@example.com', '1990-01-01', 'North America', 'hello'),
+(5, 'user2', 'Emily', 'Johnson', 'pass2', '234-567-8901', 'user2@example.com', '1991-02-02', 'South America', 'hello'),
+(6, 'user3', 'Michael', 'Williams', 'pass3', '345-678-9012', 'user3@example.com', '1992-03-03', 'Europe', 'hello'),
+(7, 'user4', 'Jessica', 'Jones', 'pass4', '456-789-0123', 'user4@example.com', '1993-04-04', 'Asia', 'hello'),
+(8, 'user5', 'Daniel', 'Brown', 'pass5', '567-890-1234', 'user5@example.com', '1994-05-05', 'Oceania', 'hello'),
+(9, 'user6', 'Sarah', 'Miller', 'pass6', '678-901-2345', 'user6@example.com', '1995-06-06', 'Antartica', 'hello'),
+(10, 'user7', 'David', 'Davis', 'pass7', '789-012-3456', 'user7@example.com', '1996-07-07', 'Africa', 'hello'),
+(11, 'user8', 'Lisa', 'Martinez', 'pass8', '890-123-4567', 'user8@example.com', '1997-08-08', 'North America', 'hello'),
+(12, 'user9', 'Kevin', 'Garcia', 'pass9', '901-234-5678', 'user9@example.com', '1998-09-09', 'South America', 'hello'),
+(13, 'user10', 'Rachel', 'Rodriguez', 'pass10', '012-345-6789', 'user10@example.com', '1999-10-10', 'Europe', 'hello'),
+(14, 'user11', 'Andrew', 'Lopez', 'pass11', '987-654-3210', 'user11@example.com', '1980-11-11', 'Asia', 'hello'),
+(15, 'user12', 'Jessica', 'Wilson', 'pass12', '876-543-2109', 'user12@example.com', '1981-12-12', 'Oceania', 'hello'),
+(16, 'user13', 'Matthew', 'Gonzalez', 'pass13', '765-432-1098', 'user13@example.com', '1982-01-13', 'Antartica', 'hello'),
+(17, 'user14', 'Amanda', 'Perez', 'pass14', '654-321-0987', 'user14@example.com', '1983-02-14', 'Africa', 'hello'),
+(18, 'user15', 'Christopher', 'Robinson', 'pass15', '543-210-9876', 'user15@example.com', '1984-03-15', 'North America', 'hello'),
+(19, 'user16', 'Ashley', 'Hernandez', 'pass16', '432-109-8765', 'user16@example.com', '1985-04-16', 'South America', 'hello'),
+(20, 'user17', 'Justin', 'Moore', 'pass17', '321-098-7654', 'user17@example.com', '1986-05-17', 'Europe', 'hello'),
+(21, 'user18', 'Stephanie', 'Young', 'pass18', '210-987-6543', 'user18@example.com', '1987-06-18', 'Asia', 'hello'),
+(22, 'user19', 'Ryan', 'King', 'pass19', '109-876-5432', 'user19@example.com', '1988-07-19', 'Oceania', 'hello'),
+(23, 'user20', 'Brittany', 'Scott', 'pass20', '098-765-4321', 'user20@example.com', '1989-08-20', 'Antartica', 'hello'),
+(24, 'user21', 'Jonathan', 'Nguyen', 'pass21', '987-654-3210', 'user21@example.com', '1970-09-21', 'Africa', 'hello'),
+(25, 'user22', 'Nicole', 'Hill', 'pass22', '876-543-2109', 'user22@example.com', '1971-10-22', 'North America', 'hello'),
+(26, 'user23', 'Brandon', 'Flores', 'pass23', '765-432-1098', 'user23@example.com', '1972-11-23', 'South America', 'hello'),
+(27, 'user24', 'Melissa', 'Green', 'pass24', '654-321-0987', 'user24@example.com', '1973-12-24', 'Europe', 'hello'),
+(28, 'user25', 'Victoria', 'Adams', 'pass25', '543-210-9876', 'user25@example.com', '1974-01-25', 'Asia', 'hello'),
+(29, 'user26', 'Eric', 'Baker', 'pass26', '432-109-8765', 'user26@example.com', '1975-02-26', 'Oceania', 'hello'),
+(30, 'user27', 'Samantha', 'Nelson', 'pass27', '321-098-7654', 'user27@example.com', '1976-03-27', 'Antartica', 'hello'),
+(31, 'user28', 'Alex', 'Carter', 'pass28', '210-987-6543', 'user28@example.com', '1977-04-28', 'Africa', 'hello'),
+(32, 'user29', 'Joshua', 'Mitchell', 'pass29', '109-876-5432', 'user29@example.com', '1978-05-29', 'North America', 'hello'),
+(33, 'user30', 'Michelle', 'Perez', 'pass30', '098-765-4321', 'user30@example.com', '1979-06-30', 'South America', 'hello'),
+(34, 'user31', 'Daniel', 'Harris', 'pass31', '987-654-3210', 'user31@example.com', '1960-07-31', 'Europe', 'hello'),
+(35, 'user32', 'Kimberly', 'Gonzales', 'pass32', '876-543-2109', 'user32@example.com', '1961-08-01', 'Asia', 'hello'),
+(36, 'user33', 'Tyler', 'Cook', 'pass33', '765-432-1098', 'user33@example.com', '1962-09-02', 'Oceania', 'hello'),
+(37, 'user34', 'Katherine', 'Bailey', 'pass34', '654-321-0987', 'user34@example.com', '1963-10-03', 'Antartica', 'hello'),
+(38, 'user35', 'Austin', 'Rivera', 'pass35', '543-210-9876', 'user35@example.com', '1964-11-04', 'Africa', 'hello'),
+(39, 'user36', 'Megan', 'Cooper', 'pass36', '432-109-8765', 'user36@example.com', '1965-12-05', 'North America', 'hello'),
+(40, 'user37', 'Benjamin', 'Richardson', 'pass37', '321-098-7654', 'user37@example.com', '1966-01-06', 'South America', 'hello'),
+(41, 'user38', 'Laura', 'Torres', 'pass38', '210-987-6543', 'user38@example.com', '1967-02-07', 'Europe', 'hello'),
+(42, 'user39', 'Gabriel', 'Morris', 'pass39', '109-876-5432', 'user39@example.com', '1968-03-08', 'Asia', 'hello'),
+(43, 'user40', 'Alyssa', 'Ward', 'pass40', '098-765-4321', 'user40@example.com', '1969-04-09', 'Oceania', 'hello'),
+(44, 'user41', 'Zachary', 'James', 'pass41', '987-654-3210', 'user41@example.com', '1950-05-10', 'Antartica', 'hello'),
+(45, 'user42', 'Julia', 'Watson', 'pass42', '876-543-2109', 'user42@example.com', '1951-06-11', 'Africa', 'hello'),
+(46, 'user43', 'Kyle', 'Brooks', 'pass43', '765-432-1098', 'user43@example.com', '1952-07-12', 'North America', 'hello'),
+(47, 'user44', 'Hannah', 'Sanders', 'pass44', '654-321-0987', 'user44@example.com', '1953-08-13', 'South America', 'hello'),
+(48, 'user45', 'Jacob', 'Bennett', 'pass45', '543-210-9876', 'user45@example.com', '1954-09-14', 'Europe', 'hello'),
+(49, 'user46', 'Olivia', 'Perry', 'pass46', '432-109-8765', 'user46@example.com', '1955-10-15', 'Asia', 'hello'),
+(50, 'user47', 'Nathan', 'Long', 'pass47', '321-098-7654', 'user47@example.com', '1956-11-16', 'Oceania', 'hello'),
+(51, 'user48', 'Emma', 'Reed', 'pass48', '210-987-6543', 'user48@example.com', '1957-12-17', 'Antartica', 'hello'),
+(52, 'user49', 'Alexander', 'Kim', 'pass49', '109-876-5432', 'user49@example.com', '1958-01-18', 'Africa', 'hello'),
+(53, 'user50', 'Madison', 'Evans', 'pass50', '098-765-4321', 'user50@example.com', '1959-02-19', 'North America', 'hello'),
+(54, 'Johnn', 'Cpooyy', 'SADAW', '202cb962ac59075b964b07152d234b70', '98234281234', 'john@mail.com', '2005-08-29', 'Asia', 'hello'),
+(55, 'Jaczyo', 'Kiwoi', 'JAXWRer', '202cb962ac59075b964b07152d234b70', '09783327242', 'jawx@gmail.com', '1997-10-26', 'Oceania', 'hello'),
+(56, 'example', 'exam', 'ple', '202cb962ac59075b964b07152d234b70', '213512322', 'example@mail.com', '2003-10-29', 'Europe', 'hello'),
+(57, '1', '27', 'Counter Strike 2', 'Master Guardian', '2024-03-12', '2004-04-12', '0000-00-00', '', 'hello');
 
 -- --------------------------------------------------------
 
@@ -168,74 +161,75 @@ CREATE TABLE `client_booster` (
   `game_uid_screenshot` varchar(255) NOT NULL,
   `game_rank_screenshot` varchar(255) NOT NULL,
   `price` decimal(10,2) NOT NULL,
-  `upload_Date` date DEFAULT curdate()
+  `upload_Date` date DEFAULT curdate(),
+  `status` varchar(255) NOT NULL DEFAULT 'Available'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `client_booster`
 --
 
-INSERT INTO `client_booster` (`client_booster_id`, `IGN`, `client_id`, `coach_uid`, `game`, `gamerank`, `game_uid_screenshot`, `game_rank_screenshot`, `price`, `upload_Date`) VALUES
-(1, 'Summoner1', 1, 101, 'League of Legends', 'Gold', '', '', 0.00, '2024-07-14'),
-(2, 'Summoner2', 2, 102, 'League of Legends', 'Platinum', '', '', 0.00, '2024-07-14'),
-(3, 'Summoner3', 3, 103, 'League of Legends', 'Diamond', '', '', 0.00, '2024-07-14'),
-(4, 'Summoner4', 4, 104, 'League of Legends', 'Master', '', '', 0.00, '2024-07-14'),
-(5, 'Summoner5', 5, 105, 'League of Legends', 'GrandMaster', '', '', 0.00, '2024-07-14'),
-(6, 'Summoner6', 6, 106, 'League of Legends', 'Challenger', '', '', 0.00, '2024-07-14'),
-(7, 'Rocketeer1', 7, 107, 'Rocket League', 'Platinum', '', '', 0.00, '2024-07-14'),
-(8, 'Rocketeer2', 8, 108, 'Rocket League', 'Diamond', '', '', 0.00, '2024-07-14'),
-(9, 'Rocketeer3', 9, 109, 'Rocket League', 'Champion', '', '', 0.00, '2024-07-14'),
-(10, 'Rocketeer4', 10, 110, 'Rocket League', 'Grand Champion', '', '', 0.00, '2024-07-14'),
-(11, 'Rocketeer5', 11, 111, 'Rocket League', 'Supersonic Legend', '', '', 0.00, '2024-07-14'),
-(12, 'FortnitePlayer1', 12, 112, 'Fortnite', 'Platinum', '', '', 0.00, '2024-07-14'),
-(13, 'FortnitePlayer2', 13, 113, 'Fortnite', 'Diamond', '', '', 0.00, '2024-07-14'),
-(14, 'FortnitePlayer3', 14, 114, 'Fortnite', 'Elite', '', '', 0.00, '2024-07-14'),
-(15, 'FortnitePlayer4', 15, 115, 'Fortnite', 'Champion', '', '', 0.00, '2024-07-14'),
-(16, 'FortnitePlayer5', 16, 116, 'Fortnite', 'Unreal', '', '', 0.00, '2024-07-14'),
-(17, 'ValorantAgent1', 17, 117, 'Valorant', 'Gold', '', '', 0.00, '2024-07-14'),
-(18, 'ValorantAgent2', 18, 118, 'Valorant', 'Platinum', '', '', 0.00, '2024-07-14'),
-(19, 'ValorantAgent3', 19, 119, 'Valorant', 'Diamond', '', '', 0.00, '2024-07-14'),
-(20, 'ValorantAgent4', 20, 120, 'Valorant', 'Ascendant', '', '', 0.00, '2024-07-14'),
-(21, 'ValorantAgent5', 21, 121, 'Valorant', 'Immortal', '', '', 0.00, '2024-07-14'),
-(22, 'ValorantAgent6', 22, 122, 'Valorant', 'Radiant', '', '', 0.00, '2024-07-14'),
-(23, 'CSPlayer1', 23, 123, 'Counter Strike 2', 'Gold Nova', '', '', 0.00, '2024-07-14'),
-(24, 'CSPlayer2', 24, 124, 'Counter Strike 2', 'Master Guardian', '', '', 0.00, '2024-07-14'),
-(25, 'CSPlayer3', 25, 125, 'Counter Strike 2', 'Legendary Eagle', '', '', 0.00, '2024-07-14'),
-(26, 'CSPlayer4', 26, 126, 'Counter Strike 2', 'Supreme Master First Class', '', '', 0.00, '2024-07-14'),
-(27, 'CSPlayer5', 27, 127, 'Counter Strike 2', 'The Global Elite', '', '', 0.00, '2024-07-14'),
-(28, 'DotAPlayer1', 28, 128, 'Dota 2', 'Archon', '', '', 0.00, '2024-07-14'),
-(29, 'DotAPlayer2', 29, 129, 'Dota 2', 'Legend', '', '', 0.00, '2024-07-14'),
-(30, 'DotAPlayer3', 30, 130, 'Dota 2', 'Ancient', '', '', 0.00, '2024-07-14'),
-(31, 'DotAPlayer4', 31, 131, 'Dota 2', 'Divine', '', '', 0.00, '2024-07-14'),
-(32, 'ChessPlayer1', 32, 132, 'Chess', 'Expert/National Candidate Master', '', '', 0.00, '2024-07-14'),
-(33, 'ChessPlayer2', 33, 133, 'Chess', 'FIDE Candidate Master/National Master', '', '', 0.00, '2024-07-14'),
-(34, 'ChessPlayer3', 34, 134, 'Chess', 'FIDE Master', '', '', 0.00, '2024-07-14'),
-(35, 'ChessPlayer4', 35, 135, 'Chess', 'International Master', '', '', 0.00, '2024-07-14'),
-(36, 'ChessPlayer5', 36, 136, 'Chess', 'Grandmaster', '', '', 0.00, '2024-07-14'),
-(37, 'SiegePlayer1', 37, 137, 'Rainbow Six Siege', 'Gold', '', '', 0.00, '2024-07-14'),
-(38, 'SiegePlayer2', 38, 138, 'Rainbow Six Siege', 'Platinum', '', '', 0.00, '2024-07-14'),
-(39, 'SiegePlayer3', 39, 139, 'Rainbow Six Siege', 'Emerald', '', '', 0.00, '2024-07-14'),
-(40, 'SiegePlayer4', 40, 140, 'Rainbow Six Siege', 'Diamond', '', '', 0.00, '2024-07-14'),
-(41, 'SiegePlayer5', 41, 141, 'Rainbow Six Siege', 'Champion', '', '', 0.00, '2024-07-14'),
-(42, 'OverwatchPlayer1', 42, 142, 'Overwatch 2', 'Platinum', '', '', 0.00, '2024-07-14'),
-(43, 'OverwatchPlayer2', 43, 143, 'Overwatch 2', 'Diamond', '', '', 0.00, '2024-07-14'),
-(44, 'OverwatchPlayer3', 44, 144, 'Overwatch 2', 'Master', '', '', 0.00, '2024-07-14'),
-(45, 'OverwatchPlayer4', 45, 145, 'Overwatch 2', 'Grandmaster', '', '', 0.00, '2024-07-14'),
-(46, 'OverwatchPlayer5', 46, 146, 'Overwatch 2', 'Champion', '', '', 0.00, '2024-07-14'),
-(47, 'OverwatchPlayer6', 47, 147, 'Overwatch 2', 'Top 500', '', '', 0.00, '2024-07-14'),
-(48, 'TekkenPlayer1', 48, 148, 'Tekken 8', 'Garyu', '', '', 0.00, '2024-07-14'),
-(49, 'TekkenPlayer2', 49, 149, 'Tekken 8', 'Shinryu', '', '', 0.00, '2024-07-14'),
-(50, 'TekkenPlayer3', 50, 150, 'Tekken 8', 'Tenryu', '', '', 0.00, '2024-07-14'),
-(51, 'TekkenPlayer4', 51, 151, 'Tekken 8', 'Mighty Ruler', '', '', 0.00, '2024-07-14'),
-(52, 'TekkenPlayer5', 52, 152, 'Tekken 8', 'Flame Ruler', '', '', 0.00, '2024-07-14'),
-(53, 'TekkenPlayer6', 53, 153, 'Tekken 8', 'Battle Ruler', '', '', 0.00, '2024-07-14'),
-(54, 'TekkenPlayer7', 54, 154, 'Tekken 8', 'Fujin', '', '', 0.00, '2024-07-14'),
-(55, 'Valorantee', 1, 125612314, 'Valorant', 'Radiant', '', '', 0.00, '2024-07-14'),
-(56, 'Johnee', 1, 325125132, 'Overwatch 2', 'Master', '', '', 0.00, '2024-07-14'),
-(57, 'jOHNY', 1, 12412314, 'Rocket League', 'Supersonic Legend', '', '', 0.00, '2024-07-14'),
-(58, 'asdf123', 56, 132131, 'Fortnite', '', 'yeah.png', 'Prospectus.png', 10.01, '0000-00-00'),
-(59, 'examplerani', 56, 1251234, 'League of Legends', 'GrandMaster', 'im2.drawio (1).png', 'im2.drawio (2).png', 12.01, '0000-00-00'),
-(60, 'TryMyAim', 56, 321342432, 'Rainbow Six Siege', 'Emerald', 'number 3.png', 'Number2.png', 11.00, '0000-00-00');
+INSERT INTO `client_booster` (`client_booster_id`, `IGN`, `client_id`, `coach_uid`, `game`, `gamerank`, `game_uid_screenshot`, `game_rank_screenshot`, `price`, `upload_Date`, `status`) VALUES
+(1, 'Summoner1', 1, 101, 'League of Legends', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(2, 'Summoner2', 2, 102, 'League of Legends', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(3, 'Summoner3', 3, 103, 'League of Legends', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(4, 'Summoner4', 4, 104, 'League of Legends', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(5, 'Summoner5', 5, 105, 'League of Legends', 'GrandMaster', '', '', 10.00, '2024-07-14', 'Available'),
+(6, 'Summoner6', 6, 106, 'League of Legends', 'Challenger', '', '', 10.00, '2024-07-14', 'Available'),
+(7, 'Rocketeer1', 7, 107, 'Rocket League', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(8, 'Rocketeer2', 8, 108, 'Rocket League', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(9, 'Rocketeer3', 9, 109, 'Rocket League', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(10, 'Rocketeer4', 10, 110, 'Rocket League', 'Grand Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(11, 'Rocketeer5', 11, 111, 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(12, 'FortnitePlayer1', 12, 112, 'Fortnite', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(13, 'FortnitePlayer2', 13, 113, 'Fortnite', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(14, 'FortnitePlayer3', 14, 114, 'Fortnite', 'Elite', '', '', 10.00, '2024-07-14', 'Available'),
+(15, 'FortnitePlayer4', 15, 115, 'Fortnite', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(16, 'FortnitePlayer5', 16, 116, 'Fortnite', 'Unreal', '', '', 10.00, '2024-07-14', 'Available'),
+(17, 'ValorantAgent1', 17, 117, 'Valorant', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(18, 'ValorantAgent2', 18, 118, 'Valorant', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(19, 'ValorantAgent3', 19, 119, 'Valorant', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(20, 'ValorantAgent4', 20, 120, 'Valorant', 'Ascendant', '', '', 10.00, '2024-07-14', 'Available'),
+(21, 'ValorantAgent5', 21, 121, 'Valorant', 'Immortal', '', '', 10.00, '2024-07-14', 'Available'),
+(22, 'ValorantAgent6', 22, 122, 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
+(23, 'CSPlayer1', 23, 123, 'Counter Strike 2', 'Gold Nova', '', '', 10.00, '2024-07-14', 'Available'),
+(24, 'CSPlayer2', 24, 124, 'Counter Strike 2', 'Master Guardian', '', '', 10.00, '2024-07-14', 'Available'),
+(25, 'CSPlayer3', 25, 125, 'Counter Strike 2', 'Legendary Eagle', '', '', 10.00, '2024-07-14', 'Available'),
+(26, 'CSPlayer4', 26, 126, 'Counter Strike 2', 'Supreme Master First Class', '', '', 10.00, '2024-07-14', 'Available'),
+(27, 'CSPlayer5', 27, 127, 'Counter Strike 2', 'The Global Elite', '', '', 10.00, '2024-07-14', 'Available'),
+(28, 'DotAPlayer1', 28, 128, 'Dota 2', 'Archon', '', '', 10.00, '2024-07-14', 'Available'),
+(29, 'DotAPlayer2', 29, 129, 'Dota 2', 'Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(30, 'DotAPlayer3', 30, 130, 'Dota 2', 'Ancient', '', '', 10.00, '2024-07-14', 'Available'),
+(31, 'DotAPlayer4', 31, 131, 'Dota 2', 'Divine', '', '', 10.00, '2024-07-14', 'Available'),
+(32, 'ChessPlayer1', 32, 132, 'Chess', 'Expert/National Candidate Master', '', '', 10.00, '2024-07-14', 'Available'),
+(33, 'ChessPlayer2', 33, 133, 'Chess', 'FIDE Candidate Master/National Master', '', '', 10.00, '2024-07-14', 'Available'),
+(34, 'ChessPlayer3', 34, 134, 'Chess', 'FIDE Master', '', '', 10.00, '2024-07-14', 'Available'),
+(35, 'ChessPlayer4', 35, 135, 'Chess', 'International Master', '', '', 10.00, '2024-07-14', 'Available'),
+(36, 'ChessPlayer5', 36, 136, 'Chess', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
+(37, 'SiegePlayer1', 37, 137, 'Rainbow Six Siege', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(38, 'SiegePlayer2', 38, 138, 'Rainbow Six Siege', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(39, 'SiegePlayer3', 39, 139, 'Rainbow Six Siege', 'Emerald', '', '', 10.00, '2024-07-14', 'Available'),
+(40, 'SiegePlayer4', 40, 140, 'Rainbow Six Siege', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(41, 'SiegePlayer5', 41, 141, 'Rainbow Six Siege', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(42, 'OverwatchPlayer1', 42, 142, 'Overwatch 2', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(43, 'OverwatchPlayer2', 43, 143, 'Overwatch 2', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(44, 'OverwatchPlayer3', 44, 144, 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(45, 'OverwatchPlayer4', 45, 145, 'Overwatch 2', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
+(46, 'OverwatchPlayer5', 46, 146, 'Overwatch 2', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(47, 'OverwatchPlayer6', 47, 147, 'Overwatch 2', 'Top 500', '', '', 10.00, '2024-07-14', 'Available'),
+(48, 'TekkenPlayer1', 48, 148, 'Tekken 8', 'Garyu', '', '', 10.00, '2024-07-14', 'Available'),
+(49, 'TekkenPlayer2', 49, 149, 'Tekken 8', 'Shinryu', '', '', 10.00, '2024-07-14', 'Available'),
+(50, 'TekkenPlayer3', 50, 150, 'Tekken 8', 'Tenryu', '', '', 10.00, '2024-07-14', 'Available'),
+(51, 'TekkenPlayer4', 51, 151, 'Tekken 8', 'Mighty Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(52, 'TekkenPlayer5', 52, 152, 'Tekken 8', 'Flame Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(53, 'TekkenPlayer6', 53, 153, 'Tekken 8', 'Battle Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(54, 'TekkenPlayer7', 54, 154, 'Tekken 8', 'Fujin', '', '', 10.00, '2024-07-14', 'Available'),
+(55, 'Valorantee', 1, 125612314, 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
+(56, 'Johnee', 1, 325125132, 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(57, 'jOHNY', 1, 12412314, 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(58, 'asdf123', 56, 132131, 'Fortnite', '', 'yeah.png', 'Prospectus.png', 10.01, '0000-00-00', 'Available'),
+(59, 'examplerani', 56, 1251234, 'League of Legends', 'GrandMaster', 'im2.drawio (1).png', 'im2.drawio (2).png', 12.01, '0000-00-00', 'Available'),
+(60, 'TryMyAim', 56, 321342432, 'Rainbow Six Siege', 'Emerald', 'number 3.png', 'Number2.png', 11.00, '0000-00-00', 'Available');
 
 -- --------------------------------------------------------
 
@@ -400,16 +394,16 @@ INSERT INTO `game_info` (`gameinfoID`, `gameID`, `gameRank`) VALUES
 
 CREATE TABLE `moderator` (
   `moderator_id` int(11) NOT NULL,
-  `fname` varchar(50) DEFAULT NULL,
-  `mname` char(1) DEFAULT NULL,
-  `lname` varchar(50) DEFAULT NULL,
-  `password` varchar(50) DEFAULT NULL,
-  `age` int(11) DEFAULT NULL,
-  `email` varchar(75) DEFAULT NULL,
-  `address` varchar(75) DEFAULT NULL,
-  `contact` int(11) DEFAULT NULL,
-  `gender` enum('Male','Female') DEFAULT NULL,
-  `birth_date` date DEFAULT NULL
+  `fname` varchar(50) NOT NULL,
+  `mname` varchar(50) NOT NULL,
+  `lname` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `age` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `contact` int(11) NOT NULL,
+  `gender` enum('Female','Male') NOT NULL,
+  `birth_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -417,9 +411,7 @@ CREATE TABLE `moderator` (
 --
 
 INSERT INTO `moderator` (`moderator_id`, `fname`, `mname`, `lname`, `password`, `age`, `email`, `address`, `contact`, `gender`, `birth_date`) VALUES
-(1, 'Ann', 'S', 'France', '*****', 21, 'annsi@gmail.com', 'Street 23', 2147483647, 'Female', '0000-00-00'),
-(2, 'Rei', 'D', 'Wei', '*****', 15, 'datwey@gmail.com', 'Street 96', 2147483647, 'Male', '0000-00-00'),
-(3, 'Jan', 'D', 'Cruz', '*****', 19, 'diswey@gmail.com', 'Street 101', 1365413255, 'Male', '0000-00-00');
+(1, 'Nicezel', 'Marquez', 'Jamero', 'gameboosting123', 21, 'nicezel@boostingmail.com', 'Buenavista Homes Jugan', 2147483647, 'Male', '2002-10-21');
 
 -- --------------------------------------------------------
 
@@ -479,9 +471,7 @@ INSERT INTO `payment` (`payment_id`, `client_player_id`, `client_booster_id`, `b
 -- Indexes for table `boosting_session`
 --
 ALTER TABLE `boosting_session`
-  ADD PRIMARY KEY (`boosting_session_id`),
-  ADD KEY `client_player_id` (`client_player_id`),
-  ADD KEY `client_booster_id` (`client_booster_id`);
+  ADD PRIMARY KEY (`boostSessionID`);
 
 --
 -- Indexes for table `boosting_session_report`
@@ -529,10 +519,16 @@ ALTER TABLE `moderator`
 --
 
 --
+-- AUTO_INCREMENT for table `boosting_session`
+--
+ALTER TABLE `boosting_session`
+  MODIFY `boostSessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `client_booster`
@@ -551,6 +547,12 @@ ALTER TABLE `game`
 --
 ALTER TABLE `game_info`
   MODIFY `gameinfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+
+--
+-- AUTO_INCREMENT for table `moderator`
+--
+ALTER TABLE `moderator`
+  MODIFY `moderator_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
