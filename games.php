@@ -24,6 +24,7 @@
         $coachResult = mysqli_query($conn ,"SELECT * FROM client_booster WHERE client_id = '$coachClientid' AND game = '$coachGame'");
         $coachRow = mysqli_fetch_assoc($coachResult);
         $maxFileSize = 20 * 1024 * 1024;
+        $currentDate = date('Y-m-d');
     
         if($coachGame == $coachRow["game"]) {
             echo '<script type="text/javascript">
@@ -52,7 +53,7 @@
                 move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
                 move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
                 $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', 
-                '$gameRankScreenshot', '$coachgamePrice')";
+                '$gameRankScreenshot', '$coachgamePrice', '$currentDate')";
                 mysqli_query($conn,$query);
                 header("location: Redirect.php");
             }
@@ -103,6 +104,7 @@
         $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session WHERE trainerID = '$sessiontrainerID'");
         if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
             echo "<script> alert('You already have a coach'); </script>";
+            
         }
         else{
             $sessionRegisterQuery = "INSERT INTO boosting_session VALUES ('', '$sessiontrainerID', '$sessionBoosterID', '$games', '$sessionGameRank', '$sessionStartDate', '$sessionEndDate', '$sessionStartTime',  '$sessionEndTime')";
@@ -163,13 +165,14 @@
                     $clientRegion = $regionResult->fetch_assoc()["region"];
 
                     $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN 
-                    game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' GROUP BY cb.client_booster_id 
+                    game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' AND cb.status = 'Available' 
+                    GROUP BY cb.client_booster_id 
                     ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC, c.region = '$clientRegion' DESC";
 
                 } else {
 
                     $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game_info gi ON cb.gamerank = gi.gameRank WHERE game = 
-                    '$games' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
+                    '$games' AND cb.status = 'Available' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
 
                 }
                 $result = $conn->query($gamesQuerry);
