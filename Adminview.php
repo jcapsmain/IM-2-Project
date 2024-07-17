@@ -163,13 +163,14 @@
                         <th class="text-center">Application Date</th>
                         <th class="text-center">Game</th>
                         <th class="text-center">Game Rank</th>
+                        <th class="text-center">Status</th>
                         <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                 <?php
                     $rowNumber = 0;
-                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster");
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster ORDER BY client_booster_id ASC");
                     while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
                         $boosterIGN = $boosterRows['IGN'];
                         $boosterUID = $boosterRows['coach_uid'];
@@ -177,7 +178,6 @@
                         $gameRank = $boosterRows['gamerank'];
                         $status = $boosterRows['status'];
                         $price = $boosterRows['price'];
-                        $bio = $boosterRows['bio'];
                         $applicationDate = $boosterRows['upload_Date'];
                         $uidScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_uid_screenshot'];
                         $gameRankScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_rank_screenshot'];
@@ -190,6 +190,7 @@
                         <td class="text-center"><?php echo $applicationDate ?></td>
                         <td class="text-center"><?php echo $game ?></td>
                         <td class="text-center"><?php echo $gameRank ?></td>
+                        <td class="text-center"><?php echo $status ?></td>
                         <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal<?php echo $rowNumber; ?>">View Info</button></td>
                     </tr>
 
