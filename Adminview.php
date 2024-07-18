@@ -215,22 +215,103 @@
                                         <p><strong>Client ID:</strong> <?php echo $boosterRowsRequest['client_id']  ?></p>
                                         <p><strong>Coach Name:</strong> <?php echo $boosterIGNRequest; ?></p>
                                         <p><strong>Application Date:</strong> <?php echo $applicationDateRequest; ?></p>
-                                        <p><strong>Game:</strong> <?php echo $gameRequest ?></p>
-                                        <p><strong>Game Rank:</strong> <?php echo $gameRankRequest ?></p>
-                                        <p><strong>Price:</strong> <?php echo $priceRequest ?></p>
-                                        <p><strong>Status:</strong> <?php echo $statusRequest ?></p>
-                                        <p><strong>Game UID:</strong> <a href="<?php echo $uidScreenshotRequest; ?>">View Screenshot</a></p>
-                                        <p><strong>Game Rank:</strong> <a href="<?php echo $gameRankScreenshotRequest; ?>">View Screenshot</a></p>
+                                        <p><strong>Game:</strong> <?php echo $gameRequest; ?></p>
+                                        <p><strong>Game Rank:</strong> <?php echo $gameRankRequest; ?></p>
+                                        <p><strong>Price:</strong> <?php echo $priceRequest; ?></p>
+                                        <p><strong>Status:</strong> <?php echo $statusRequest; ?></p>
+                                        <p><strong>UID Screenshot:</strong></p>
+                                        <img src="<?php echo $uidScreenshotRequest ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <p><strong>Game Rank Screenshot:</strong></p>
+                                        <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <form action="client_booster_function.php" method="POST">
-                                            <input type="hidden" name="boosterIGNRequest" value="<?php echo $boosterIGNRequest ?>">
-                                            <input type="hidden" name="boosterUIDRequest" value="<?php echo $boosterUIDRequest ?>">
-                                            <input type="hidden" name="priceRequest" value="<?php echo $priceRequest ?>">
-                                            <button type="submit" name="acceptBooster" class="btn btn-success">Accept</button>
-                                            <button type="submit" name="rejectBooster" class="btn btn-danger">Reject</button>
-                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Coach Reviews -->
+    <div class="content" id="coachReviews" style="display:none;">
+        <div class="header">
+            <h1>Coach Reviews</h1>
+        </div>
+        <div class="table-responsive mt-4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Profile Picture</th>
+                        <th class="text-center">Coach IGN</th>
+                        <th class="text-center">Application Date</th>
+                        <th class="text-center">Game</th>
+                        <th class="text-center">Game Rank</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $rowNumber = 0;
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status != 'Pending' ORDER BY client_booster_id ASC");
+                    while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
+                        $boosterIGN = $boosterRows['IGN'];
+                        $boosterUID = $boosterRows['coach_uid'];
+                        $game = $boosterRows['game'];
+                        $gameRank = $boosterRows['gamerank'];
+                        $status = $boosterRows['status'];
+                        $price = $boosterRows['price'];
+                        $applicationDate = $boosterRows['upload_Date'];
+                        $uidScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_uid_screenshot'];
+                        $gameRankScreenshot = "clientBooster/" . $boosterIGN . "/" . $boosterRows['game_rank_screenshot'];
+                        $rowNumber += 1;
+                ?>
+                    <tr>
+                        <th scope="row" class="text-center"><?php echo $boosterRows['client_booster_id'] ?></th>
+                        <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td class="text-center"><?php echo $boosterIGN; ?></td>
+                        <td class="text-center"><?php echo $applicationDate ?></td>
+                        <td class="text-center"><?php echo $game ?></td>
+                        <td class="text-center"><?php echo $gameRank ?></td>
+                        <td class="text-center"><?php echo $status ?></td>
+                        <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal<?php echo $rowNumber; ?>">View Info</button></td>
+                    </tr>
+
+                        <!-- Review Modal 1 -->
+                        <div class="modal fade" id="reviewModal<?php echo $rowNumber; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabel">Review Details: <?php echo $boosterIGN; ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
+                                        <p><strong>Coach ID:</strong> <?php echo $boosterRows['client_booster_id'] ?></p>
+                                        <p><strong>Client ID:</strong> <?php echo $boosterRows['client_id']  ?></p>
+                                        <p><strong>Coach Name:</strong> <?php echo $boosterIGN; ?></p>
+                                        <p><strong>Application Date:</strong> <?php echo $applicationDate; ?></p>
+                                        <p><strong>Game:</strong> <?php echo $game; ?></p>
+                                        <p><strong>Game Rank:</strong> <?php echo $gameRank; ?></p>
+                                        <p><strong>Price:</strong> <?php echo $price; ?></p>
+                                        <p><strong>Status:</strong> <?php echo $status; ?></p>
+                                        <p><strong>UID Screenshot:</strong></p>
+                                        <img src="<?php echo $uidScreenshot ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <p><strong>Game Rank Screenshot:</strong></p>
+                                        <img src="<?php echo $gameRankScreenshot ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     </div>
                                 </div>
                             </div>
@@ -243,114 +324,57 @@
         </div>
     </div>
 
-    <!-- Coach Reviews -->
-    <div class="content" id="coachReviews" style="display:none;">
-        <div class="header">
-            <h1>Coach Reviews</h1>
-        </div>
-        <div class="table-responsive mt-4">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Profile Picture</th>
-                        <th>Coach Name</th>
-                        <th>Game</th>
-                        <th>Rating</th>
-                        <th>Review Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td><img src="profile3.jpg" alt="CoachJohn" class="profile-pic"></td>
-                        <td>CoachJohn</td>
-                        <td>Fortnite</td>
-                        <td>4.8</td>
-                        <td>2024-07-06</td>
-                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal1">View Info</button></td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td><img src="profile4.jpg" alt="CoachJane" class="profile-pic"></td>
-                        <td>CoachJane</td>
-                        <td>League of Legends</td>
-                        <td>4.5</td>
-                        <td>2024-07-05</td>
-                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal2">View Info</button></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
 
-    <!-- Game Review -->
+    <!-- Modify Game -->
     <div class="content" id="modifyGame" style="display:none;">
         <div class="header">
             <h1>Game Review</h1>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
-        <div class="game-box mt-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="game1.jpg" alt="Game One" class="img-fluid">
-                </div>
-                <div class="col-md-8">
-                    <h2>Game One</h2>
-                    <p>Release Date: 2024-06-01</p>
-                    <p>Genre: Action RPG</p>
-                    <p>Platform: PC, PS5, Xbox</p>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#editGameModal1">Edit Game</button>
+        <div class="mt-4">
+            <div class="game-box">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game1.jpg" alt="League of Legends">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>League of Legends</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="game-box mt-4">
-            <div class="row">
-                <div class="col-md-4">
-                    <img src="game2.jpg" alt="Game Two" class="img-fluid">
-                </div>
-                <div class="col-md-8">
-                    <h2>Game Two</h2>
-                    <p>Release Date: 2024-05-15</p>
-                    <p>Genre: Strategy</p>
-                    <p>Platform: PC</p>
-                    <button class="btn btn-primary" data-toggle="modal" data-target="#editGameModal2">Edit Game</button>
+            <div class="game-box">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game2.jpg" alt="Dota 2">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>Dota 2</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Game Modal 1 -->
-    <div class="modal fade" id="editGameModal1" tabindex="-1" aria-labelledby="editGameModalLabel1" aria-hidden="true">
+    <!-- Report Modal 1 -->
+    <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editGameModalLabel1">Edit Game: Game One</h5>
+                    <h5 class="modal-title" id="reportModalLabel">Report Details: JohnDoe123</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="update_game.php" method="POST">
-                        <input type="hidden" name="gameId" value="1">
-                        <div class="form-group">
-                            <label for="gameTitle1">Game Title</label>
-                            <input type="text" class="form-control" id="gameTitle1" name="gameTitle" value="Game One">
-                        </div>
-                        <div class="form-group">
-                            <label for="releaseDate1">Release Date</label>
-                            <input type="date" class="form-control" id="releaseDate1" name="releaseDate" value="2024-06-01">
-                        </div>
-                        <div class="form-group">
-                            <label for="genre1">Genre</label>
-                            <input type="text" class="form-control" id="genre1" name="genre" value="Action RPG">
-                        </div>
-                        <div class="form-group">
-                            <label for="platform1">Platform</label>
-                            <input type="text" class="form-control" id="platform1" name="platform" value="PC, PS5, Xbox">
-                        </div>
-                        <button type="submit" class="btn btn-success">Save Changes</button>
-                    </form>
+                    <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
+                    <p><strong>Reported User:</strong> JohnDoe123</p>
+                    <p><strong>Report Type:</strong> Spam</p>
+                    <p><strong>Report Date:</strong> 2024-07-06</p>
+                    <p><strong>Reason:</strong> User was spamming messages in chat.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -359,37 +383,22 @@
         </div>
     </div>
 
-    <!-- Edit Game Modal 2 -->
-    <div class="modal fade" id="editGameModal2" tabindex="-1" aria-labelledby="editGameModalLabel2" aria-hidden="true">
+    <!-- Report Modal 2 -->
+    <div class="modal fade" id="reportModal2" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editGameModalLabel2">Edit Game: Game Two</h5>
+                    <h5 class="modal-title" id="reportModalLabel">Report Details: JaneSmith456</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="update_game.php" method="POST">
-                        <input type="hidden" name="gameId" value="2">
-                        <div class="form-group">
-                            <label for="gameTitle2">Game Title</label>
-                            <input type="text" class="form-control" id="gameTitle2" name="gameTitle" value="Game Two">
-                        </div>
-                        <div class="form-group">
-                            <label for="releaseDate2">Release Date</label>
-                            <input type="date" class="form-control" id="releaseDate2" name="releaseDate" value="2024-05-15">
-                        </div>
-                        <div class="form-group">
-                            <label for="genre2">Genre</label>
-                            <input type="text" class="form-control" id="genre2" name="genre" value="Strategy">
-                        </div>
-                        <div class="form-group">
-                            <label for="platform2">Platform</label>
-                            <input type="text" class="form-control" id="platform2" name="platform" value="PC">
-                        </div>
-                        <button type="submit" class="btn btn-success">Save Changes</button>
-                    </form>
+                    <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
+                    <p><strong>Reported User:</strong> JaneSmith456</p>
+                    <p><strong>Report Type:</strong> Harassment</p>
+                    <p><strong>Report Date:</strong> 2024-07-05</p>
+                    <p><strong>Reason:</strong> User was harassing others in chat.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -397,18 +406,60 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Game Modal -->
+    <div class="modal fade" id="addGameModal" tabindex="-1" aria-labelledby="addGameModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addGameModalLabel">Add New Game</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="gameName">Game Name</label>
+                            <input type="text" class="form-control" id="gameName" placeholder="Enter game name">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameImage">Game Image</label>
+                            <input type="file" class="form-control" id="gameImage">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDescription">Game Description</label>
+                            <textarea class="form-control" id="gameDescription" rows="3" placeholder="Enter game description"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Game</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        function showSection(sectionId) {
+        document.addEventListener('DOMContentLoaded', function () {
+            var links = document.querySelectorAll('.sidebar a');
             var sections = document.querySelectorAll('.content');
-            sections.forEach(function(section) {
-                section.style.display = 'none';
+
+            links.forEach(function (link) {
+                link.addEventListener('click', function () {
+                    var targetId = link.getAttribute('href').substring(1);
+                    sections.forEach(function (section) {
+                        section.style.display = section.getAttribute('id') === targetId ? 'block' : 'none';
+                    });
+                });
             });
-            document.getElementById(sectionId).style.display = 'block';
-        }
+        });
     </script>
 </body>
 </html>
+
+
+
+
