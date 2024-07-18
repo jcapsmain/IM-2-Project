@@ -141,87 +141,71 @@
                         <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="name" class="form-label">IGN</label>
-                                <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
+                                <input class="col-md-4" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
                             </div>
+
                             <div class="mb-3">
                                 <label for="UID" class="form-label">UID</label>
-                                <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                                <input class="col-md-4" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
                             </div>
 
 
-
-                            <div class="form-group">
-                                <label for="edit-game" class="form-label1">Game:</label>
-                                    <select id="edit-game" name="game" class="form-control" required>
-                                        <option value="Chess">Chess</option>
-                                    </select>
-                            </div>
-
-
-
-
-                            <!--div class="mb-3">
-                                <label for="game" class="form-label1">Game</label>
-                                <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
-                                    //<?php 
-                                    //    $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-                                    //    while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                    //        $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                    //        echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
-                                    //    }
-                                    //?>
-                                </select>
-                            </div-->
-
-
-                        <!-- chess ranks -->
-                            <div class="form-group">
-                                <label for="edit-game_rank" class="form-label1">Game Rank:</label>
-                                    <select id="edit-game_rank" name="game_rank" class="form-control" required>
-                                        <option value="Expert/National Candidate Master">Expert/National Candidate Master</option>
-                                        <option value="FIDE Candidate Master/National Master">FIDE Candidate Master/National Master</option>
-                                        <option value="FIDE Master">FIDE Master</option>
-                                        <option value="International Master">International Master</option>
-                                        <option value="Grandmaster">Grandmaster</option>
-                                    </select>
-                            </div>
-
-
-
-                            <!--div class="mb-3">
-                                <label for="gameRank" class="form-label1">Game Rank</label>
-                                <select class="form-select" id="gameRank" name="coachGameRank" required>
-                                   // <?php 
-                                    //    $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
-                                     //   if ($gamerankquery) {
-                                      //      $options = '';
-                                       //     while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
-                                       //         $gameinfoRank = $gameinfoRow['gameRank'];
-                                       //         $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
-                                       //     }
-                                       //     echo $options; // Output all options for dropdown
-                                    //    } else {
-                                    //        echo "Error: " . mysqli_error($conn); // Display error message if query fails
-                                    //    }
+                            <div class="mb-3">
+                                <label for="game" class="form-label">Game</label>
+                                <select class="form-control" class="col-md-4" id="game" name="coachGame" onchange="populateGameRanks()" required>
+                                    <?php 
+                                        $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
+                                        while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                        }
                                     ?>
                                 </select>
                             </div-->
 
+
                             <div class="mb-3">
+                                <label for="gameRank" class="form-label">Game Rank</label>
+                                <select class="form-control" class="col-md-4" id="gameRank" name="coachGameRank" required>
+                                    <?php 
+                                        $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                        if ($gamerankquery) {
+                                           $options = '';
+                                            while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                $gameinfoRank = $gameinfoRow['gameRank'];
+                                                $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                            }
+                                            echo $options; // Output all options for dropdown
+                                        }else {
+                                            echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-4">
                                 <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
                                 <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
+
+                            <div class="form-group">
+                                <div class="col-md-4">
                                 <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
                                 <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                </div>
                             </div>
-                            <div class="mb-3">
+
+                            <div class="form-group">
                                 <label for="price" class="form-label">Hourly Coach Price</label>
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
                                 </div>
                             </div>
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
                             </div>
