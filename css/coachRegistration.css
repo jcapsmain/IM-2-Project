@@ -3,7 +3,7 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
-    background-image: url("css/Background option3.jpg");
+    background-image: url("css/images/Background option3.jpg");
     background-repeat: no-repeat;
     background-size: 100% 200%;
 }
@@ -17,5 +17,3 @@ body, html {
     margin-bottom: 20px; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-
