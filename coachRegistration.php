@@ -136,7 +136,7 @@
                 <div>
                     <h1 id="exampleModalLabel">Register as Coach</h1>
                 </div>
-                <div>
+                
                     <div class="container">
                         <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
                             <div class="mb-3">
@@ -148,7 +148,7 @@
                                 <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
                             </div>
                             <div class="mb-3">
-                                <label for="game" class="form-label">Game</label>
+                                <label for="game" class="form-label1">Game</label>
                                 <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
                                     <?php 
                                         $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
@@ -160,7 +160,7 @@
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="gameRank" class="form-label">Game Rank</label>
+                                <label for="gameRank" class="form-label1">Game Rank</label>
                                 <select class="form-select" id="gameRank" name="coachGameRank" required>
                                     <?php 
                                         $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
@@ -197,7 +197,7 @@
                             </div>
                         </form>
                     </div>
-                </div>
+                
             </div>
 
 
