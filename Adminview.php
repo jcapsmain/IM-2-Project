@@ -200,16 +200,16 @@
                     </tr>
 
                         <!-- Request Modal 1 -->
-                        <div class="modal fade" id="reviewModal<?php echo $rowNumber; ?>" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="reviewModalRequest<?php echo $rowNumberRequest; ?>" tabindex="-1" aria-labelledby="reviewModalLabelRequest" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="reviewModalLabelRequest">Review Details: <?php echo $boosterIGN; ?></h5>
+                                        <h5 class="modal-title" id="reviewModalLabelRequest">Request Details: <?php echo $boosterIGNRequest; ?></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
-                                    <div class="modal-body text-center">
+                                    <div class="modal-body">
                                         <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
                                         <p><strong>Coach ID:</strong> <?php echo $boosterRowsRequest['client_booster_id'] ?></p>
                                         <p><strong>Client ID:</strong> <?php echo $boosterRowsRequest['client_id']  ?></p>
@@ -218,13 +218,14 @@
                                         <p><strong>Game:</strong> <?php echo $gameRequest; ?></p>
                                         <p><strong>Game Rank:</strong> <?php echo $gameRankRequest; ?></p>
                                         <p><strong>Price:</strong> <?php echo $priceRequest; ?></p>
-                                        <p><strong>Game UID Screenshot:</strong> </p>
-                                        <p><strong>Game Rank Screenshot:</strong> </p>
                                         <p><strong>Status:</strong> <?php echo $statusRequest; ?></p>
+                                        <p><strong>UID Screenshot:</strong></p>
+                                        <img src="<?php echo $uidScreenshotRequest ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <p><strong>Game Rank Screenshot:</strong></p>
+                                        <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger">Take Action</button>
                                     </div>
                                 </div>
                             </div>
