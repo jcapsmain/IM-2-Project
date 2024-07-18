@@ -261,7 +261,7 @@
                 <tbody>
                 <?php
                     $rowNumber = 0;
-                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status = 'Available' ORDER BY client_booster_id ASC");
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status != 'Pending' ORDER BY client_booster_id ASC");
                     while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
                         $boosterIGN = $boosterRows['IGN'];
                         $boosterUID = $boosterRows['coach_uid'];
