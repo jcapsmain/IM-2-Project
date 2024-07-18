@@ -438,6 +438,74 @@
         </div>
     </div>
 
+    <!-- Edit Game Modal -->
+    <div class="modal fade" id="editGameModal1" tabindex="-1" aria-labelledby="editGameModalLabel1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editGameModalLabel1">Edit Game: Game One</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGameForm1">
+                        <div class="form-group">
+                            <label for="gameName1">Game Name</label>
+                            <input type="text" class="form-control" id="gameName1" value="Game One">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDescription1">Description</label>
+                            <textarea class="form-control" id="gameDescription1" rows="3">Exciting and fun game.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="gameImage1">Game Image</label>
+                            <input type="file" class="form-control-file" id="gameImage1">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges(1)">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editGameModal2" tabindex="-1" aria-labelledby="editGameModalLabel2" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editGameModalLabel2">Edit Game: Game Two</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="editGameForm2">
+                        <div class="form-group">
+                            <label for="gameName2">Game Name</label>
+                            <input type="text" class="form-control" id="gameName2" value="Game Two">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDescription2">Description</label>
+                            <textarea class="form-control" id="gameDescription2" rows="3">Challenging and engaging.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="gameImage2">Game Image</label>
+                            <input type="file" class="form-control-file" id="gameImage2">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges(2)">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
