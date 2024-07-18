@@ -2,7 +2,6 @@
 
     ob_start();
     require 'config.php';
-    include 'navbar.php';
     include 'messagepopup.php';
 
     $games = htmlspecialchars($_GET['game']);
@@ -132,7 +131,6 @@
 
 <body>
 
-
     <!-- Coach Registration Modal -->
     <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -206,5 +204,68 @@
             </div>
         </div>
     </div>
+
+    <!-- Game Sections -->
+    <div class="container-fluid full-height" id="containfluid">
+        <div class="row">
+
+
+            <?php
+                if(!empty($_SESSION["client_ID"])){
+                    $sessionID = $_SESSION["client_ID"];
+                    $clientRegionQuery = "SELECT region FROM client WHERE client_ID = '$sessionID'";
+                    $regionResult = $conn->query($clientRegionQuery);
+                    $clientRegion = $regionResult->fetch_assoc()["region"];
+
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN 
+                    game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' AND cb.status = 'Available' 
+                    GROUP BY cb.client_booster_id 
+                    ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC, c.region = '$clientRegion' DESC";
+
+                } else {
+
+                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game_info gi ON cb.gamerank = gi.gameRank WHERE game = 
+                    '$games' AND cb.status = 'Available' GROUP BY cb.client_booster_id ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC";
+
+                }
+                $result = $conn->query($gamesQuerry);
+
+                if ($result->num_rows > 0) {
+                    // Loop through each row of data
+                    while($row = $result->fetch_assoc()) {
+                        // Output HTML for each coach
+                ?>
+                    <div class="col-md-4">
+                        <div class="game-box">
+                            <h2><?php echo $row["IGN"]; ?></h2>
+                            <div class="coach-details position-relative">
+                                <p><strong>Game Rank:</strong> <?php echo $row["gamerank"]; ?></p>
+                                <!-- Logo (Absolute Positioning) -->
+                                <div class="position-absolute top-0 end-0">
+                                <img src="css/images/peakpx.jpg" alt="Logo" style="height: 150px;">
+                                </div>
+                                <p><strong>Rating:</strong> 4.5 / 5</p>
+                                <p><strong>Region:</strong> <?php echo $row["region"]; ?></p>
+                                <p><strong>Email:</strong> <?php echo $row["email"]; ?></p>
+                            </div>
+                            <!-- Hire Button -->
+                            <div class="mt-3 d-flex justify-content-end">
+                                <button class="btn btn-primary hire-button" data-bs-toggle="modal" data-bs-target="#StudentRegisterModal" data-booster-id="<?php echo $row["client_booster_id"]; ?>">
+                                Hire</button>
+                            </div>
+                        </div>
+                    </div>  
+                <?php
+                    }
+                } 
+                else {
+                    echo "0 results";
+                }
+                    ?>
+        </div>
+    </div>
+
+    
+
 </body>
 </html>
