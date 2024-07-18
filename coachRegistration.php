@@ -27,7 +27,7 @@
         $maxFileSize = 20 * 1024 * 1024;
         $currentDate = date('Y-m-d');
     
-        if($coachGame == $coachRow["game"]) {
+        if(mysqli_num_rows($coachResult)) {
             echo '<script type="text/javascript">
                 $(document).ready(function(){
                     $("#messageModal").modal("show");

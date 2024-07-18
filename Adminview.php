@@ -110,7 +110,7 @@
         <a href="#accountReports">Reports</a>
         <a href="#coachRequest">Coach Request</a>
         <a href="#coachReviews">Coach Review</a>
-        <a href="#modifyGame">Modify</a>
+        <a href="#modifyGame">Game Review</a>
     </div>
 
     <!-- Account Reports -->
@@ -328,7 +328,7 @@
     <!-- Modify Game -->
     <div class="content" id="modifyGame" style="display:none;">
         <div class="header">
-            <h1>Modify Game</h1>
+            <h1>Game Review</h1>
             <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
         <div class="mt-4">
