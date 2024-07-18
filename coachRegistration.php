@@ -132,12 +132,9 @@
 <body>
 
     <!-- Coach Registration Modal -->
-    <div>
-        <div>
-            <div>
+            <div class="container1">
                 <div>
                     <h1 id="exampleModalLabel">Register as Coach</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div>
                     <div class="container">
@@ -202,8 +199,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
 
     
 
