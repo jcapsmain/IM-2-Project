@@ -108,9 +108,12 @@
     <div class="sidebar">
         <h4 class="text-light">Admin Panel</h4>
         <a href="#accountReports">Reports</a>
-        <a href="#coachReviews">Review</a>
+        <a href="#coachRequest">Coach Request</a>
+        <a href="#coachReviews">Coach Review</a>
         <a href="#modifyGame">Modify</a>
     </div>
+
+    <!-- Account Reports -->
     <div class="content" id="accountReports">
         <div class="header">
             <h1>Account Reports</h1>
@@ -149,6 +152,94 @@
         </div>
     </div>
 
+
+    <!-- Coach Request -->
+    <div class="content" id="coachRequest" style="display:none;">
+        <div class="header">
+            <h1>Coach Request</h1>
+        </div>
+        <div class="table-responsive mt-4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Profile Picture</th>
+                        <th class="text-center">Coach IGN</th>
+                        <th class="text-center">Application Date</th>
+                        <th class="text-center">Game</th>
+                        <th class="text-center">Game Rank</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                    $rowNumberRequest = 0;
+                    $clientBoosterRequest = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status = 'Pending' ORDER BY client_booster_id ASC");
+                    while ($boosterRowsRequest = mysqli_fetch_assoc($clientBoosterRequest)) {
+                        $boosterIGNRequest = $boosterRowsRequest['IGN'];
+                        $boosterUIDRequest = $boosterRowsRequest['coach_uid'];
+                        $gameRequest = $boosterRowsRequest['game'];
+                        $gameRankRequest = $boosterRowsRequest['gamerank'];
+                        $statusRequest = $boosterRowsRequest['status'];
+                        $priceRequest = $boosterRowsRequest['price'];
+                        $applicationDateRequest = $boosterRowsRequest['upload_Date'];
+                        $uidScreenshotRequest = "clientBooster/" . $boosterIGNRequest . "/" . $boosterRowsRequest['game_uid_screenshot'];
+                        $gameRankScreenshotRequest = "clientBooster/" . $boosterIGNRequest . "/" . $boosterRowsRequest['game_rank_screenshot'];
+                        $rowNumberRequest += 1;
+                ?>
+                    <tr>
+                        <th scope="row" class="text-center"><?php echo $boosterRowsRequest['client_booster_id'] ?></th>
+                        <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td class="text-center"><?php echo $boosterIGNRequest; ?></td>
+                        <td class="text-center"><?php echo $applicationDateRequest ?></td>
+                        <td class="text-center"><?php echo $gameRequest ?></td>
+                        <td class="text-center"><?php echo $gameRankRequest ?></td>
+                        <td class="text-center"><?php echo $statusRequest ?></td>
+                        <td class="text-center"><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModalRequest<?php echo $rowNumberRequest; ?>">View Info</button></td>
+                    </tr>
+
+                        <!-- Request Modal 1 -->
+                        <div class="modal fade" id="reviewModalRequest<?php echo $rowNumberRequest; ?>" tabindex="-1" aria-labelledby="reviewModalLabelRequest" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reviewModalLabelRequest">Request Details: <?php echo $boosterIGNRequest; ?></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
+                                        <p><strong>Coach ID:</strong> <?php echo $boosterRowsRequest['client_booster_id'] ?></p>
+                                        <p><strong>Client ID:</strong> <?php echo $boosterRowsRequest['client_id']  ?></p>
+                                        <p><strong>Coach Name:</strong> <?php echo $boosterIGNRequest; ?></p>
+                                        <p><strong>Application Date:</strong> <?php echo $applicationDateRequest; ?></p>
+                                        <p><strong>Game:</strong> <?php echo $gameRequest; ?></p>
+                                        <p><strong>Game Rank:</strong> <?php echo $gameRankRequest; ?></p>
+                                        <p><strong>Price:</strong> <?php echo $priceRequest; ?></p>
+                                        <p><strong>Status:</strong> <?php echo $statusRequest; ?></p>
+                                        <p><strong>UID Screenshot:</strong></p>
+                                        <img src="<?php echo $uidScreenshotRequest ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <p><strong>Game Rank Screenshot:</strong></p>
+                                        <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php
+                    }
+                ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- Coach Reviews -->
     <div class="content" id="coachReviews" style="display:none;">
         <div class="header">
             <h1>Coach Reviews</h1>
@@ -170,7 +261,7 @@
                 <tbody>
                 <?php
                     $rowNumber = 0;
-                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster ORDER BY client_booster_id ASC");
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status = 'Available' ORDER BY client_booster_id ASC");
                     while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
                         $boosterIGN = $boosterRows['IGN'];
                         $boosterUID = $boosterRows['coach_uid'];
@@ -233,6 +324,8 @@
         </div>
     </div>
 
+
+    <!-- Modify Game -->
     <div class="content" id="modifyGame" style="display:none;">
         <div class="header">
             <h1>Modify Game</h1>

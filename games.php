@@ -43,7 +43,7 @@
             }
 
             if (!empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
-                !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
+                !empty($gameRankScreenshots) && is_image_file($_FILES['gameRankScreenshots']['tmp_name']) && 
                 ($_FILES['gameUidScreenshots']['size'] > $maxFileSize && $_FILES['gameRankScreenshots']['size'] > $maxFileSize)) {
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
@@ -53,7 +53,7 @@
                 move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
                 move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
                 $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', 
-                '$gameRankScreenshot', '$coachgamePrice', '$currentDate')";
+                '$gameRankScreenshot', '$coachgamePrice', '$currentDate', 'Pending')";
                 mysqli_query($conn,$query);
                 header("location: Redirect.php");
             }
@@ -230,7 +230,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="UID" class="form-label">UID</label>
-                                <input class="form-control" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                                <input class="form-control" placeholder="Enter User ID" type="number" class="form-control" id="uid" name="coachUid" required>
                             </div>
                             <div class="mb-3">
                                 <label for="game" class="form-label">Game</label>
