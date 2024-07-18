@@ -344,20 +344,18 @@
         </div>
     </div>
 </div>
-            <div class="game-box">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="game2.jpg" alt="Dota 2">
-                    </div>
-                    <div class="col-md-9">
-                        <h3>Dota 2</h3>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
+<div class="game-box">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="game2.jpg" alt="Dota 2">
+        </div>
+        <div class="col-md-9">
+            <h3>Dota 2</h3>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal2">Edit</button>
+            <button class="btn btn-danger">Delete</button>
         </div>
     </div>
+</div>
 
     <!-- Report Modal 1 -->
     <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
