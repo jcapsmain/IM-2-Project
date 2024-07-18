@@ -18,8 +18,8 @@
         $coachGameRank = $_POST["coachGameRank"];
         $coachUid = $_POST["coachUid"];
         $coachClientid = $_SESSION["client_ID"];
-        $gameUidScreenshot = "";
-        $gameRankScreenshot = "";
+        $gameUidScreenshot = $_FILES['gameUidScreenshots'];
+        $gameRankScreenshot = $_FILES['gameRankScreenshots'];
         $uploadDir = "clientBooster/" . $coachIGN . "/";
         $coachgamePrice = $_POST["price"];
         $coachResult = mysqli_query($conn ,"SELECT * FROM client_booster WHERE client_id = '$coachClientid' AND game = '$coachGame'");
@@ -27,45 +27,35 @@
         $maxFileSize = 20 * 1024 * 1024;
         $currentDate = date('Y-m-d');
     
-        if(mysqli_num_rows($coachResult)) {
-            echo '<script type="text/javascript">
-                $(document).ready(function(){
-                    $("#messageModal").modal("show");
-                });
-                </script>';
-                unset($_POST["coachGame"]);
-                unset($coachRow);
+        if(mysqli_num_rows($coachResult) > 0) {
+            echo '<script>alert("Your message here");</script>';
         }
         else {
-
             function is_image_file($filename) {
-                $image_info = @getimagesize($filename);
+                $image_info = @getimagesize($filename['tmp_name']);
                 return $image_info !== false && strpos($image_info['mime'], 'image/') === 0;
             }
 
-            if (!empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
-                !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
-                ($_FILES['gameUidScreenshots']['size'] > $maxFileSize && $_FILES['gameRankScreenshots']['size'] > $maxFileSize)) {
+            if (!empty($gameUidScreenshot) && is_image_file($gameUidScreenshot) && 
+                !empty($gameRankScreenshot) && is_image_file($gameRankScreenshot) && 
+                ($_FILES['gameUidScreenshots']['size'] < $maxFileSize && $_FILES['gameRankScreenshots']['size'] < $maxFileSize)) {
+
+                    
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
                 }
-                $gameUidScreenshot = $_FILES['gameUidScreenshots']['name'];
-                $gameRankScreenshot = $_FILES['gameRankScreenshots']['name'];
-                move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshot);
-                move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshot);
+                $gameUidScreenshotName = $_FILES['gameUidScreenshots']['name'];
+                $gameRankScreenshotName = $_FILES['gameRankScreenshots']['name'];
+                move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshotName);
+                move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshotName);
+
                 $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', 
-                '$gameRankScreenshot', '$coachgamePrice', '$currentDate')";
+                '$gameRankScreenshot', '$coachgamePrice', '$currentDate', 'Pending')";
                 mysqli_query($conn,$query);
                 header("location: Redirect.php");
             }
             else {
-                echo '<script type="text/javascript">
-                    $(document).ready(function(){
-                        $("#messageModal").modal("show");
-                    });
-                    </script>';
-                    unset($_POST["coachGame"]);
-                    unset($coachRow);
+
             }
         }
     }
@@ -92,26 +82,6 @@
                 });
             </script>
         ";
-    }
-
-    if(isset($_POST["session-register"])) {
-        $sessionBoosterID = $_POST["boosterID"];
-        $sessionGameRank = $_POST["sessiongameRank"];
-        $sessionStartDate = $_POST["startDate"];
-        $sessionEndDate = $_POST["endDate"];
-        $sessionStartTime = $_POST["startTime"];
-        $sessionEndTime = $_POST["endTime"];
-        $sessiontrainerID = $_SESSION["client_ID"];
-        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session WHERE trainerID = '$sessiontrainerID'");
-        if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
-            echo "<script> alert('You already have a coach'); </script>";
-            
-        }
-        else{
-            $sessionRegisterQuery = "INSERT INTO boosting_session VALUES ('', '$sessiontrainerID', '$sessionBoosterID', '$games', '$sessionGameRank', '$sessionStartDate', '$sessionEndDate', '$sessionStartTime',  '$sessionEndTime')";
-            mysqli_query($conn,$sessionRegisterQuery);
-            echo"<script> alert('Registration Succesful'); </script>";
-        }
     }
     ob_end_flush();
 ?>
@@ -146,7 +116,11 @@
 
                             <div class="mb-3">
                                 <label for="UID" class="form-label">UID</label>
+<<<<<<< HEAD
                                 <input class="col-md-4" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+=======
+                                <input class="form-control" placeholder="Enter User ID" type="number" class="form-control" id="uid" name="coachUid" required>
+>>>>>>> 2bd6ffd26466754adbb0c1a221a2208d1269ddd3
                             </div>
 
 
