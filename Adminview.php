@@ -332,18 +332,18 @@
             <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
         <div class="mt-4">
-            <div class="game-box">
-                <div class="row">
-                    <div class="col-md-3">
-                        <img src="game1.jpg" alt="League of Legends">
-                    </div>
-                    <div class="col-md-9">
-                        <h3>League of Legends</h3>
-                        <button class="btn btn-warning">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
+            <<div class="game-box">
+    <div class="row">
+        <div class="col-md-3">
+            <img src="game1.jpg" alt="League of Legends">
+        </div>
+        <div class="col-md-9">
+            <h3>League of Legends</h3>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal1">Edit</button>
+            <button class="btn btn-danger">Delete</button>
+        </div>
+    </div>
+</div>
             <div class="game-box">
                 <div class="row">
                     <div class="col-md-3">
