@@ -140,7 +140,7 @@
                 </div>
                 <div class="carousel-buttons">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createAccountModal" id="start_now">Start Now</button>
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#CoachRegisterModal" id="register_as_coach">Register as Coach</button>
+                    <button type="button" class="btn btn-dark"  id="register_as_coach" onclick="location.href='coachRegistration.php?game=<?php echo htmlspecialchars($games); ?>'">Register as Coach</button>
                 </div>
             </div>
             <div class="carousel-inner">
@@ -213,79 +213,6 @@
     </div>
         
     <!-- Modals -->
-    <!-- Coach Registration Modal -->
-    <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Register as Coach</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="container">
-                        <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">IGN</label>
-                                <input class="form-control" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="UID" class="form-label">UID</label>
-                                <input class="form-control" placeholder="Enter User ID" type="number" class="form-control" id="uid" name="coachUid" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="game" class="form-label">Game</label>
-                                <select class="form-select" id="game" name="coachGame" onchange="populateGameRanks()" required>
-                                    <?php 
-                                        $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-                                        while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="gameRank" class="form-label">Game Rank</label>
-                                <select class="form-select" id="gameRank" name="coachGameRank" required>
-                                    <?php 
-                                        $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
-                                        if ($gamerankquery) {
-                                            $options = '';
-                                            while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
-                                                $gameinfoRank = $gameinfoRow['gameRank'];
-                                                $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
-                                            }
-                                            echo $options; // Output all options for dropdown
-                                        } else {
-                                            echo "Error: " . mysqli_error($conn); // Display error message if query fails
-                                        }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
-                                <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
-                                <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="price" class="form-label">Hourly Coach Price</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
-                                </div>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Student Registration Modal -->
     <div class="modal fade" id="StudentRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
