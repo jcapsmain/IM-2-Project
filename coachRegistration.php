@@ -86,6 +86,47 @@
     ob_end_flush();
 ?>
 
+    <!-- CAPTCHA -->
+<?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Your hCaptcha secret key obtained from hCaptcha admin panel
+        $hCaptchaSecret = 'ES_9a306b270e6f4ade851ddc748df61fe6';
+
+        // Retrieve hCaptcha response token from $_POST
+        $hCaptchaResponse = $_POST['h-captcha-response'];
+
+        // Prepare POST data for hCaptcha verification
+        $postData = array(
+            'secret' => $hCaptchaSecret,
+            'response' => $hCaptchaResponse
+        );
+
+        // Send POST request to hCaptcha verification endpoint
+        $verificationUrl = 'https://hcaptcha.com/siteverify';
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $verificationUrl);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Decode the JSON response from hCaptcha
+        $responseData = json_decode($response);
+
+        // Check if the CAPTCHA was successfully completed
+        if ($responseData && $responseData->success) {
+            // CAPTCHA verification succeeded, process your form submission
+            // Example: $email = $_POST['email'];
+            echo "CAPTCHA verified successfully!";
+        } else {
+            // CAPTCHA verification failed, handle the error
+            echo "CAPTCHA verification failed!";
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -96,6 +137,7 @@
     <title>Coach Registration</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/coachRegistration.css">
+    <script src="https://hcaptcha.com/1/api.js" async defer></script> <!-- CAPTCHA -->
 
 </head>
 
@@ -104,58 +146,58 @@
     <!-- Coach Registration Modal -->
             <div class="container1">
                 <div>
-                    <h1 id="exampleModalLabel">Register as Coach</h1>
+                    <h1>Register as Coach</h1>
                 </div>
                 
                     <div class="container">
                         <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
-                            <div class="mb-3">
-                                <label for="name" class="form-label">IGN</label>
-                                <input class="col-md-4" placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
-                            </div>
 
-                            <div class="mb-3">
-                                <label for="UID" class="form-label">UID</label>
-<<<<<<< HEAD
-                                <input class="col-md-4" placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
-=======
-                                <input class="form-control" placeholder="Enter User ID" type="number" class="form-control" id="uid" name="coachUid" required>
->>>>>>> 2bd6ffd26466754adbb0c1a221a2208d1269ddd3
-                            </div>
+                                <div class="col-md-6">
+                                    <label for="name" class="form-label">IGN</label>
+                                    <input placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="UID" class="form-label">UID</label>
+                                    <input placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                                </div>
 
 
-                            <div class="mb-3">
-                                <label for="game" class="form-label">Game</label>
-                                <select class="form-control" class="col-md-4" id="game" name="coachGame" onchange="populateGameRanks()" required>
-                                    <?php 
-                                        $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-                                        while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                            $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                            echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
-                                        }
-                                    ?>
-                                </select>
-                            </div-->
 
-
-                            <div class="mb-3">
-                                <label for="gameRank" class="form-label">Game Rank</label>
-                                <select class="form-control" class="col-md-4" id="gameRank" name="coachGameRank" required>
-                                    <?php 
-                                        $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
-                                        if ($gamerankquery) {
-                                           $options = '';
-                                            while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
-                                                $gameinfoRank = $gameinfoRow['gameRank'];
-                                                $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                <div class="col-md-6">
+                                    <label for="game" class="form-label">Game</label>
+                                    <select class="form-control" id="game" name="coachGame" onchange="populateGameRanks()" required>
+                                        <?php 
+                                            $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
+                                            while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                                $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                                echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
                                             }
-                                            echo $options; // Output all options for dropdown
-                                        }else {
-                                            echo "Error: " . mysqli_error($conn); // Display error message if query fails
-                                        }
-                                    ?>
-                                </select>
-                            </div>
+                                        ?>
+                                    </select>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <label for="gameRank" class="form-label">Game Rank</label>
+                                    <select class="form-control" id="gameRank" name="coachGameRank" required>
+                                        <?php 
+                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                            if ($gamerankquery) {
+                                            $options = '';
+                                                while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                    $gameinfoRank = $gameinfoRow['gameRank'];
+                                                    $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                                }
+                                                echo $options; // Output all options for dropdown
+                                            }else {
+                                                echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                            }
+                                        ?>
+                                    </select>
+                                
+                                </div>
+
 
 
                             <div class="form-group">
@@ -180,12 +222,13 @@
                                 </div>
                             </div>
 
+                            <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
                             </div>
                         </form>
                     </div>
-                
             </div>
 
 
