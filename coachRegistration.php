@@ -2,7 +2,6 @@
 
     ob_start();
     require 'config.php';
-    include 'navbar.php';
     include 'messagepopup.php';
 
     $games = htmlspecialchars($_GET['game']);
@@ -129,7 +128,6 @@
 </head>
 
 <body>
-
 
     <!-- Coach Registration Modal -->
     <div class="modal fade" id="CoachRegisterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
