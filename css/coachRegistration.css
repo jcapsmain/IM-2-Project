@@ -3,18 +3,16 @@ body, html {
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
-    background-image: url("images/BackgroundLMAO.webp");
+    /*background-image: url("images/BackgroundLMAO.webp");*/
     background-size: 100% ;
 }
 
 
-.container{
+.custom-bg{
 
     border: 2px solid #ccc; 
-    padding: 15px; 
+    padding: 10px; 
     border-radius: 8px; 
     margin-bottom: 20px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgb(244, 239, 239);
 }
-
-
