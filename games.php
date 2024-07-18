@@ -43,7 +43,7 @@
             }
 
             if (!empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
-                !empty($gameUidScreenshot) && is_image_file($_FILES['gameUidScreenshots']['tmp_name']) && 
+                !empty($gameRankScreenshots) && is_image_file($_FILES['gameRankScreenshots']['tmp_name']) && 
                 ($_FILES['gameUidScreenshots']['size'] > $maxFileSize && $_FILES['gameRankScreenshots']['size'] > $maxFileSize)) {
                 if (!file_exists($uploadDir)) {
                     mkdir($uploadDir, 0777, true);
