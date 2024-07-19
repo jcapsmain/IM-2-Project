@@ -32,7 +32,8 @@
                             $ignRow = mysqli_fetch_assoc($ignSQL);
                             $IGN = $ignRow["username"];
                             $inboxRequest = 'Coaching Request';
-                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
+                            $numbRow = $boosterRow['boostSessionID'];
+                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\', \'' . htmlspecialchars($inboxRequest) . '\', \'' . $numbRow. '\')">';
                             // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
                             echo '<div class="contact-info ml-3">';
                             echo '<h5>' . $IGN . '</h5>';
@@ -43,7 +44,7 @@
                         else {
                             $IGN = $boosterRow["IGN"];
                             $inboxRequest = 'Request Accepted';
-                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
+                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\', \'' . htmlspecialchars($inboxRequest) . '\')">';
                             // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
                             echo '<div class="contact-info ml-3">';
                             echo '<h5>' . $IGN . '</h5>';
@@ -103,7 +104,7 @@
                     <h1 id="game-name">Game Name</h1>
                     <img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">
                     <div class="user-info mt-3">
-                        <p><strong>IGN:</strong> <span id="ign">Sender IGN</span></p>
+                        <p><strong>IGN/Username:</strong> <span id="ign">Sender IGN</span></p>
                         <p><strong>UID:</strong> <span id="uid">Sender UID</span></p>
                         <p><strong>Game Rank:</strong> <span id="game-rank">Sender Game Rank</span></p>
                         <p id="additional-info" class="mt-3"></p>
@@ -169,17 +170,62 @@
         }
     </script> -->
 
-<script>
-    function showRequest(IGN) {
-        // Here, IGN is the parameter passed to the function
+    <script>
+        function showRequest(IGN, inboxRequest, numbRow) {
+            
+            const actionButtons = document.getElementById('action-buttons');
 
-        // Example: Displaying the IGN value
-        alert('IGN: ' + IGN);
+            if (inboxRequest === 'Coaching Request') {
+                // Assuming you have elements with IDs 'ign', 'uid', 'game-rank', 'additionalInfo', and 'actionButtons'
+                document.getElementById('ign').innerHTML = IGN;
+                document.getElementById('ign').parentNode.style.display = 'block';
+                
 
-        // You can use IGN parameter to perform other operations
-        // For example, update UI elements based on IGN value
-    }
-</script>
+                // Show IGN, UID, Game Rank, and add the action buttons
+                document.getElementById('uid').parentNode.style.display = 'block';
+                document.getElementById('game-rank').parentNode.style.display = 'block';
+
+                                // Clear previous buttons (if any)
+                actionButtons.innerHTML = '';
+
+                // Create Accept button
+                var acceptButton = document.createElement('button');
+                acceptButton.className = 'btn btn-success mr-2';
+                acceptButton.textContent = 'Accept';
+                acceptButton.onclick = function() {
+                    acceptRequest(numbRow); // Example: Call acceptRequest function
+                };
+                actionButtons.appendChild(acceptButton);
+
+                // Create Reject button
+                var rejectButton = document.createElement('button');
+                rejectButton.className = 'btn btn-danger';
+                rejectButton.textContent = 'Reject';
+                rejectButton.onclick = function() {
+                    rejectRequest(numbRow); // Example: Call rejectRequest function
+                };
+                actionButtons.appendChild(rejectButton);
+            }
+        }
+
+            // Example function for accepting the request
+            function acceptRequest(numbRow) {
+                console.log('Accept button clicked with numbRow: ' + numbRow);
+                <?php 
+                    $acceptRequest = mysqli_query($conn, "SELECT * FROM boostsession WHERE boostsessionID = 'echo'");
+                ?>
+                
+                // Implement logic for accepting the request
+            }
+
+            // Example function for rejecting the request
+            function rejectRequest(numbRow) {
+                console.log('Reject button clicked with numbRow: ' + numbRow);
+                // Implement logic for rejecting the request
+        }
+        
+    </script>
     
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
