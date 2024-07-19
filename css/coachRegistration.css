@@ -65,15 +65,25 @@ h1{
 .image_edit {
     position: absolute;
     width: 100%;
-    margin-left: 62%; /* Center the image horizontally */
+    margin-left: 62%; 
     margin-top: -3.9%;
-    padding: auto /* Example padding for spacing */
+    padding: auto 
 }
 
-/* Adjust size of image */
+
 .img-fluid {
     width: 60%;
-    
-     /* Remove default inline block behavior */
+}
+
+.captcha{
+    position: absolute;
+    width: 100%;
+    margin-left: 63%; 
+    margin-top: -7%;
+    padding: auto 
+}
+
+.tos_eula{
+    text-align: center;
 }
 
