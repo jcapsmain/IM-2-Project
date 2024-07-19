@@ -145,11 +145,9 @@
     <!-- Coach Registration Modal -->
             <div class="container1">
 
-
                 <div>
                     <h1>Register as Coach</h1>
                 </div>
-                    
 
                         <div class="container position-relative">
                             <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
@@ -203,45 +201,47 @@
                                                 }
                                             ?>
                                         </select>
-                                    
                                     </div>
                                     
-
-
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                    <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
-                                    <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-15">
+                                            <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
+                                            <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            
-                                <div class="form-group">
-                                    <div class="col-md-4">
-                                    <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
-                                    <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="col-md-15">
+                                            <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
+                                            <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div class="captcha">
-                                    <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
-                                </div>
+                                        <div class="captcha">
+                                            <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
+                                        </div>
+                                        
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="price" class="form-label">Hourly Coach Price</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text">$</span>
+                                                <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
+                                            </div>
+                                        </div>
+                                    </div>  
+                                        <div class="tos_eula">
+                                            <a href="terms-of-service.html">Terms of Service</a> /
+                                            <a href="end-user-license-agreement.html">End User License Agreement<br></br></a>
+                                        </div>
 
-                                <div class="form-group">
-                                    <label for="price" class="form-label">Hourly Coach Price</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text">$</span>
-                                        <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
-                                    </div>
-                                </div>
-                                
-                                <div class="tos_eula">
-                                    <a href="terms-of-service.html">Terms of Service</a> /
-                                    <a href="end-user-license-agreement.html">End User License Agreement<br></br></a>
-                                </div>
-
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
-                                </div>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
+                                        </div>
                             </form>
                         </div>
                     
