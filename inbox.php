@@ -21,16 +21,37 @@
                 <div class="contact-list">
                     <?php
                     // Array of users with different statuses
-                    $boosterSession = mysqli_query($conn, "SELECT * FROM client_booster");
-                    while ($boosterRow = mysqli_fetch_assoc($boosterSession)) { 
-                        $IGN = $boosterRow["IGN"];
-                        echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
-                        // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
-                        echo '<div class="contact-info ml-3">';
-                        echo '<h5>' . $boosterRow['IGN'] . '</h5>';
-                        echo '<p>' . $boosterRow['status'] . '</p>';
-                        echo '</div>';
-                        echo '</div>';
+                    $inboxID = $_SESSION["client_ID"];
+                    $boosterSession = mysqli_query($conn, "SELECT * FROM client c JOIN client_booster cb ON c.client_ID = cb.client_id JOIN boostsession bs ON 
+                    bs.boosterID = cb.client_booster_id WHERE bs.traineeID = $inboxID OR (bs.boosterID = cb.client_booster_id AND cb.client_id = $inboxID) AND bs.status = 'On Hold'");
+                    while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+                        if($boosterRow['boosterID'] == $inboxID) {
+                            $traineeID = $boosterRow['traineeID'];
+                            $ignSQL = mysqli_query($conn, "SELECT * FROM client c JOIN boostsession bs ON 
+                            c.client_ID = bs.traineeID WHERE bs.traineeID = $traineeID");
+                            $ignRow = mysqli_fetch_assoc($ignSQL);
+                            $IGN = $ignRow["username"];
+                            $inboxRequest = 'Coaching Request';
+                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
+                            // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
+                            echo '<div class="contact-info ml-3">';
+                            echo '<h5>' . $IGN . '</h5>';
+                            echo '<p>'. $inboxRequest .'</p>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                        else {
+                            $IGN = $boosterRow["IGN"];
+                            $inboxRequest = 'Request Accepted';
+                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
+                            // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
+                            echo '<div class="contact-info ml-3">';
+                            echo '<h5>' . $IGN . '</h5>';
+                            echo '<p>' . $inboxRequest . '</p>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+
                     }
                     
                     $users = [
