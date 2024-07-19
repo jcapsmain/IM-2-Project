@@ -76,10 +76,9 @@
         <div id="HeadCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-content text-start transparent-background">
                 <div class="carousel-caption">
-                    <h1>These are our available games for coaching</h1>
-                    <p>If you wish to become a coach or become a trainee
-                    to cultivate your skills<br></br> in the game of your choice 
-                    then feel free to join our program here.</p>
+                    <h1>If you so wish to become a coach</h1><br></br>
+                    <p>Click this button below to become one of our coaches and help <br></br> 
+                        fellow gamers climb the ranks</p>
                 </div>
                 <div class="carousel-buttons">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createAccountModal" id="start_now">Start Now</button>
