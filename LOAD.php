@@ -1,6 +1,33 @@
 <?php 
     require 'config.php';
     include 'navbar.php'; 
+
+    require 'vendor/autoload.php'; // Make sure to use the correct path to autoload.php
+
+    \Stripe\Stripe::setApiKey('your-secret-key-here');
+
+    header('Content-Type: application/json');
+
+    $checkoutSession = \Stripe\Checkout\Session::create([
+        'payment_method_types' => ['card'],
+        'line_items' => [
+            [
+                'price_data' => [
+                    'currency' => 'usd',
+                    'product_data' => [
+                        'name' => 'Coaching Service',
+                    ],
+                    'unit_amount' => 1000000, // Amount in cents
+                ],
+                'quantity' => 1,
+            ],
+        ],
+        'mode' => 'payment',
+        'success_url' => 'https://yourdomain.com/success.html',
+        'cancel_url' => 'https://yourdomain.com/cancel.html',
+    ]);
+
+    echo json_encode(['id' => $checkoutSession->id]);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -95,7 +122,7 @@
                                         <p>Payment Due: $1000000</p>
 
                                         <div class="mt-3">
-                                            <button type="button" class="btn btn-dark">Finish Coaching</button>
+                                            <button type="button" id="finish-coaching" class="btn btn-dark">Finish Coaching</button>
                                         </div>
                                     </div>
                                 </div>
@@ -107,5 +134,32 @@
             </div>
         </div>
     </div>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+    // Your Stripe public key
+    const stripe = Stripe('pk_test_51PeJpOKQLR7cI20jlv4bTAQMWS9ZmyiCwhb1eaKg0CgX9PlgPjDRkW5gXJUMrxesv6WsYYjesqQnXP1ptWV2FGRP00L4xZN24u');
+
+    document.querySelector('#finish-coaching').addEventListener('click', function() {
+        fetch('/create-checkout-session.php', {
+            method: 'POST'
+        })
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(sessionId) {
+            return stripe.redirectToCheckout({ sessionId: sessionId });
+        })
+        .then(function(result) {
+            if (result.error) {
+                alert(result.error.message);
+            }
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+        });
+    });
+    </script>
+
 </body>
 </html>
