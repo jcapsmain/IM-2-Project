@@ -48,8 +48,8 @@
                 move_uploaded_file($_FILES['gameUidScreenshots']['tmp_name'], $uploadDir . $gameUidScreenshotName);
                 move_uploaded_file($_FILES['gameRankScreenshots']['tmp_name'], $uploadDir . $gameRankScreenshotName);
 
-                $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshot', 
-                '$gameRankScreenshot', '$coachgamePrice', '$currentDate', 'Pending')";
+                $query = "INSERT INTO client_booster VALUES ('', '$coachIGN', '$coachClientid', '$coachUid', '$coachGame', '$coachGameRank', '$gameUidScreenshotName', 
+                '$gameRankScreenshotName', '$coachgamePrice', '$currentDate', 'Pending')";
                 mysqli_query($conn,$query);
                 header("location: Redirect.php");
             }
