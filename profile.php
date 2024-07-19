@@ -55,7 +55,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/profile.css">
 </head>
-<body>
+<body class="pt-5 mt-4">
 
     <div class="container mt-4">
         <div class="profile-header p-4 rounded d-flex align-items-center mb-4">
