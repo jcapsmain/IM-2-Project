@@ -2,6 +2,7 @@
 
     ob_start();
     require 'config.php';
+    include 'navbar.php';
     include 'messagepopup.php';
 
     $games = htmlspecialchars($_GET['game']);
@@ -143,90 +144,108 @@
 
     <!-- Coach Registration Modal -->
             <div class="container1">
+
+
                 <div>
                     <h1>Register as Coach</h1>
                 </div>
-                
-                    <div class="container">
-                        <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
+                    
 
-                                <div class="col-md-6">
-                                    <label for="name" class="form-label">IGN</label>
-                                    <input placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="UID" class="form-label">UID</label>
-                                    <input placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <label for="game" class="form-label">Game</label>
-                                    <select class="form-control" id="game" name="coachGame" onchange="populateGameRanks()" required>
-                                        <?php 
-                                            $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
-                                            while ($gamerow = mysqli_fetch_assoc($gamequery)) {
-                                                $gameDesc = htmlspecialchars($gamerow['gameDescription']);
-                                                echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
-                                            }
-                                        ?>
-                                    </select>
-                                </div>
-
-
-                                <div class="col-md-6">
-                                    <label for="gameRank" class="form-label">Game Rank</label>
-                                    <select class="form-control" id="gameRank" name="coachGameRank" required>
-                                        <?php 
-                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID DESC LIMIT 5");
-                                            if ($gamerankquery) {
-                                            $options = '';
-                                                while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
-                                                    $gameinfoRank = $gameinfoRow['gameRank'];
-                                                    $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
-                                                }
-                                                echo $options; // Output all options for dropdown
-                                            }else {
-                                                echo "Error: " . mysqli_error($conn); // Display error message if query fails
-                                            }
-                                        ?>
-                                    </select>
+                        <div class="container position-relative">
+                            <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
                                 
+                                
+                                    <div class="col-md-6">
+                                        <label for="name" class="form-label">IGN</label>
+                                        <input placeholder="Enter In Game Name" type="text" class="form-control" id="name" name="coachIGN" required>
+                                    </div>
+
+                                <div class="image_edit">
+                                    <div class="col-md-6">
+                                        <img src="css/images/peakpx.jpg" class="img-fluid">
+                                    </div>
+                                </div>
+                                
+                                    <div class="col-md-6">
+                                        <label for="UID" class="form-label">UID</label>
+                                        <input placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
+                                    </div>
+
+
+                                    <div class="col-md-6">
+                                        <label for="game" class="form-label">Game</label>
+                                        <select class="form-control" id="game" name="coachGame" onchange="populateGameRanks()" required>
+                                            <?php 
+                                                $gamequery = mysqli_query($conn ,"SELECT * FROM game WHERE gameDescription = '$games'");
+                                                while ($gamerow = mysqli_fetch_assoc($gamequery)) {
+                                                    $gameDesc = htmlspecialchars($gamerow['gameDescription']);
+                                                    echo '<option value="' . $gameDesc . '">' . $gameDesc . '</option>';
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                
+
+                                    <div class="col-md-6">
+                                        <label for="gameRank" class="form-label">Game Rank</label>
+                                        <select class="form-control" id="gameRank" name="coachGameRank" required>
+                                            <?php 
+                                                $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID DESC LIMIT 5");
+                                                if ($gamerankquery) {
+                                                $options = '';
+                                                    while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {
+                                                        $gameinfoRank = $gameinfoRow['gameRank'];
+                                                        $options .= '<option value="' . htmlspecialchars($gameinfoRank) . '">' . htmlspecialchars($gameinfoRank) . '</option>';
+                                                    }
+                                                    echo $options; // Output all options for dropdown
+                                                }else {
+                                                    echo "Error: " . mysqli_error($conn); // Display error message if query fails
+                                                }
+                                            ?>
+                                        </select>
+                                    
+                                    </div>
+                                    
+
+
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                    <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
+                                    <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                    </div>
+                                </div>
+                            
+                                <div class="form-group">
+                                    <div class="col-md-4">
+                                    <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
+                                    <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                    </div>
                                 </div>
 
-
-
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                <label for="gameUidScreenshots" class="form-label">Attach Screenshots of your Game UID</label>
-                                <input type="file" class="form-control" id="gameUidScreenshots" accept="image/*" name="gameUidScreenshots" required>
+                                <div class="captcha">
+                                    <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <div class="col-md-4">
-                                <label for="gameRankScreenshots" class="form-label">Attach Screenshots of your Game Rank</label>
-                                <input type="file" class="form-control" id="gameRankScreenshots" accept="image/*" name="gameRankScreenshots" required>
+                                <div class="form-group">
+                                    <label for="price" class="form-label">Hourly Coach Price</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="price" class="form-label">Hourly Coach Price</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">$</span>
-                                    <input class="form-control" placeholder="Enter Price" type="number" id="price" name="price" value="10.00" min="0" required>
+                                
+                                <div class="tos_eula">
+                                    <a href="terms-of-service.html">Terms of Service</a> /
+                                    <a href="end-user-license-agreement.html">End User License Agreement<br></br></a>
                                 </div>
-                            </div>
 
-                            <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    
 
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-dark" name='coach-register'>Submit</button>
-                            </div>
-                        </form>
-                    </div>
             </div>
 
 
