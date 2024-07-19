@@ -160,7 +160,7 @@
 
                                 <div class="image_edit">
                                     <div class="col-md-6">
-                                        <img src="css/images/peakpx.jpg" class="img-fluid">
+                                        <img src="css/images/LogoBoosting.png" class="img-fluid">
                                     </div>
                                 </div>
                                 
@@ -224,7 +224,7 @@
                                         <div class="captcha">
                                             <div class="h-captcha" data-sitekey="9fa44994-76c4-46bc-9fe4-2946a0aea936" name="h-captcha-response"></div>
                                         </div>
-                                        
+
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="price" class="form-label">Hourly Coach Price</label>
