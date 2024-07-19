@@ -2,6 +2,7 @@
 
     ob_start();
     require 'config.php';
+    include 'navbar.php';
     include 'messagepopup.php';
 
     $games = htmlspecialchars($_GET['game']);
