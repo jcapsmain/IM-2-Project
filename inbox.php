@@ -208,15 +208,37 @@
             }
         }
 
-            // Example function for accepting the request
-            function acceptRequest(numbRow) {
-                console.log('Accept button clicked with numbRow: ' + numbRow);
-                <?php 
-                    $acceptRequest = mysqli_query($conn, "SELECT * FROM boostsession WHERE boostsessionID = 'echo'");
-                ?>
-                
-                // Implement logic for accepting the request
-            }
+        function acceptRequest(numbRow) {
+            console.log('Accept button clicked with numbRow: ' + numbRow);
+            
+            // Make AJAX request to PHP script
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'numbRow=' + encodeURIComponent(numbRow),
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle response from PHP script
+                console.log('Server response:', data);
+                // Implement logic for handling response, e.g., updating UI
+                if (data.success) {
+                    alert('Request accepted successfully');
+                    // Implement UI update or redirect as needed
+                } else {
+                    alert('Error accepting request: ' + data.message);
+                    // Implement error handling UI or redirect
+                }
+            })
+            .catch(error => {
+                console.error('Error accepting request:', error);
+                // Implement error handling UI or redirect
+            });
+        }
+
+
 
             // Example function for rejecting the request
             function rejectRequest(numbRow) {
@@ -225,6 +247,36 @@
         }
         
     </script>
+
+    <?php 
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            // Check if 'numbRow' is set in the POST data
+            if (isset($_POST['numbRow'])) {
+                // Sanitize the input (assuming it's an integer)
+                $numbRow = mysqli_real_escape_string($conn, $_POST['numbRow']);
+        
+                // Example SQL query to update the database
+                $sql = "UPDATE boostsession SET status = 'accepted' WHERE boostsessionID = $numbRow";
+        
+                if ($conn->query($sql) === TRUE) {
+                    // Success message to be returned to JavaScript
+                    $response = array('success' => true, 'message' => 'Request accepted successfully');
+                } else {
+                    // Error message to be returned to JavaScript
+                    $response = array('success' => false, 'message' => 'Error accepting request: ' . $conn->error);
+                }
+        
+                // Return JSON response to JavaScript
+                echo json_encode($response);
+                exit; // Stop further execution of PHP script
+            } else {
+                // Handle case where 'numbRow' is not set in POST data
+                $response = array('success' => false, 'message' => 'Invalid request data');
+                echo json_encode($response);
+                exit; // Stop further execution of PHP script
+            }
+        }
+    ?>
     
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
