@@ -235,18 +235,18 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-@ -227,9 +230,7 @@
+
                                 </div>
                             </div>
                         </div>
                         <!-- End Modal -->
 
                 <?php
-                    <?php
-                    }
+                    
+                    
                 ?>
                 </tbody>
-@ -247,155 +248,218 @@
+
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -554,6 +554,3 @@
     </script>
 </body>
 </html>
-
-
-
