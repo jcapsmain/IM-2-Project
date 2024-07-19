@@ -18,9 +18,6 @@
             height: calc(100vh - 100px); /* Adjust the 70px value based on the height of your navbar */
             overflow-y: auto; /* Enable vertical scrolling */
         }
-        .border-right {
-            border-right: 2px solid #ccc; /* Adjust border color and width */
-        }
     </style>
 </head>
 <body class="bg-secondary pt-5 mt-5">
@@ -34,7 +31,7 @@
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
                         <!-- Nested Rows inside Left Container -->
-                        <div class="row mt-3">
+                        <div class="row mt-3 border-bottom">
                             <div class="col-12 no-padding">
                                 <div class="d-flex align-items-center">
                                     <!-- Circular Image -->
