@@ -145,7 +145,7 @@
     <!-- Coach Registration Modal -->
             <div class="container1">
 
-                <div>
+                <div class="title-register">
                     <h1>Register as Coach</h1>
                 </div>
 
