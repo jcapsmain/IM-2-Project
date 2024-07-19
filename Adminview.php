@@ -357,34 +357,29 @@
     </div>
 </div>
 
-   <!-- Trigger Button -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reportModal1">
-    Open Report Modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="reportModalLabel">Report Details: JohnDoe123</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic" style="max-width: 100%;">
-                <p><strong>Reported User:</strong> JohnDoe123</p>
-                <p><strong>Report Type:</strong> Spam</p>
-                <p><strong>Report Date:</strong> 2024-07-06</p>
-                <p><strong>Reason:</strong> User was spamming messages in chat.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <!-- Report Modal 1 -->
+    <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reportModalLabel">Report Details: JohnDoe123</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
+                    <p><strong>Reported User:</strong> JohnDoe123</p>
+                    <p><strong>Report Type:</strong> Spam</p>
+                    <p><strong>Report Date:</strong> 2024-07-06</p>
+                    <p><strong>Reason:</strong> User was spamming messages in chat.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
     <!-- Report Modal 2 -->
     <div class="modal fade" id="reportModal2" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
