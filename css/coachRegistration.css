@@ -65,14 +65,14 @@ h1{
 .image_edit {
     position: absolute;
     width: 100%;
-    margin-left: 35%; /* Center the image horizontally */
-    margin-top: -2.4%;
+    margin-left: 62%; /* Center the image horizontally */
+    margin-top: -3.9%;
     padding: auto /* Example padding for spacing */
 }
 
 /* Adjust size of image */
 .img-fluid {
-    width: 30%;
+    width: 60%;
     
      /* Remove default inline block behavior */
 }

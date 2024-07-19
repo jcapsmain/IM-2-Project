@@ -150,7 +150,7 @@
                 </div>
                     
 
-                        <div class="container">
+                        <div class="container position-relative">
                             <form method="post" autocomplete="off" name="coach-signup" enctype="multipart/form-data">
                                 
                                 
