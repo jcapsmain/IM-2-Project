@@ -23,7 +23,7 @@
     }
   </style>
 </head>
-<body>
+<body class="pt-5 mt-5>
     <div class="container table-container">
         <h2 class="text-center">Schedule</h2>
         <table class="table table-bordered">

@@ -182,7 +182,7 @@
                                     <label for="gameRank" class="form-label">Game Rank</label>
                                     <select class="form-control" id="gameRank" name="coachGameRank" required>
                                         <?php 
-                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
+                                            $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID DESC LIMIT 5");
                                             if ($gamerankquery) {
                                             $options = '';
                                                 while ($gameinfoRow = mysqli_fetch_assoc($gamerankquery)) {

@@ -7,7 +7,6 @@
     background-color: #171a21 !important;
     font-family: 'Press Start 2P', cursive;
     height: 100px;
-    overflow: hidden; /* This ensures content that exceeds the max height is hidden */
 }
 
 .dropdown-menu {

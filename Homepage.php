@@ -91,50 +91,6 @@
                 <?php
                     }
                 ?>
-                
-                <!-- Add Game -->
-                                
-                <div class="col-md-3 mb-4">
-                    <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#addGameModal">
-                        <div class="card bg-dark text-white">
-                            <div class="card-img-overlay text-box">
-                                <h5 class="card-title mt-5">Add Game<br>+</h5>
-                            </div>
-                        </div>
-                    </button>
-                </div>
-
-                <div class="modal fade" id="addGameModal" tabindex="-1" aria-labelledby="addGameModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="addGameModalLabel">Add New Game</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="mb-3">
-                                        <label for="gameName" class="form-label">Game Name</label>
-                                        <input type="text" class="form-control" id="gameName" name="gameName">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gameRanks" class="form-label">Game Ranks</label>
-                                        <input type="text" class="form-control" id="gameRanks" name="gameRanks">
-                                        <div id="gameRanksHelp" class="form-text">Enter comma-separated values (e.g., Gold, Silver, Bronze)</div>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="gameImage" class="form-label">Image Upload</label>
-                                        <input type="file" class="form-control" id="gameImage" name="gameImage">
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         
