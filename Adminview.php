@@ -4,6 +4,15 @@
     require 'config.php';
     ob_end_flush();
 
+    if(isset($_POST["acceptRequest"])) {
+        $coachID = $_POST["coach_id"];
+        $status = $_POST["status"];
+        $acceptQuery = "UPDATE client_booster SET status = 'Available' WHERE client_booster_id = '$coachID'";
+        mysqli_query($conn, $acceptQuery);
+
+    }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -225,7 +234,13 @@
                                         <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <form method="post" autocomplete="off" name="coach-reg">
+                                            <input type="hidden" name="status" value="Available">
+                                            <input type="hidden" name="coach_id" value="<?php echo $boosterRowsRequest['client_booster_id']; ?>">
+                                            <button type="submit" class="btn btn-secondary" name="acceptRequest">Accept</button>
+                                            <button type="button" class="btn btn-secondary"data-dismiss="modal">Close</button>
+                                        </form>
+
                                     </div>
                                 </div>
                             </div>
