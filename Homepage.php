@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="css/footer.css">
     
 </head>
-<body>
+<body class="pt-5 mt-4">
 
     <!-- Main Carousel -->
     <div class="container-fluid p-0">
