@@ -1,7 +1,30 @@
 <?php 
+    ob_start();
     require 'config.php';
     include 'navbar.php'; 
+
+    if (isset($_POST['acceptSubmit'])) {
+        $accept = $_POST['accept'];
+        $acceptQuery = "UPDATE boostsession SET status = 'Coach Accepted' WHERE boostSessionID = '$accept'";
+        mysqli_query($conn, $acceptQuery);
+       
+    }
+    if (isset($_POST['acceptCoachSubmit'])) {
+        $acceptCoach = $_POST['acceptCoach'];
+        $acceptCoachQuery = "UPDATE boostsession SET status = 'All Accepted' WHERE boostSessionID = '$acceptCoach'";
+        mysqli_query($conn, $acceptCoachQuery);
+       
+    }
+    if (isset($_POST['rejectSubmit'])) {
+        $reject = $_POST['reject'];
+        $rejectQuery = "UPDATE boostsession SET status = 'Coach Rejected' WHERE boostSessionID = '$reject'";
+        mysqli_query($conn, $rejectQuery);
+    }
+
+    ob_end_flush();
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,101 +42,157 @@
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
                 <div class="contact-list">
-                    <?php
-                    // Array of users with different statuses
-                    $inboxID = $_SESSION["client_ID"];
-                    $boosterSession = mysqli_query($conn, "SELECT * FROM client c JOIN client_booster cb ON c.client_ID = cb.client_id JOIN boostsession bs ON 
-                    bs.boosterID = cb.client_booster_id WHERE bs.traineeID = $inboxID OR (bs.boosterID = cb.client_booster_id AND cb.client_id = $inboxID) AND bs.status = 'On Hold'");
-                    while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
-                        if($boosterRow['boosterID'] == $inboxID) {
-                            $traineeID = $boosterRow['traineeID'];
-                            $ignSQL = mysqli_query($conn, "SELECT * FROM client c JOIN boostsession bs ON 
-                            c.client_ID = bs.traineeID WHERE bs.traineeID = $traineeID");
-                            $ignRow = mysqli_fetch_assoc($ignSQL);
-                            $IGN = $ignRow["username"];
-                            $inboxRequest = 'Coaching Request';
-                            $numbRow = $boosterRow['boostSessionID'];
-                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\', \'' . htmlspecialchars($inboxRequest) . '\', \'' . $numbRow. '\')">';
-                            // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
-                            echo '<div class="contact-info ml-3">';
-                            echo '<h5>' . $IGN . '</h5>';
-                            echo '<p>'. $inboxRequest .'</p>';
-                            echo '</div>';
-                            echo '</div>';
-                        }
-                        else {
-                            $IGN = $boosterRow["IGN"];
-                            $inboxRequest = 'Request Accepted';
-                            echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\', \'' . htmlspecialchars($inboxRequest) . '\')">';
-                            // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
-                            echo '<div class="contact-info ml-3">';
-                            echo '<h5>' . $IGN . '</h5>';
-                            echo '<p>' . $inboxRequest . '</p>';
-                            echo '</div>';
-                            echo '</div>';
-                        }
-
-                    }
-                    
-                    $users = [
-                        [
-                            'username' => 'Username',
-                            'game_name' => 'Game Name',
-                            'ign' => 'IGN',
-                            'uid' => 'UID',
-                            'game_rank' => 'Rank',
-                            'profile_image' => 'resources/img_avatar2.webp',
-                            'status' => 'Coaching request'
-                        ],
-                        [
-                            'username' => 'Username',
-                            'game_name' => 'Game Name',
-                            'status' => 'Request Accepted',
-                            'coach_email' => 'coach@example.com',
-                            'coach_bio' => 'Coaches other soacial media links',
-                            'profile_image' => 'resources/img_avatar2.webp'
-                        ],
-                        [
-                            'username' => 'Username',
-                            'game_name' => 'Game Name',
-                            'status' => 'Request Rejected',
-                            'coach_username' => 'Coach Name',
-                            'profile_image' => 'resources/img_avatar2.webp'
-                        ]
-                    ];
-
-                    // Display contacts
-                    foreach ($users as $index => $user) {
-                        echo '<div class="contact p-3 border-bottom" onclick="showRequest(' . $index . ')">';
-                        echo '<img src="' . $user['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
+                <?php
+                // Fetch data from the database
+                $inboxID = $_SESSION["client_ID"];
+                $boosterSession = mysqli_query($conn, "SELECT * FROM client c 
+                    JOIN client_booster cb ON c.client_ID = cb.client_id 
+                    JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
+                    WHERE bs.traineeID = $inboxID OR (bs.boosterID = cb.client_booster_id AND cb.client_id = $inboxID)");
+                
+                while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+                    // Extract variables for each session
+                    $traineeID = $boosterRow['traineeID'];
+                    $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
+                        JOIN boostsession bs ON c.client_ID = bs.traineeID 
+                        WHERE bs.traineeID = '$traineeID'");
+                    $ignRow = mysqli_fetch_assoc($ignSQL);
+                    $numbRow = $boosterRow['boostSessionID'];
+                    if($boosterRow['traineeID'] != $_SESSION["client_ID"] && $ignRow["status"] == 'On hold') {
+                        // Output the contact list item
+                        $IGN = htmlspecialchars($ignRow["username"]);
+                        echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
+                        // Add profile image if needed: echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
                         echo '<div class="contact-info ml-3">';
-                        echo '<h5>' . $user['username'] . '</h5>';
-                        echo '<p>' . $user['status'] . '</p>';
+                        echo '<h5>' . $IGN . '</h5>';
+                        echo '<p>Coaching Request</p>';
                         echo '</div>';
                         echo '</div>';
                     }
-                    ?>
-                </div>
+                    else if($boosterRow["status"] == 'Coach Accepted' && $boosterRow["client_id"] != $_SESSION["client_ID"]) {
+                        $IGN = htmlspecialchars($boosterRow["username"]);
+                        // Output the contact list item
+                        echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
+                        // Add profile image if needed: echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
+                        echo '<div class="contact-info ml-3">';
+                        echo '<h5>' . $IGN . '</h5>';
+                        echo '<p>Request Accepted</p>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+                    else if($boosterRow["status"] == 'Coach Rejected' && $boosterRow["client_id"] != $_SESSION["client_ID"]) {
+                        $IGN = htmlspecialchars($boosterRow["username"]);
+                        // Output the contact list item
+                        echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
+                        // Add profile image if needed: echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
+                        echo '<div class="contact-info ml-3">';
+                        echo '<h5>' . $IGN . '</h5>';
+                        echo '<p>Request Rejected</p>';
+                        echo '</div>';
+                        echo '</div>';
+                    }
+
+                }
+                ?>
             </div>
-            <div class="col-9 position-fixed end-0 top-0 pt-5 mt-5">
-                <div class="message-header p-3 border-bottom bg-secondary">
-                    <img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">
-                    <h5 class="ml-3" id="username">Username</h5>
-                </div>
-                <div class="message-body p-3 text-center bg-dark">
-                    <h1 id="game-name">Game Name</h1>
-                    <img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">
-                    <div class="user-info mt-3">
-                        <p><strong>IGN/Username:</strong> <span id="ign">Sender IGN</span></p>
-                        <p><strong>UID:</strong> <span id="uid">Sender UID</span></p>
-                        <p><strong>Game Rank:</strong> <span id="game-rank">Sender Game Rank</span></p>
-                        <p id="additional-info" class="mt-3"></p>
-                    </div>
-                    <div class="action-buttons mt-4" id="action-buttons">
-                        <!-- Buttons will be dynamically added here -->
-                    </div>
-                </div>
-            </div>
+
+            <?php
+            // Reset the mysqli pointer to reuse the result set
+            mysqli_data_seek($boosterSession, 0);
+
+            // Output message details for each session
+            while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+                $traineeID = $boosterRow['traineeID'];
+                $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
+                    JOIN boostsession bs ON c.client_ID = bs.traineeID 
+                    WHERE bs.traineeID = $traineeID");
+                $ignRow = mysqli_fetch_assoc($ignSQL);
+                
+                if($boosterRow['traineeID'] != $_SESSION["client_ID"]) {
+                    $IGN = htmlspecialchars($ignRow["username"]);
+                    $sessID = $ignRow["boostSessionID"];
+                    echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
+                    echo '<div class="message-header p-3 border-bottom bg-secondary">';
+                    echo '<img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">';
+                    echo '<h5 class="ml-3" id="username">Username</h5>';
+                    echo '</div>';
+                    echo '<div class="message-body p-3 text-center bg-dark">';
+                    echo '<h1 id="game-name">' . $ignRow["game"] . '</h1>';
+                    echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
+                    echo '<div class="user-info mt-3">';
+                    echo '<p><strong>Username:</strong> <span id="ign">' . $IGN . '</span></p>';
+                    echo '<p><strong>UID:</strong> <span id="uid">Sender UID</span></p>';
+                    echo '<p><strong>Game Rank:</strong> <span id="game-rank">Sender Game Rank</span></p>';
+                    echo '<p id="additional-info" class="mt-3"></p>';
+                    echo '</div>';
+                    echo '<div class="action-buttons mt-4" id="action-buttons">';
+
+                    echo '<form method="post" autocomplete="off" name="acceptSubmits">';
+                    echo '<input name="accept" type="hidden" value="' . $sessID . '">';
+                    echo '<button class="btn btn-success mr-2" name="acceptSubmit">Accept</button>';
+                    echo '</form>';
+
+                    echo '<form method="post" autocomplete="off" name="rejectSubmits">';
+                    echo '<input name="reject" type="hidden" value="' . $sessID . '">';
+                    echo '<button class="btn btn-danger" name="rejectSubmit">Reject</button>';
+                    echo '</form>';
+
+                    
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                else if($boosterRow["status"] = 'Coach Accepted') {
+                    $IGN = htmlspecialchars($boosterRow["username"]);
+                    $sessID = $boosterRow["boostSessionID"];
+                    echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
+                    echo '<div class="message-header p-3 border-bottom bg-secondary">';
+                    echo '<img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">';
+                    echo '<h5 class="ml-3" id="username">Username</h5>';
+                    echo '</div>';
+                    echo '<div class="message-body p-3 text-center bg-dark">';
+                    echo '<h1 id="game-name">' . $boosterRow["game"] . '</h1>';
+                    echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
+                    echo '<div class="user-info mt-3">';
+                    echo '<p>Your request has been accepted by ' . $IGN . '.</p>';
+                    echo '<p>Contact me at: ' . $boosterRow["email"] . '.</p>';
+                    echo '<p id="additional-info" class="mt-3"></p>';
+                    echo '</div>';
+
+                    echo '<div class="action-buttons mt-4" id="action-buttons">';
+
+                    echo '<form method="post" autocomplete="off" name="acceptCoachSubmits">';
+                    echo '<input name="acceptCoach" type="hidden" value="' . $sessID . '">';
+                    echo '<button class="btn btn-success mr-2" name="acceptCoachSubmit">Accept Coach</button>';
+                    echo '</form>';
+
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                else if($boosterRow["status"] = 'Coach Rejected') {
+                    $IGN = htmlspecialchars($boosterRow["username"]);
+                    echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
+                    echo '<div class="message-header p-3 border-bottom bg-secondary">';
+                    echo '<img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">';
+                    echo '<h5 class="ml-3" id="username">Username</h5>';
+                    echo '</div>';
+                    echo '<div class="message-body p-3 text-center bg-dark">';
+                    echo '<h1 id="game-name">' . $boosterRow["game"] . '</h1>';
+                    echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
+                    echo '<div class="user-info mt-3">';
+                    echo '<p>Your request has been rejected by ' . $IGN . '.</p>';
+                    echo '<p id="additional-info" class="mt-3"></p>';
+                    echo '</div>';
+                    echo '<div class="action-buttons mt-4" id="action-buttons">';
+                    // Buttons will be dynamically added here
+                    echo '</div>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+
+            }
+            ?>
         </div>
     </div>
     <!-- <script>
@@ -170,114 +249,24 @@
         }
     </script> -->
 
-    <script>
-        function showRequest(IGN, inboxRequest, numbRow) {
-            
-            const actionButtons = document.getElementById('action-buttons');
-
-            if (inboxRequest === 'Coaching Request') {
-                // Assuming you have elements with IDs 'ign', 'uid', 'game-rank', 'additionalInfo', and 'actionButtons'
-                document.getElementById('ign').innerHTML = IGN;
-                document.getElementById('ign').parentNode.style.display = 'block';
-                
-
-                // Show IGN, UID, Game Rank, and add the action buttons
-                document.getElementById('uid').parentNode.style.display = 'block';
-                document.getElementById('game-rank').parentNode.style.display = 'block';
-
-                                // Clear previous buttons (if any)
-                actionButtons.innerHTML = '';
-
-                // Create Accept button
-                var acceptButton = document.createElement('button');
-                acceptButton.className = 'btn btn-success mr-2';
-                acceptButton.textContent = 'Accept';
-                acceptButton.onclick = function() {
-                    acceptRequest(numbRow); // Example: Call acceptRequest function
-                };
-                actionButtons.appendChild(acceptButton);
-
-                // Create Reject button
-                var rejectButton = document.createElement('button');
-                rejectButton.className = 'btn btn-danger';
-                rejectButton.textContent = 'Reject';
-                rejectButton.onclick = function() {
-                    rejectRequest(numbRow); // Example: Call rejectRequest function
-                };
-                actionButtons.appendChild(rejectButton);
-            }
-        }
-
-        function acceptRequest(numbRow) {
-            console.log('Accept button clicked with numbRow: ' + numbRow);
-            
-            // Make AJAX request to PHP script
-            fetch(window.location.href, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'numbRow=' + encodeURIComponent(numbRow),
-            })
-            .then(response => response.json())
-            .then(data => {
-                // Handle response from PHP script
-                console.log('Server response:', data);
-                // Implement logic for handling response, e.g., updating UI
-                if (data.success) {
-                    alert('Request accepted successfully');
-                    // Implement UI update or redirect as needed
-                } else {
-                    alert('Error accepting request: ' + data.message);
-                    // Implement error handling UI or redirect
-                }
-            })
-            .catch(error => {
-                console.error('Error accepting request:', error);
-                // Implement error handling UI or redirect
-            });
-        }
-
-
-
-            // Example function for rejecting the request
-            function rejectRequest(numbRow) {
-                console.log('Reject button clicked with numbRow: ' + numbRow);
-                // Implement logic for rejecting the request
-        }
-        
-    </script>
-
-    <?php 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Check if 'numbRow' is set in the POST data
-            if (isset($_POST['numbRow'])) {
-                // Sanitize the input (assuming it's an integer)
-                $numbRow = mysqli_real_escape_string($conn, $_POST['numbRow']);
-        
-                // Example SQL query to update the database
-                $sql = "UPDATE boostsession SET status = 'accepted' WHERE boostsessionID = $numbRow";
-        
-                if ($conn->query($sql) === TRUE) {
-                    // Success message to be returned to JavaScript
-                    $response = array('success' => true, 'message' => 'Request accepted successfully');
-                } else {
-                    // Error message to be returned to JavaScript
-                    $response = array('success' => false, 'message' => 'Error accepting request: ' . $conn->error);
-                }
-        
-                // Return JSON response to JavaScript
-                echo json_encode($response);
-                exit; // Stop further execution of PHP script
-            } else {
-                // Handle case where 'numbRow' is not set in POST data
-                $response = array('success' => false, 'message' => 'Invalid request data');
-                echo json_encode($response);
-                exit; // Stop further execution of PHP script
-            }
-        }
-    ?>
     
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    function showMessage(targetId) {
+        var sections = document.querySelectorAll('.col-9.position-fixed');
+
+        sections.forEach(function(section) {
+            if (section.id === targetId) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    }
+</script>
+
 </body>
 </html>
