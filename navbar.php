@@ -78,8 +78,10 @@
                     var logout = document.getElementById('logout');
                     var profile = document.getElementById('text-profile');
                     var inbox = document.getElementById('text-inbox');
+                    var load = document.getElementById('text-load');
                     var schedule = document.getElementById('text-schedule');
                     schedule.style.display = 'none';
+                    load.style.display = 'none';
                     inbox.style.display = 'none';
                     profileImg.style.display = 'none';
                     logout.style.display = 'none';
@@ -118,6 +120,9 @@
                     </a></li>
                     <li><a class="dropdown-item" href="inbox.php" id="text-inbox">
                         <img src="resources/inbox.svg" alt="Inbox" id="inbox"> Inbox
+                    </a></li>
+                    <li><a class="dropdown-item" href="LOAD.php" id="text-load">
+                        <img src="resources/Load.svg" alt="Inbox" id="load"> View Load
                     </a></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#signInModal" id="login">Login</button></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" onclick="location.href='logout.php';" id="logout"><a>logout</a></button></li>
