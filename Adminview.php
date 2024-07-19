@@ -1,3 +1,4 @@
+
 <?php
 
     ob_start();
@@ -212,6 +213,14 @@
                                     <div class="modal-body">
                                         <img src="coach1.jpg" alt="CoachOne" class="modal-profile-pic">
                                         <p><strong>Coach ID:</strong> <?php echo $boosterRowsRequest['client_booster_id'] ?></p>
+                                        <p><strong>Client ID:</strong> <?php echo $boosterUIDRequest ?></p>
+                                        <p><strong>IGN:</strong> <?php echo $boosterIGNRequest ?></p>
+                                        <p><strong>Game:</strong> <?php echo $gameRequest ?></p>
+                                        <p><strong>Rank:</strong> <?php echo $gameRankRequest ?></p>
+                                        <p><strong>Status:</strong> <?php echo $statusRequest ?></p>
+                                        <p><strong>UID Screenshot:</strong> <a href="<?php echo $uidScreenshotRequest ?>" target="_blank">View Screenshot</a></p>
+                                        <p><strong>Rank Screenshot:</strong> <a href="<?php echo $gameRankScreenshotRequest ?>" target="_blank">View Screenshot</a></p>
+                                        <p><strong>Price:</strong> <?php echo $priceRequest ?></p>
                                         <p><strong>Client ID:</strong> <?php echo $boosterRowsRequest['client_id']  ?></p>
                                         <p><strong>Coach Name:</strong> <?php echo $boosterIGNRequest; ?></p>
                                         <p><strong>Application Date:</strong> <?php echo $applicationDateRequest; ?></p>
@@ -226,28 +235,27 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
+@ -227,9 +230,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- End Modal -->
+
+                <?php
                     <?php
                     }
                 ?>
                 </tbody>
-            </table>
-        </div>
-    </div>
-
-
-    <!-- Coach Reviews -->
-    <div class="content" id="coachReviews" style="display:none;">
-        <div class="header">
-            <h1>Coach Reviews</h1>
-        </div>
-        <div class="table-responsive mt-4">
+@ -247,155 +248,218 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
+                        <th>#</th>
+                        <th>Profile Picture</th>
+                        <th>Coach IGN</th>
+                        <th>Review</th>
+                        <th>Date</th>
+                        <th>Actions</th>
                         <th class="text-center">#</th>
                         <th class="text-center">Profile Picture</th>
                         <th class="text-center">Coach IGN</th>
@@ -275,6 +283,20 @@
                         $rowNumber += 1;
                 ?>
                     <tr>
+                        <th scope="row">1</th>
+                        <td><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td>CoachOne</td>
+                        <td>Excellent coach!</td>
+                        <td>2024-07-06</td>
+                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal1">View Info</button></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><img src="coach2.jpg" alt="CoachTwo" class="profile-pic"></td>
+                        <td>CoachTwo</td>
+                        <td>Very helpful and friendly.</td>
+                        <td>2024-07-05</td>
+                        <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target="#reviewModal2">View Info</button></td>
                         <th scope="row" class="text-center"><?php echo $boosterRows['client_booster_id'] ?></th>
                         <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
                         <td class="text-center"><?php echo $boosterIGN; ?></td>
@@ -324,6 +346,7 @@
         </div>
     </div>
 
+    <!-- Game Reviews -->
 
     <!-- Modify Game -->
     <div class="content" id="modifyGame" style="display:none;">
@@ -331,43 +354,94 @@
             <h1>Game Review</h1>
             <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
+        <div class="table-responsive mt-4">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Game Picture</th>
+                        <th>Game Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">1</th>
+                        <td><img src="game1.jpg" alt="Game One" class="profile-pic"></td>
+                        <td>Game One</td>
+                        <td>Exciting and fun game.</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGameModal1">Edit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">2</th>
+                        <td><img src="game2.jpg" alt="Game Two" class="profile-pic"></td>
+                        <td>Game Two</td>
+                        <td>Challenging and engaging.</td>
+                        <td>
+                            <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#editGameModal2">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         <div class="mt-4">
-            <<div class="game-box">
-    <div class="row">
-        <div class="col-md-3">
-            <img src="game1.jpg" alt="League of Legends">
-        </div>
-        <div class="col-md-9">
-            <h3>League of Legends</h3>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal1">Edit</button>
-            <button class="btn btn-danger">Delete</button>
+            <div class="game-box">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game1.jpg" alt="League of Legends">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>League of Legends</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+            <div class="game-box">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img src="game2.jpg" alt="Dota 2">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>Dota 2</h3>
+                        <button class="btn btn-warning">Edit</button>
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-<div class="game-box">
-    <div class="row">
-        <div class="col-md-3">
-            <img src="game2.jpg" alt="Dota 2">
-        </div>
-        <div class="col-md-9">
-            <h3>Dota 2</h3>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal2">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </div>
-    </div>
-</div>
 
+    <!-- Edit Game Modal -->
+    <div class="modal fade" id="editGameModal1" tabindex="-1" aria-labelledby="editGameModalLabel1" aria-hidden="true">
     <!-- Report Modal 1 -->
     <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title" id="editGameModalLabel1">Edit Game: Game One</h5>
                     <h5 class="modal-title" id="reportModalLabel">Report Details: JohnDoe123</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="editGameForm1">
+                        <div class="form-group">
+                            <label for="gameName1">Game Name</label>
+                            <input type="text" class="form-control" id="gameName1" value="Game One">
+                        </div>
+                        <div class="form-group">
+                            <label for="gameDescription1">Description</label>
+                            <textarea class="form-control" id="gameDescription1" rows="3">Exciting and fun game.</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="gameImage1">Game Image</label>
+                            <input type="file" class="form-control-file" id="gameImage1">
+                        </div>
+                    </form>
                     <img src="profile1.jpg" alt="JohnDoe123" class="modal-profile-pic">
                     <p><strong>Reported User:</strong> JohnDoe123</p>
                     <p><strong>Report Type:</strong> Spam</p>
@@ -376,22 +450,26 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges(1)">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="editGameModal2" tabindex="-1" aria-labelledby="editGameModalLabel2" aria-hidden="true">
     <!-- Report Modal 2 -->
     <div class="modal fade" id="reportModal2" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
+                    <h5 class="modal-title" id="editGameModalLabel2">Edit Game: Game Two</h5>
                     <h5 class="modal-title" id="reportModalLabel">Report Details: JaneSmith456</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
+                    <form id="editGameForm2">
                     <img src="profile2.jpg" alt="JaneSmith456" class="modal-profile-pic">
                     <p><strong>Reported User:</strong> JaneSmith456</p>
                     <p><strong>Report Type:</strong> Harassment</p>
@@ -418,93 +496,48 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
+                            <label for="gameName2">Game Name</label>
+                            <input type="text" class="form-control" id="gameName2" value="Game Two">
                             <label for="gameName">Game Name</label>
                             <input type="text" class="form-control" id="gameName" placeholder="Enter game name">
                         </div>
                         <div class="form-group">
+                            <label for="gameDescription2">Description</label>
+                            <textarea class="form-control" id="gameDescription2" rows="3">Challenging and engaging.</textarea>
                             <label for="gameImage">Game Image</label>
                             <input type="file" class="form-control" id="gameImage">
                         </div>
                         <div class="form-group">
+                            <label for="gameImage2">Game Image</label>
+                            <input type="file" class="form-control-file" id="gameImage2">
                             <label for="gameDescription">Game Description</label>
                             <textarea class="form-control" id="gameDescription" rows="3" placeholder="Enter game description"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Game</button>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
-
-     <!-- Edit Game Modal 1 -->
-     <div class="modal fade" id="editGameModal1" tabindex="-1" aria-labelledby="editGameModalLabel1" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editGameModalLabel1">Edit Game: League of Legends</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="gameTitle1">Game Title</label>
-                        <input type="text" class="form-control" id="gameTitle1" value="League of Legends">
-                    </div>
-                    <div class="form-group">
-                        <label for="gameImage1">Game Image</label>
-                        <input type="file" class="form-control-file" id="gameImage1">
-                    </div>
-                    <div class="form-group">
-                        <label for="gameDescription1">Game Description</label>
-                        <textarea class="form-control" id="gameDescription1" rows="3">A highly competitive, team-based strategy game.</textarea>
-                    </div>
-                </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
+                    <button type="button" class="btn btn-primary" onclick="saveChanges(2)">Save Changes</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Edit Game Modal 2 -->
-    <div class="modal fade" id="editGameModal2" tabindex="-1" aria-labelledby="editGameModalLabel2" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editGameModalLabel2">Edit Game: Valorant</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="gameTitle2">Game Title</label>
-                        <input type="text" class="form-control" id="gameTitle2" value="Valorant">
-                    </div>
-                    <div class="form-group">
-                        <label for="gameImage2">Game Image</label>
-                        <input type="file" class="form-control-file" id="gameImage2">
-                    </div>
-                    <div class="form-group">
-                        <label for="gameDescription2">Game Description</label>
-                        <textarea class="form-control" id="gameDescription2" rows="3">A tactical first-person shooter game.</textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save Changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Bootstrap JS and dependencies -->
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
+        function saveChanges(gameId) {
+            var gameName = document.getElementById('gameName' + gameId).value;
+            var gameDescription = document.getElementById('gameDescription' + gameId).value;
+            var gameImage = document.getElementById('gameImage' + gameId).files[0];
+            // Perform AJAX request to save changes (implement this function on the server-side)
+            console.log('Saving changes for game ' + gameId + ':', gameName, gameDescription, gameImage);
+        }
         document.addEventListener('DOMContentLoaded', function () {
             var links = document.querySelectorAll('.sidebar a');
             var sections = document.querySelectorAll('.content');
@@ -521,7 +554,6 @@
     </script>
 </body>
 </html>
-
 
 
 
