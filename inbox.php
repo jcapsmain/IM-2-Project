@@ -31,21 +31,23 @@
                             c.client_ID = bs.traineeID WHERE bs.traineeID = $traineeID");
                             $ignRow = mysqli_fetch_assoc($ignSQL);
                             $IGN = $ignRow["username"];
+                            $inboxRequest = 'Coaching Request';
                             echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
                             // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
                             echo '<div class="contact-info ml-3">';
                             echo '<h5>' . $IGN . '</h5>';
-                            echo '<p>Coaching Request</p>';
+                            echo '<p>'. $inboxRequest .'</p>';
                             echo '</div>';
                             echo '</div>';
                         }
                         else {
                             $IGN = $boosterRow["IGN"];
+                            $inboxRequest = 'Request Accepted';
                             echo '<div class="contact p-3 border-bottom" onclick="showRequest(\'' . htmlspecialchars($IGN) . '\')">';
                             // echo '<img src="' . $boosterRow['profile_image'] . '" alt="User Image" class="rounded-circle" width="50">';
                             echo '<div class="contact-info ml-3">';
                             echo '<h5>' . $IGN . '</h5>';
-                            echo '<p>Request Accepted</p>';
+                            echo '<p>' . $inboxRequest . '</p>';
                             echo '</div>';
                             echo '</div>';
                         }
