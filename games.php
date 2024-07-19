@@ -76,9 +76,9 @@
         <div id="HeadCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-content text-start transparent-background">
                 <div class="carousel-caption">
-                    <h1>If you so wish to become a coach</h1><br></br>
-                    <p>Click this button below to become one of our coaches and help <br></br> 
-                        fellow gamers climb the ranks</p>
+                    <h1>Become a Coach Today!</h1><br></br>
+                    <p>Take the first step towards coaching excellence. <br></br> 
+                    Click the button below to join our ranks and assist fellow gamers in their climb to the top.</p>
                 </div>
                 <div class="carousel-buttons">
                     <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#createAccountModal" id="start_now">Start Now</button>
@@ -174,7 +174,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="form-label" for="gameRank">Game Rank</label>
+                                <label class="form-label">Game Rank</label>
                                 <select class="form-select" id="sessiongameRank" name="sessiongameRank" required>
                                     <?php 
                                         $gamerankquery = mysqli_query($conn ,"SELECT * FROM game g JOIN game_info gi ON g.game_id = gi.gameID WHERE g.gameDescription = '$games' GROUP BY gi.gameRank ORDER BY gi.gameinfoID ASC");
@@ -220,13 +220,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Ensure input is rounded to two decimal places on input change
-        document.getElementById('price').addEventListener('input', function() {
-            this.value = parseFloat(this.value).toFixed(2);
-        });
-    </script>
 
             <!-- JavaScript to set modal form values -->
     <script>

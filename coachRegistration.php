@@ -232,7 +232,12 @@
             </div>
 
 
-    
+    <script>
+        // Ensure input is rounded to two decimal places on input change
+        document.getElementById('price').addEventListener('input', function() {
+            this.value = parseFloat(this.value).toFixed(2);
+        });
+    </script>
 
     
 
