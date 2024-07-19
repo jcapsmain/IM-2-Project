@@ -44,13 +44,13 @@
         $sessionStartTime = $_POST["startTime"];
         $sessionEndTime = $_POST["endTime"];
         $sessiontrainerID = $_SESSION["client_ID"];
-        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boosting_session WHERE trainerID = '$sessiontrainerID'");
+        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boostsession WHERE traineeID = '$sessiontrainerID'");
         if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
             echo "<script> alert('You already have a coach'); </script>";
             
         }
         else{
-            $sessionRegisterQuery = "INSERT INTO boosting_session VALUES ('', '$sessiontrainerID', '$sessionBoosterID', '$games', '$sessionGameRank', '$sessionStartDate', '$sessionEndDate', '$sessionStartTime',  '$sessionEndTime')";
+            $sessionRegisterQuery = "INSERT INTO boostsession VALUES ('', '$sessiontrainerID', '$sessionBoosterID', '$games', '$sessionGameRank', '$sessionStartDate', '$sessionEndDate', '$sessionStartTime',  '$sessionEndTime', 'On hold')";
             mysqli_query($conn,$sessionRegisterQuery);
             echo"<script> alert('Registration Succesful'); </script>";
         }
