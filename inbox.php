@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="css/inbox.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
-<body class="bg-secondary">
+<body class="bg-secondary pt-5 mt-5">
     <div class="container-fluid bg-secondary">
         <div class="row no-gutters">
             <div class="col-3 border-right bg-secondary">
@@ -22,6 +22,222 @@
                     <?php
                     // Array of users with different statuses
                     $users = [
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'ign' => 'IGN',
+                            'uid' => 'UID',
+                            'game_rank' => 'Rank',
+                            'profile_image' => 'resources/img_avatar2.webp',
+                            'status' => 'Coaching request'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Accepted',
+                            'coach_email' => 'coach@example.com',
+                            'coach_bio' => 'Coaches other soacial media links',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
+                        [
+                            'username' => 'Username',
+                            'game_name' => 'Game Name',
+                            'status' => 'Request Rejected',
+                            'coach_username' => 'Coach Name',
+                            'profile_image' => 'resources/img_avatar2.webp'
+                        ],
                         [
                             'username' => 'Username',
                             'game_name' => 'Game Name',
@@ -61,7 +277,7 @@
                     ?>
                 </div>
             </div>
-            <div class="col-9">
+            <div class="col-9 position-fixed end-0 top-0 pt-5 mt-4">
                 <div class="message-header p-3 border-bottom bg-secondary">
                     <img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">
                     <h5 class="ml-3" id="username">Username</h5>
