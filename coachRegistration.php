@@ -166,7 +166,7 @@
                                 
                                     <div class="col-md-6">
                                         <label for="UID" class="form-label">UID</label>
-                                        <input placeholder="Enter User ID" type="number" class="form-control" id="uid" name="coachUid" required>
+                                        <input placeholder="Enter User ID" type="text" class="form-control" id="uid" name="coachUid" required>
                                     </div>
 
 

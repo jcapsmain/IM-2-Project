@@ -19,7 +19,7 @@
         }
         else{
             if($registerPassword == $registerConfirmpassword) {
-                $registerQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion')";
+                $registerQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion', 'hello')";
                 mysqli_query($conn,$registerQuery);
                 echo"<script> alert('Registration Succesful'); </script>";
             }
