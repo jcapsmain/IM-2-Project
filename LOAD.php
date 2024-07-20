@@ -2,6 +2,13 @@
     require 'config.php';
     include 'navbar.php'; 
 ?>
+
+<style>
+    .contact {
+        cursor: pointer; /* Set pointer cursor */
+    }
+</style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,19 +49,45 @@
                                         JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
                                         WHERE bs.status = 'All Accepted'");
                                         while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
-                                    ?>
-                                    <div class="d-flex align-items-center">
+                                            if($boosterRow['traineeID'] != $_SESSION["client_ID"]) {
+                                                $traineeID = $boosterRow['traineeID'];
+                                                $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
+                                                    JOIN boostsession bs ON c.client_ID = bs.traineeID 
+                                                    WHERE bs.traineeID = $traineeID");
+                                                $ignRow = mysqli_fetch_assoc($ignSQL);
+                                                $IGN = htmlspecialchars($ignRow["username"]);
+                                                $sessID = $ignRow["boostSessionID"];
+                                            echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
+                                
+                                            
+                                                ?>
                                     <!-- Circular Image -->
                                     <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
 
                                     <!-- Text Container -->
                                     <div class="d-flex flex-column">
-                                        <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
-                                        <p class="mb-0 text-light">Time</p> 
+                                        <?php echo'<strong><p class="mb-0 text-light">'.$IGN.'</p></strong>'; ?>
+                                        <p class="mb-0 text-light">Coach</p> 
                                     </div>
                                     </div>
                                     <?php 
-                                        }
+                                    }else {
+                                        $IGN = $boosterRow["username"];
+                                        echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
+                            
+                                        
+                                            ?>
+                                <!-- Circular Image -->
+                                <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
+
+                                <!-- Text Container -->
+                                <div class="d-flex flex-column">
+                                    <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
+                                    <p class="mb-0 text-light">Trainee</p> 
+                                </div>
+                                </div>
+                                    <?php 
+                                    }}
                                     ?>
                                 
                             </div>
@@ -63,9 +96,19 @@
                     </div>
                 </div>
             </div>
+            
+            <?php
+                // Reset the mysqli pointer to reuse the result set
+                mysqli_data_seek($boosterSession, 0);
+
+                // Output message details for each session
+                while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+                    $IGN = $boosterRow["username"];
+                    echo '<div class="col-md-9 no-padding position-fixed end-0 top-2 pt-5 mt-5" id="' .$IGN. '" style="display:block;">';
+            ?>
 
             <!-- Right Container -->
-            <div class="col-md-9 no-padding">
+            
                 <div class="card full-height bg-dark">
                     <div class="card-body no-padding">
                         <!-- Header Section -->
@@ -75,7 +118,7 @@
                             <img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50" height="50">
 
                             <!-- Username -->
-                            <h5 class="ml-3 mb-0 text-light" id="username">Username</h5>
+                            <h5 class="ml-3 mb-0 text-light" id="username"><?php echo'<p>'.$boosterRow["username"].'</p>';?></h5>
                         </div>
 
                         <!-- Content Section -->
@@ -84,13 +127,12 @@
                                 <div class="col-6">
                                     <div class="alert alert-secondary bg-secondary text-white" role="alert">
                                         <div class="mt-3">
-                                            <h1>Game: Valorant</h1>
-                                            <p>IGN: Username</p>
-                                            <p>UID: 123456789</p>
-                                            <p>DATE start: DATE</p>
-                                            <p>DATE end: DATE</p>
-                                            <p>Schedule start: TIME</p>
-                                            <p>Schedule end: TIME</p>
+                                        <?php echo'<p>Username: '.$IGN.'</p>';?>
+                                            <p>UID: <?php echo $boosterRow["coach_uid"];?></p>
+                                            <p>DATE start: <?php echo $boosterRow["startDate"];?></p>
+                                            <p>DATE end: <?php echo $boosterRow["endDate"];?></p>
+                                            <p>Schedule start: <?php echo $boosterRow["startTime"];?></p>
+                                            <p>Schedule end: <?php echo $boosterRow["endTime"];?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +164,29 @@
                     </div>
                 </div>
             </div>
+            <?php 
+                }
+            ?>
+
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+    function showMessage(targetId) {
+        var sections = document.querySelectorAll('.col-md-9');
+        
+
+        sections.forEach(function(section) {
+            if (section.id === targetId) {
+                section.style.display = 'block';
+            } else {
+                section.style.display = 'none';
+            }
+        });
+    }
+</script>
 </body>
 </html>
