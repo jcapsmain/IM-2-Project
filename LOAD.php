@@ -49,45 +49,20 @@
                                         JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
                                         WHERE bs.status = 'All Accepted'");
                                         while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
-                                            if($boosterRow['traineeID'] != $_SESSION["client_ID"]) {
-                                                $traineeID = $boosterRow['traineeID'];
-                                                $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
-                                                    JOIN boostsession bs ON c.client_ID = bs.traineeID 
-                                                    WHERE bs.traineeID = $traineeID");
-                                                $ignRow = mysqli_fetch_assoc($ignSQL);
-                                                $IGN = htmlspecialchars($ignRow["username"]);
-                                                $sessID = $ignRow["boostSessionID"];
+                                            $IGN = $boosterRow["username"];
                                             echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
-                                
-                                            
-                                                ?>
+                                    ?>
                                     <!-- Circular Image -->
                                     <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
 
                                     <!-- Text Container -->
                                     <div class="d-flex flex-column">
-                                        <?php echo'<strong><p class="mb-0 text-light">'.$IGN.'</p></strong>'; ?>
-                                        <p class="mb-0 text-light">Coach</p> 
+                                        <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
+                                        <p class="mb-0 text-light">Time</p> 
                                     </div>
                                     </div>
                                     <?php 
-                                    }else {
-                                        $IGN = $boosterRow["username"];
-                                        echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
-                            
-                                        
-                                            ?>
-                                <!-- Circular Image -->
-                                <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
-
-                                <!-- Text Container -->
-                                <div class="d-flex flex-column">
-                                    <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
-                                    <p class="mb-0 text-light">Trainee</p> 
-                                </div>
-                                </div>
-                                    <?php 
-                                    }}
+                                        }
                                     ?>
                                 
                             </div>
@@ -132,7 +107,7 @@
                                             <p>DATE start: <?php echo $boosterRow["startDate"];?></p>
                                             <p>DATE end: <?php echo $boosterRow["endDate"];?></p>
                                             <p>Schedule start: <?php echo $boosterRow["startTime"];?></p>
-                                            <p>Schedule end: <?php echo $boosterRow["endTime"];?></p>
+                                            <p>Schedule end: <?php echo $boosterRow["coach_uid"];?></p>
                                         </div>
                                     </div>
                                 </div>
