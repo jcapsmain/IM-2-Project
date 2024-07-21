@@ -19,7 +19,7 @@
         }
         else{
             if($registerPassword == $registerConfirmpassword) {
-                $registerQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion')";
+                $registerQuery = "INSERT INTO client VALUES ('', '$registerUsername', '$registerFirstname', '$registerLastname', '$registerEncpassword', '$registerPhonenumber', '$registerEmail', '$registerDate',  '$registerRegion', 'hello')";
                 mysqli_query($conn,$registerQuery);
                 echo"<script> alert('Registration Succesful'); </script>";
             }
@@ -115,8 +115,8 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
                     <li><a class="dropdown-item" href="profile.php" id="text-profile">Profile</a></li>
-                    <li><a class="dropdown-item" href="schedule.php" id="text-schedule">
-                        <img src="resources/calendar.svg" alt="schedule" id="schedule" style="width: 20px; height: 20px;"> Schedule
+                    <li><a class="dropdown-item" href="LOAD.php" id="text-schedule">
+                        <img src="resources/calendar.svg" alt="schedule" id="schedule" style="width: 20px; height: 20px;"> Load
                     </a></li>
                     <li><a class="dropdown-item" href="inbox.php" id="text-inbox">
                         <img src="resources/inbox.svg" alt="Inbox" id="inbox"> Inbox
