@@ -2,32 +2,32 @@
     require 'config.php';
     include 'navbar.php'; 
 
-    require 'vendor/autoload.php'; // Make sure to use the correct path to autoload.php
+    // require 'vendor/autoload.php'; // Make sure to use the correct path to autoload.php
 
-    \Stripe\Stripe::setApiKey('your-secret-key-here');
+    // \Stripe\Stripe::setApiKey('your-secret-key-here');
 
-    header('Content-Type: application/json');
+    // header('Content-Type: application/json');
 
-    $checkoutSession = \Stripe\Checkout\Session::create([
-        'payment_method_types' => ['card'],
-        'line_items' => [
-            [
-                'price_data' => [
-                    'currency' => 'usd',
-                    'product_data' => [
-                        'name' => 'Coaching Service',
-                    ],
-                    'unit_amount' => 1000000, // Amount in cents
-                ],
-                'quantity' => 1,
-            ],
-        ],
-        'mode' => 'payment',
-        'success_url' => 'https://yourdomain.com/success.html',
-        'cancel_url' => 'https://yourdomain.com/cancel.html',
-    ]);
+    // $checkoutSession = \Stripe\Checkout\Session::create([
+    //     'payment_method_types' => ['card'],
+    //     'line_items' => [
+    //         [
+    //             'price_data' => [
+    //                 'currency' => 'usd',
+    //                 'product_data' => [
+    //                     'name' => 'Coaching Service',
+    //                 ],
+    //                 'unit_amount' => 1000000, // Amount in cents
+    //             ],
+    //             'quantity' => 1,
+    //         ],
+    //     ],
+    //     'mode' => 'payment',
+    //     'success_url' => 'https://yourdomain.com/success.html',
+    //     'cancel_url' => 'https://yourdomain.com/cancel.html',
+    // ]);
 
-    echo json_encode(['id' => $checkoutSession->id]);
+    // echo json_encode(['id' => $checkoutSession->id]);
 ?>
 
 <style>
@@ -76,6 +76,7 @@
                                         JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
                                         WHERE bs.status = 'All Accepted'");
                                         while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+                                            if($boosterRow["client_ID"] != $_SESSION["client_ID"]) {
                                             $IGN = $boosterRow["username"];
                                             echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
                                     ?>
@@ -89,7 +90,7 @@
                                     </div>
                                     </div>
                                     <?php 
-                                        }
+                                            }}
                                     ?>
                                 
                             </div>
@@ -173,8 +174,7 @@
         </div>
     </div>
 
-<<<<<<< HEAD
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- <script src="https://js.stripe.com/v3/"></script>
     <script>
     // Your Stripe public key
     const stripe = Stripe('pk_test_51PeJpOKQLR7cI20jlv4bTAQMWS9ZmyiCwhb1eaKg0CgX9PlgPjDRkW5gXJUMrxesv6WsYYjesqQnXP1ptWV2FGRP00L4xZN24u');
@@ -198,9 +198,8 @@
             console.error('Error:', error);
         });
     });
-    </script>
+    </script> -->
 
-=======
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -218,6 +217,5 @@
         });
     }
 </script>
->>>>>>> b3cc8c772cfdfab84fab5cce85748ae5c732ccd2
 </body>
 </html>

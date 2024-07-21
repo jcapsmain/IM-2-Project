@@ -122,7 +122,7 @@
                         <img src="resources/inbox.svg" alt="Inbox" id="inbox"> Inbox
                     </a></li>
                     <li><a class="dropdown-item" href="LOAD.php" id="text-load">
-                        <img src="resources/Load.svg" alt="Inbox" id="load"> View Load
+                         View Load
                     </a></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" data-bs-toggle="modal" data-bs-target="#signInModal" id="login">Login</button></li>
                     <li class="text-center"><button class="btn btn-dark" type="button" onclick="location.href='logout.php';" id="logout"><a>logout</a></button></li>

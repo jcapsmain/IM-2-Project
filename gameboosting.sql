@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 17, 2024 at 04:19 PM
+-- Generation Time: Jul 22, 2024 at 01:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,24 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `gameboosting`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `boosting_session`
---
-
-CREATE TABLE `boosting_session` (
-  `boostSessionID` int(11) NOT NULL,
-  `trainerID` int(11) NOT NULL,
-  `boosterID` int(11) NOT NULL,
-  `game` varchar(255) NOT NULL,
-  `gameRank` varchar(255) NOT NULL,
-  `startDate` date NOT NULL,
-  `endDate` date NOT NULL,
-  `startTime` time NOT NULL,
-  `endTime` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -66,6 +48,39 @@ INSERT INTO `boosting_session_report` (`boosting_session_rep_id`, `boosting_sess
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `boostsession`
+--
+
+CREATE TABLE `boostsession` (
+  `boostSessionID` int(11) NOT NULL,
+  `traineeID` int(11) NOT NULL,
+  `boosterID` int(11) NOT NULL,
+  `game` varchar(255) NOT NULL,
+  `gameRank` varchar(50) NOT NULL,
+  `startDate` date NOT NULL,
+  `endDate` date NOT NULL,
+  `startTime` time NOT NULL,
+  `endTime` time NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'On hold'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `boostsession`
+--
+
+INSERT INTO `boostsession` (`boostSessionID`, `traineeID`, `boosterID`, `game`, `gameRank`, `startDate`, `endDate`, `startTime`, `endTime`, `status`) VALUES
+(1, 2, 1, 'League of Legends', 'Iron', '2024-07-19', '2024-07-20', '10:00:00', '12:00:00', 'All Accepted'),
+(2, 3, 1, 'League of Legends', 'Iron', '2024-07-21', '2024-07-22', '10:00:00', '12:00:00', 'Coach Accepted'),
+(3, 4, 1, 'League of Legends', 'Iron', '2024-07-23', '2024-07-24', '10:00:00', '12:00:00', 'On hold'),
+(4, 5, 1, 'League of Legends', 'Iron', '2024-07-25', '2024-07-26', '10:00:00', '12:00:00', 'Coach Rejected'),
+(5, 1, 31, 'Dota 2', 'Herald', '2024-07-31', '2024-08-01', '13:00:00', '15:00:00', 'All Accepted'),
+(6, 1, 27, 'Counter Strike 2', 'Gold Nova', '2024-07-21', '2024-07-22', '07:30:00', '17:30:00', 'On hold'),
+(7, 1, 27, 'Counter Strike 2', 'Gold Nova', '2024-07-21', '2024-07-22', '07:30:00', '17:30:00', 'On hold'),
+(8, 2, 66, 'Chess', 'Between 1000 and 1199', '2024-07-21', '2024-07-22', '13:00:00', '15:00:00', 'On hold');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `client`
 --
 
@@ -87,7 +102,7 @@ CREATE TABLE `client` (
 --
 
 INSERT INTO `client` (`client_ID`, `username`, `fname`, `lname`, `password`, `phoneNumber`, `email`, `dateofbirth`, `region`, `bio`) VALUES
-(1, 'johnCapoy123', 'John', 'Capoy', '202cb962ac59075b964b07152d234b70', '9823423421', 'johncapoy@gmail.com', '1999-05-03', 'North America', 'hello123'),
+(1, 'johnCapoy123', 'John', 'CapoyZa', '202cb962ac59075b964b07152d234b70', '98234234212', 'johncapoy@gmail.com', '1999-05-03', 'Europe', 'hello12421'),
 (2, 'skibidi', 'Skib', 'Idi', '202cb962ac59075b964b07152d234b70', '0923421241', 'skibidi@mail.com', '2015-10-26', 'Asia', 'hello'),
 (3, 'user', 'user', 'user', '202cb962ac59075b964b07152d234b70', '3251551', 'user@mail.com', '2002-07-18', 'Asia', 'hello'),
 (4, 'user1', 'John', 'Smith', 'pass1', '123-456-7890', 'user1@example.com', '1990-01-01', 'North America', 'hello'),
@@ -143,7 +158,9 @@ INSERT INTO `client` (`client_ID`, `username`, `fname`, `lname`, `password`, `ph
 (54, 'Johnn', 'Cpooyy', 'SADAW', '202cb962ac59075b964b07152d234b70', '98234281234', 'john@mail.com', '2005-08-29', 'Asia', 'hello'),
 (55, 'Jaczyo', 'Kiwoi', 'JAXWRer', '202cb962ac59075b964b07152d234b70', '09783327242', 'jawx@gmail.com', '1997-10-26', 'Oceania', 'hello'),
 (56, 'example', 'exam', 'ple', '202cb962ac59075b964b07152d234b70', '213512322', 'example@mail.com', '2003-10-29', 'Europe', 'hello'),
-(57, '1', '27', 'Counter Strike 2', 'Master Guardian', '2024-03-12', '2004-04-12', '0000-00-00', '', 'hello');
+(57, '1', '27', 'Counter Strike 2', 'Master Guardian', '2024-03-12', '2004-04-12', '0000-00-00', '', 'hello'),
+(58, 'franzGuessr', 'franz', 'Guessr', '4297f44b13955235245b2497399d7a93', '09297783232', 'franz@mail.com', '2002-09-21', 'Europe', 'hello'),
+(59, 'Trying', 'Try', 'Ying', '4297f44b13955235245b2497399d7a93', '09297718273', 'ying@mail.com', '2002-10-02', 'Asia', 'hello');
 
 -- --------------------------------------------------------
 
@@ -155,7 +172,7 @@ CREATE TABLE `client_booster` (
   `client_booster_id` int(11) NOT NULL,
   `IGN` varchar(255) NOT NULL,
   `client_id` int(11) NOT NULL,
-  `coach_uid` int(11) NOT NULL,
+  `coach_uid` varchar(255) NOT NULL,
   `game` varchar(255) NOT NULL,
   `gamerank` varchar(255) NOT NULL,
   `game_uid_screenshot` varchar(255) NOT NULL,
@@ -170,66 +187,71 @@ CREATE TABLE `client_booster` (
 --
 
 INSERT INTO `client_booster` (`client_booster_id`, `IGN`, `client_id`, `coach_uid`, `game`, `gamerank`, `game_uid_screenshot`, `game_rank_screenshot`, `price`, `upload_Date`, `status`) VALUES
-(1, 'Summoner1', 1, 101, 'League of Legends', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
-(2, 'Summoner2', 2, 102, 'League of Legends', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(3, 'Summoner3', 3, 103, 'League of Legends', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(4, 'Summoner4', 4, 104, 'League of Legends', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
-(5, 'Summoner5', 5, 105, 'League of Legends', 'GrandMaster', '', '', 10.00, '2024-07-14', 'Available'),
-(6, 'Summoner6', 6, 106, 'League of Legends', 'Challenger', '', '', 10.00, '2024-07-14', 'Available'),
-(7, 'Rocketeer1', 7, 107, 'Rocket League', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(8, 'Rocketeer2', 8, 108, 'Rocket League', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(9, 'Rocketeer3', 9, 109, 'Rocket League', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
-(10, 'Rocketeer4', 10, 110, 'Rocket League', 'Grand Champion', '', '', 10.00, '2024-07-14', 'Available'),
-(11, 'Rocketeer5', 11, 111, 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
-(12, 'FortnitePlayer1', 12, 112, 'Fortnite', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(13, 'FortnitePlayer2', 13, 113, 'Fortnite', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(14, 'FortnitePlayer3', 14, 114, 'Fortnite', 'Elite', '', '', 10.00, '2024-07-14', 'Available'),
-(15, 'FortnitePlayer4', 15, 115, 'Fortnite', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
-(16, 'FortnitePlayer5', 16, 116, 'Fortnite', 'Unreal', '', '', 10.00, '2024-07-14', 'Available'),
-(17, 'ValorantAgent1', 17, 117, 'Valorant', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
-(18, 'ValorantAgent2', 18, 118, 'Valorant', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(19, 'ValorantAgent3', 19, 119, 'Valorant', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(20, 'ValorantAgent4', 20, 120, 'Valorant', 'Ascendant', '', '', 10.00, '2024-07-14', 'Available'),
-(21, 'ValorantAgent5', 21, 121, 'Valorant', 'Immortal', '', '', 10.00, '2024-07-14', 'Available'),
-(22, 'ValorantAgent6', 22, 122, 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
-(23, 'CSPlayer1', 23, 123, 'Counter Strike 2', 'Gold Nova', '', '', 10.00, '2024-07-14', 'Available'),
-(24, 'CSPlayer2', 24, 124, 'Counter Strike 2', 'Master Guardian', '', '', 10.00, '2024-07-14', 'Available'),
-(25, 'CSPlayer3', 25, 125, 'Counter Strike 2', 'Legendary Eagle', '', '', 10.00, '2024-07-14', 'Available'),
-(26, 'CSPlayer4', 26, 126, 'Counter Strike 2', 'Supreme Master First Class', '', '', 10.00, '2024-07-14', 'Available'),
-(27, 'CSPlayer5', 27, 127, 'Counter Strike 2', 'The Global Elite', '', '', 10.00, '2024-07-14', 'Available'),
-(28, 'DotAPlayer1', 28, 128, 'Dota 2', 'Archon', '', '', 10.00, '2024-07-14', 'Available'),
-(29, 'DotAPlayer2', 29, 129, 'Dota 2', 'Legend', '', '', 10.00, '2024-07-14', 'Available'),
-(30, 'DotAPlayer3', 30, 130, 'Dota 2', 'Ancient', '', '', 10.00, '2024-07-14', 'Available'),
-(31, 'DotAPlayer4', 31, 131, 'Dota 2', 'Divine', '', '', 10.00, '2024-07-14', 'Available'),
-(32, 'ChessPlayer1', 32, 132, 'Chess', 'Expert/National Candidate Master', '', '', 10.00, '2024-07-14', 'Available'),
-(33, 'ChessPlayer2', 33, 133, 'Chess', 'FIDE Candidate Master/National Master', '', '', 10.00, '2024-07-14', 'Available'),
-(34, 'ChessPlayer3', 34, 134, 'Chess', 'FIDE Master', '', '', 10.00, '2024-07-14', 'Available'),
-(35, 'ChessPlayer4', 35, 135, 'Chess', 'International Master', '', '', 10.00, '2024-07-14', 'Available'),
-(36, 'ChessPlayer5', 36, 136, 'Chess', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
-(37, 'SiegePlayer1', 37, 137, 'Rainbow Six Siege', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
-(38, 'SiegePlayer2', 38, 138, 'Rainbow Six Siege', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(39, 'SiegePlayer3', 39, 139, 'Rainbow Six Siege', 'Emerald', '', '', 10.00, '2024-07-14', 'Available'),
-(40, 'SiegePlayer4', 40, 140, 'Rainbow Six Siege', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(41, 'SiegePlayer5', 41, 141, 'Rainbow Six Siege', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
-(42, 'OverwatchPlayer1', 42, 142, 'Overwatch 2', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
-(43, 'OverwatchPlayer2', 43, 143, 'Overwatch 2', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
-(44, 'OverwatchPlayer3', 44, 144, 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
-(45, 'OverwatchPlayer4', 45, 145, 'Overwatch 2', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
-(46, 'OverwatchPlayer5', 46, 146, 'Overwatch 2', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
-(47, 'OverwatchPlayer6', 47, 147, 'Overwatch 2', 'Top 500', '', '', 10.00, '2024-07-14', 'Available'),
-(48, 'TekkenPlayer1', 48, 148, 'Tekken 8', 'Garyu', '', '', 10.00, '2024-07-14', 'Available'),
-(49, 'TekkenPlayer2', 49, 149, 'Tekken 8', 'Shinryu', '', '', 10.00, '2024-07-14', 'Available'),
-(50, 'TekkenPlayer3', 50, 150, 'Tekken 8', 'Tenryu', '', '', 10.00, '2024-07-14', 'Available'),
-(51, 'TekkenPlayer4', 51, 151, 'Tekken 8', 'Mighty Ruler', '', '', 10.00, '2024-07-14', 'Available'),
-(52, 'TekkenPlayer5', 52, 152, 'Tekken 8', 'Flame Ruler', '', '', 10.00, '2024-07-14', 'Available'),
-(53, 'TekkenPlayer6', 53, 153, 'Tekken 8', 'Battle Ruler', '', '', 10.00, '2024-07-14', 'Available'),
-(54, 'TekkenPlayer7', 54, 154, 'Tekken 8', 'Fujin', '', '', 10.00, '2024-07-14', 'Available'),
-(55, 'Valorantee', 1, 125612314, 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
-(56, 'Johnee', 1, 325125132, 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
-(57, 'jOHNY', 1, 12412314, 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
-(58, 'asdf123', 56, 132131, 'Fortnite', '', 'yeah.png', 'Prospectus.png', 10.01, '0000-00-00', 'Available'),
-(59, 'examplerani', 56, 1251234, 'League of Legends', 'GrandMaster', 'im2.drawio (1).png', 'im2.drawio (2).png', 12.01, '0000-00-00', 'Available'),
-(60, 'TryMyAim', 56, 321342432, 'Rainbow Six Siege', 'Emerald', 'number 3.png', 'Number2.png', 11.00, '0000-00-00', 'Available');
+(1, 'Summoner1', 1, '101', 'League of Legends', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(2, 'Summoner2', 2, '102', 'League of Legends', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(3, 'Summoner3', 3, '103', 'League of Legends', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(4, 'Summoner4', 4, '104', 'League of Legends', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(5, 'Summoner5', 5, '105', 'League of Legends', 'GrandMaster', '', '', 10.00, '2024-07-14', 'Available'),
+(6, 'Summoner6', 6, '106', 'League of Legends', 'Challenger', '', '', 10.00, '2024-07-14', 'Available'),
+(7, 'Rocketeer1', 7, '107', 'Rocket League', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(8, 'Rocketeer2', 8, '108', 'Rocket League', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(9, 'Rocketeer3', 9, '109', 'Rocket League', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(10, 'Rocketeer4', 10, '110', 'Rocket League', 'Grand Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(11, 'Rocketeer5', 11, '111', 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(12, 'FortnitePlayer1', 12, '112', 'Fortnite', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(13, 'FortnitePlayer2', 13, '113', 'Fortnite', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(14, 'FortnitePlayer3', 14, '114', 'Fortnite', 'Elite', '', '', 10.00, '2024-07-14', 'Available'),
+(15, 'FortnitePlayer4', 15, '115', 'Fortnite', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(16, 'FortnitePlayer5', 16, '116', 'Fortnite', 'Unreal', '', '', 10.00, '2024-07-14', 'Available'),
+(17, 'ValorantAgent1', 17, '117', 'Valorant', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(18, 'ValorantAgent2', 18, '118', 'Valorant', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(19, 'ValorantAgent3', 19, '119', 'Valorant', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(20, 'ValorantAgent4', 20, '120', 'Valorant', 'Ascendant', '', '', 10.00, '2024-07-14', 'Available'),
+(21, 'ValorantAgent5', 21, '121', 'Valorant', 'Immortal', '', '', 10.00, '2024-07-14', 'Available'),
+(22, 'ValorantAgent6', 22, '122', 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
+(23, 'CSPlayer1', 23, '123', 'Counter Strike 2', 'Gold Nova', '', '', 10.00, '2024-07-14', 'Available'),
+(24, 'CSPlayer2', 24, '124', 'Counter Strike 2', 'Master Guardian', '', '', 10.00, '2024-07-14', 'Available'),
+(25, 'CSPlayer3', 25, '125', 'Counter Strike 2', 'Legendary Eagle', '', '', 10.00, '2024-07-14', 'Available'),
+(26, 'CSPlayer4', 26, '126', 'Counter Strike 2', 'Supreme Master First Class', '', '', 10.00, '2024-07-14', 'Available'),
+(27, 'CSPlayer5', 27, '127', 'Counter Strike 2', 'The Global Elite', '', '', 10.00, '2024-07-14', 'Available'),
+(28, 'DotAPlayer1', 28, '128', 'Dota 2', 'Archon', '', '', 10.00, '2024-07-14', 'Available'),
+(29, 'DotAPlayer2', 29, '129', 'Dota 2', 'Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(30, 'DotAPlayer3', 30, '130', 'Dota 2', 'Ancient', '', '', 10.00, '2024-07-14', 'Available'),
+(31, 'DotAPlayer4', 31, '131', 'Dota 2', 'Divine', '', '', 10.00, '2024-07-14', 'Available'),
+(32, 'ChessPlayer1', 32, '132', 'Chess', 'Expert/National Candidate Master', '', '', 10.00, '2024-07-14', 'Available'),
+(33, 'ChessPlayer2', 33, '133', 'Chess', 'FIDE Candidate Master/National Master', '', '', 10.00, '2024-07-14', 'Available'),
+(34, 'ChessPlayer3', 34, '134', 'Chess', 'FIDE Master', '', '', 10.00, '2024-07-14', 'Available'),
+(35, 'ChessPlayer4', 35, '135', 'Chess', 'International Master', '', '', 10.00, '2024-07-14', 'Available'),
+(36, 'ChessPlayer5', 36, '136', 'Chess', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
+(37, 'SiegePlayer1', 37, '137', 'Rainbow Six Siege', 'Gold', '', '', 10.00, '2024-07-14', 'Available'),
+(38, 'SiegePlayer2', 38, '138', 'Rainbow Six Siege', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(39, 'SiegePlayer3', 39, '139', 'Rainbow Six Siege', 'Emerald', '', '', 10.00, '2024-07-14', 'Available'),
+(40, 'SiegePlayer4', 40, '140', 'Rainbow Six Siege', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(41, 'SiegePlayer5', 41, '141', 'Rainbow Six Siege', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(42, 'OverwatchPlayer1', 42, '142', 'Overwatch 2', 'Platinum', '', '', 10.00, '2024-07-14', 'Available'),
+(43, 'OverwatchPlayer2', 43, '143', 'Overwatch 2', 'Diamond', '', '', 10.00, '2024-07-14', 'Available'),
+(44, 'OverwatchPlayer3', 44, '144', 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(45, 'OverwatchPlayer4', 45, '145', 'Overwatch 2', 'Grandmaster', '', '', 10.00, '2024-07-14', 'Available'),
+(46, 'OverwatchPlayer5', 46, '146', 'Overwatch 2', 'Champion', '', '', 10.00, '2024-07-14', 'Available'),
+(47, 'OverwatchPlayer6', 47, '147', 'Overwatch 2', 'Top 500', '', '', 10.00, '2024-07-14', 'Available'),
+(48, 'TekkenPlayer1', 48, '148', 'Tekken 8', 'Garyu', '', '', 10.00, '2024-07-14', 'Available'),
+(49, 'TekkenPlayer2', 49, '149', 'Tekken 8', 'Shinryu', '', '', 10.00, '2024-07-14', 'Available'),
+(50, 'TekkenPlayer3', 50, '150', 'Tekken 8', 'Tenryu', '', '', 10.00, '2024-07-14', 'Available'),
+(51, 'TekkenPlayer4', 51, '151', 'Tekken 8', 'Mighty Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(52, 'TekkenPlayer5', 52, '152', 'Tekken 8', 'Flame Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(53, 'TekkenPlayer6', 53, '153', 'Tekken 8', 'Battle Ruler', '', '', 10.00, '2024-07-14', 'Available'),
+(54, 'TekkenPlayer7', 54, '154', 'Tekken 8', 'Fujin', '', '', 10.00, '2024-07-14', 'Available'),
+(55, 'Valorantee', 1, '125612314', 'Valorant', 'Radiant', '', '', 10.00, '2024-07-14', 'Available'),
+(56, 'Johnee', 1, '325125132', 'Overwatch 2', 'Master', '', '', 10.00, '2024-07-14', 'Available'),
+(57, 'jOHNY', 1, '12412314', 'Rocket League', 'Supersonic Legend', '', '', 10.00, '2024-07-14', 'Available'),
+(58, 'asdf123', 56, '132131', 'Fortnite', '', 'yeah.png', 'Prospectus.png', 10.01, '0000-00-00', 'Available'),
+(59, 'examplerani', 56, '1251234', 'League of Legends', 'GrandMaster', 'im2.drawio (1).png', 'im2.drawio (2).png', 12.01, '0000-00-00', 'Available'),
+(60, 'TryMyAim', 56, '321342432', 'Rainbow Six Siege', 'Emerald', 'number 3.png', 'Number2.png', 11.00, '0000-00-00', 'Available'),
+(61, 'asdfasdf', 1, '123123123', 'Dota 2', 'Archon', 'Array', 'Array', 10.00, '2024-07-18', 'Pending'),
+(62, 'Jonhyy', 1, '1231', 'Counter Strike 2', 'Master Guardian', 'Array', 'Array', 10.00, '2024-07-18', 'Available'),
+(64, 'StriiNGSHii', 1, '212341234', 'Tekken 8', 'Tekken God', 'im2.drawio (2).png', '3NF.png', 101.00, '2024-07-20', 'Pending'),
+(66, 'JohnnyASD', 1, '123121', 'Chess', 'International Master', 'im2.drawio (1).png', 'im2.drawio (2).png', 10.00, '2024-07-20', 'Available'),
+(67, 'TryYing', 59, '123123123', 'Chess', 'FIDE Master', 'im2.drawio (2).png', 'Prospectus.png', 102.00, '2024-07-22', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -240,24 +262,25 @@ INSERT INTO `client_booster` (`client_booster_id`, `IGN`, `client_id`, `coach_ui
 CREATE TABLE `game` (
   `game_id` int(11) NOT NULL,
   `gameDescription` varchar(255) NOT NULL,
-  `image_path` varchar(255) DEFAULT NULL
+  `image_path` varchar(255) DEFAULT NULL,
+  `uploaded_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `game`
 --
 
-INSERT INTO `game` (`game_id`, `gameDescription`, `image_path`) VALUES
-(1, 'League of Legends', 'resources/Main_Content/League of Legends.jpg'),
-(2, 'Rocket League', 'resources/Main_Content/Rocket League.jpg'),
-(3, 'Fortnite', 'resources/Main_Content/Fortnite.jpg'),
-(4, 'Valorant', 'resources/Main_Content/Valorant.webp'),
-(5, 'Counter Strike 2', 'resources/Main_Content/Counter Strike 2.jpeg'),
-(6, 'Dota 2', 'resources/Main_Content/Dota 2.jpg'),
-(7, 'Chess', 'resources/Main_Content/Chess.jpg'),
-(8, 'Rainbow Six Siege', 'resources/Main_Content/R6.jpg'),
-(9, 'Overwatch 2', 'resources/Main_Content/Overwatch 2.jpg'),
-(10, 'Tekken 8', 'resources/Main_Content/Tekken 8.webp');
+INSERT INTO `game` (`game_id`, `gameDescription`, `image_path`, `uploaded_by`) VALUES
+(1, 'League of Legends', 'resources/Main_Content/League of Legends.jpg', 1),
+(2, 'Rocket League', 'resources/Main_Content/Rocket League.jpg', 1),
+(3, 'Fortnite', 'resources/Main_Content/Fortnite.jpg', 1),
+(4, 'Valorant', 'resources/Main_Content/Valorant.webp', 1),
+(5, 'Counter Strike 2', 'resources/Main_Content/Counter Strike 2.jpeg', 1),
+(6, 'Dota 2', 'resources/Main_Content/Dota 2.jpg', 1),
+(7, 'Chess', 'resources/Main_Content/Chess.jpg', 1),
+(8, 'Rainbow Six Siege', 'resources/Main_Content/R6.jpg', 1),
+(9, 'Overwatch 2', 'resources/Main_Content/Overwatch 2.jpg', 1),
+(10, 'Tekken 8', 'resources/Main_Content/Tekken 8.webp', 1);
 
 -- --------------------------------------------------------
 
@@ -276,115 +299,112 @@ CREATE TABLE `game_info` (
 --
 
 INSERT INTO `game_info` (`gameinfoID`, `gameID`, `gameRank`) VALUES
-(1, 1, 'Gold'),
-(2, 1, 'Platinum'),
-(3, 1, 'Diamond'),
-(4, 1, 'Master'),
-(5, 1, 'GrandMaster'),
-(6, 1, 'Challenger'),
-(7, 2, 'Platinum'),
-(8, 2, 'Diamond'),
-(9, 2, 'Champion'),
-(10, 2, 'Grand Champion'),
-(11, 2, 'Supersonic Legend'),
-(12, 3, 'Platinum'),
-(13, 3, 'Diamond'),
-(14, 3, 'Elite'),
-(15, 3, 'Champion'),
-(16, 3, 'Unreal'),
-(17, 1, 'Gold'),
-(18, 1, 'Platinum'),
-(19, 1, 'Diamond'),
-(20, 1, 'Master'),
-(21, 1, 'GrandMaster'),
-(22, 1, 'Challenger'),
-(23, 2, 'Platinum'),
-(24, 2, 'Diamond'),
-(25, 2, 'Champion'),
-(26, 2, 'Grand Champion'),
-(27, 2, 'Supersonic Legend'),
-(28, 3, 'Platinum'),
-(29, 3, 'Diamond'),
-(30, 3, 'Elite'),
-(31, 3, 'Champion'),
-(32, 3, 'Unreal'),
-(33, 1, 'Gold'),
-(34, 1, 'Platinum'),
-(35, 1, 'Diamond'),
-(36, 1, 'Master'),
-(37, 1, 'GrandMaster'),
-(38, 1, 'Challenger'),
-(39, 2, 'Platinum'),
-(40, 2, 'Diamond'),
-(41, 2, 'Champion'),
-(42, 2, 'Grand Champion'),
-(43, 2, 'Supersonic Legend'),
-(44, 3, 'Platinum'),
-(45, 3, 'Diamond'),
-(46, 3, 'Elite'),
-(47, 3, 'Champion'),
-(48, 3, 'Unreal'),
-(49, 1, 'Gold'),
-(50, 1, 'Platinum'),
-(51, 1, 'Diamond'),
-(52, 1, 'Master'),
-(53, 1, 'GrandMaster'),
-(54, 1, 'Challenger'),
-(55, 2, 'Platinum'),
-(56, 2, 'Diamond'),
-(57, 2, 'Champion'),
-(58, 2, 'Grand Champion'),
-(59, 2, 'Supersonic Legend'),
-(60, 3, 'Platinum'),
-(61, 3, 'Diamond'),
-(62, 3, 'Elite'),
-(63, 3, 'Champion'),
-(64, 3, 'Unreal'),
-(65, 4, 'Gold'),
-(66, 4, 'Platinum'),
-(67, 4, 'Diamond'),
-(68, 4, 'Ascendant'),
-(69, 4, 'Immortal'),
-(70, 4, 'Radiant'),
-(71, 5, 'Gold Nova'),
-(72, 5, 'Master Guardian'),
-(73, 5, 'Legendary Eagle'),
-(74, 5, 'Supreme Master First Class'),
-(75, 5, 'The Global Elite'),
-(76, 6, 'Archon'),
-(77, 6, 'Legend'),
-(78, 6, 'Ancient'),
-(79, 6, 'Divine'),
-(80, 7, 'Expert/National Candidate Master'),
-(81, 7, 'FIDE Candidate Master/National Master'),
-(82, 7, 'FIDE Master'),
-(83, 7, 'International Master'),
-(84, 7, 'Grandmaster'),
-(85, 8, 'Gold'),
-(86, 8, 'Platinum'),
-(87, 8, 'Emerald'),
-(88, 8, 'Diamond'),
-(89, 8, 'Champion'),
-(90, 9, 'Platinum'),
-(91, 9, 'Diamond'),
-(92, 9, 'Master'),
-(93, 9, 'Grandmaster'),
-(94, 9, 'Champion'),
-(95, 9, 'Top 500'),
-(96, 10, 'Garyu'),
-(97, 10, 'Shinryu'),
-(98, 10, 'Tenryu'),
-(99, 10, 'Mighty Ruler'),
-(100, 10, 'Flame Ruler'),
-(101, 10, 'Battle Ruler'),
-(102, 10, 'Fujin'),
-(103, 10, 'Raijin'),
-(104, 10, 'Kishin'),
-(105, 10, 'Bushin'),
-(106, 10, 'Tekken Emperor'),
-(107, 10, 'Tekken God'),
-(108, 10, 'Tekken God Supreme'),
-(109, 10, 'God of Destruction');
+(1, 1, 'Iron'),
+(2, 1, 'Bronze'),
+(3, 1, 'Silver'),
+(4, 1, 'Gold'),
+(5, 1, 'Platinum'),
+(6, 1, 'Diamond'),
+(7, 1, 'Master'),
+(8, 1, 'GrandMaster'),
+(9, 1, 'Challenger'),
+(10, 2, 'Bronze'),
+(11, 2, 'Silver'),
+(12, 2, 'Gold'),
+(13, 2, 'Platinum'),
+(14, 2, 'Diamond'),
+(15, 2, 'Champion'),
+(16, 2, 'Grand Champion'),
+(17, 2, 'Supersonic Legend'),
+(18, 3, 'Bronze'),
+(19, 3, 'Silver'),
+(20, 3, 'Gold'),
+(21, 3, 'Platinum'),
+(22, 3, 'Diamond'),
+(23, 3, 'Elite'),
+(24, 3, 'Champion'),
+(25, 3, 'Unreal'),
+(26, 4, 'Iron'),
+(27, 4, 'Bronze'),
+(28, 4, 'Silver'),
+(29, 4, 'Gold'),
+(30, 4, 'Platinum'),
+(31, 4, 'Diamond'),
+(32, 4, 'Ascendant'),
+(33, 4, 'Immortal'),
+(34, 4, 'Radiant'),
+(35, 5, 'Silver'),
+(36, 5, 'Silver Elite'),
+(37, 5, 'Gold Nova'),
+(38, 5, 'Master Guardian'),
+(39, 5, 'Legendary Eagle'),
+(40, 5, 'Supreme Master First Class'),
+(41, 5, 'The Global Elite'),
+(42, 6, 'Herald'),
+(43, 6, 'Guardian'),
+(44, 6, 'Crusader'),
+(45, 6, 'Archon'),
+(46, 6, 'Legend'),
+(47, 6, 'Ancient'),
+(48, 6, 'Divine'),
+(49, 6, 'Immortal'),
+(50, 7, 'Below 1000'),
+(51, 7, 'Between 1000 and 1199'),
+(52, 7, 'Between 1200 and 1399'),
+(53, 7, 'Between 1400 and 1599'),
+(54, 7, 'Between 1600 and 1799'),
+(55, 7, 'Between 1800 and 1999'),
+(56, 7, 'Expert/National Candidate Master'),
+(57, 7, 'FIDE Candidate Master/National Master'),
+(58, 7, 'FIDE Master'),
+(59, 7, 'International Master'),
+(60, 7, 'Grandmaster'),
+(61, 8, 'Copper'),
+(62, 8, 'Bronze'),
+(63, 8, 'Silver'),
+(64, 8, 'Gold'),
+(65, 8, 'Platinum'),
+(66, 8, 'Emerald'),
+(67, 8, 'Diamond'),
+(68, 8, 'Champion'),
+(69, 9, 'Bronze'),
+(70, 9, 'Silver'),
+(71, 9, 'Gold'),
+(72, 9, 'Platinum'),
+(73, 9, 'Diamond'),
+(74, 9, 'Master'),
+(75, 9, 'Grandmaster'),
+(76, 9, 'Champion'),
+(77, 9, 'Top 500'),
+(78, 10, 'Beginner'),
+(79, 10, '1st Dan'),
+(80, 10, '2nd Dan'),
+(81, 10, 'Fighter'),
+(82, 10, 'Strategist'),
+(83, 10, 'Combatant'),
+(84, 10, 'Brawler'),
+(85, 10, 'Ranger'),
+(86, 10, 'Cavalry'),
+(87, 10, 'Warrior'),
+(88, 10, 'Assailant'),
+(89, 10, 'Dominator'),
+(90, 10, 'Vanquisher'),
+(91, 10, 'Destroyer'),
+(92, 10, 'Eliminator'),
+(93, 10, 'Garyu'),
+(94, 10, 'Shinryu'),
+(95, 10, 'Tenryu'),
+(96, 10, 'Mighty Ruler'),
+(97, 10, 'Flame Ruler'),
+(98, 10, 'Battle Ruler'),
+(99, 10, 'Fujin'),
+(100, 10, 'Raijin'),
+(101, 10, 'Kishin'),
+(102, 10, 'Bushin'),
+(103, 10, 'Tekken Emperor'),
+(104, 10, 'Tekken God'),
+(105, 10, 'Tekken God Supreme'),
+(106, 10, 'God of Destruction');
 
 -- --------------------------------------------------------
 
@@ -468,12 +488,6 @@ INSERT INTO `payment` (`payment_id`, `client_player_id`, `client_booster_id`, `b
 --
 
 --
--- Indexes for table `boosting_session`
---
-ALTER TABLE `boosting_session`
-  ADD PRIMARY KEY (`boostSessionID`);
-
---
 -- Indexes for table `boosting_session_report`
 --
 ALTER TABLE `boosting_session_report`
@@ -481,6 +495,14 @@ ALTER TABLE `boosting_session_report`
   ADD KEY `boosting_session_id` (`boosting_session_id`),
   ADD KEY `client_player_id` (`client_player_id`),
   ADD KEY `checkedby` (`checkedby`);
+
+--
+-- Indexes for table `boostsession`
+--
+ALTER TABLE `boostsession`
+  ADD PRIMARY KEY (`boostSessionID`),
+  ADD KEY `trainerID` (`traineeID`),
+  ADD KEY `boosterID` (`boosterID`);
 
 --
 -- Indexes for table `client`
@@ -499,7 +521,8 @@ ALTER TABLE `client_booster`
 -- Indexes for table `game`
 --
 ALTER TABLE `game`
-  ADD PRIMARY KEY (`game_id`);
+  ADD PRIMARY KEY (`game_id`),
+  ADD KEY `fk_uploaded_by` (`uploaded_by`);
 
 --
 -- Indexes for table `game_info`
@@ -519,22 +542,22 @@ ALTER TABLE `moderator`
 --
 
 --
--- AUTO_INCREMENT for table `boosting_session`
+-- AUTO_INCREMENT for table `boostsession`
 --
-ALTER TABLE `boosting_session`
-  MODIFY `boostSessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+ALTER TABLE `boostsession`
+  MODIFY `boostSessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `client_booster`
 --
 ALTER TABLE `client_booster`
-  MODIFY `client_booster_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `client_booster_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `game`
@@ -546,7 +569,7 @@ ALTER TABLE `game`
 -- AUTO_INCREMENT for table `game_info`
 --
 ALTER TABLE `game_info`
-  MODIFY `gameinfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=110;
+  MODIFY `gameinfoID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
 
 --
 -- AUTO_INCREMENT for table `moderator`
@@ -559,10 +582,23 @@ ALTER TABLE `moderator`
 --
 
 --
+-- Constraints for table `boostsession`
+--
+ALTER TABLE `boostsession`
+  ADD CONSTRAINT `boostsession_ibfk_1` FOREIGN KEY (`traineeID`) REFERENCES `client` (`client_ID`),
+  ADD CONSTRAINT `boostsession_ibfk_2` FOREIGN KEY (`boosterID`) REFERENCES `client_booster` (`client_booster_id`);
+
+--
 -- Constraints for table `client_booster`
 --
 ALTER TABLE `client_booster`
   ADD CONSTRAINT `client_booster_ibfk_1` FOREIGN KEY (`client_id`) REFERENCES `client` (`client_ID`);
+
+--
+-- Constraints for table `game`
+--
+ALTER TABLE `game`
+  ADD CONSTRAINT `fk_uploaded_by` FOREIGN KEY (`uploaded_by`) REFERENCES `moderator` (`moderator_id`);
 
 --
 -- Constraints for table `game_info`
