@@ -44,7 +44,7 @@
         $sessionStartTime = $_POST["startTime"];
         $sessionEndTime = $_POST["endTime"];
         $sessiontrainerID = $_SESSION["client_ID"];
-        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boostsession WHERE traineeID = '$sessiontrainerID'");
+        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boostsession WHERE traineeID = '$sessiontrainerID' AND game = '$games'");
         if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
             echo "<script> alert('You already have a coach'); </script>";
             
