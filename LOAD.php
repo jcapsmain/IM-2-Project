@@ -28,6 +28,30 @@
     // ]);
 
     // echo json_encode(['id' => $checkoutSession->id]);
+
+    if (isset($_POST['timeIn'])) {
+        $timestamp = date('Y-m-d H:i:s');
+        $timeID = $_POST['timeID'];
+        $timeQuery = "INSERT INTO boostsessiontime VALUES ('', '$timeID', '$timestamp', '$timestamp')";
+        mysqli_query($conn, $timeQuery);
+        echo "<script>alert(\"Time in at $timestamp\");</script>";
+
+       
+    }
+
+    if (isset($_POST['timeOut'])) {
+        $timestampend = date('Y-m-d H:i:s');
+        $timeID1 = $_POST['timeID'];
+        $timeQuery1 = "UPDATE boostsessiontime SET end_time = '$timestampend' WHERE id = (
+        SELECT id 
+        FROM boostsessiontime 
+        WHERE boostsession_id = '$timeID1' 
+        ORDER BY id DESC 
+        LIMIT 1)";
+        mysqli_query($conn, $timeQuery1);
+        echo "<script>alert(\"Time end at $timestampend\");</script>";
+       
+    }
 ?>
 
 <style>
@@ -70,27 +94,49 @@
                                 
                                     <?php
                                     // Fetch data from the database
-                                    $loadID = $_SESSION["client_ID"];
-                                    $boosterSession = mysqli_query($conn, "SELECT * FROM client c 
-                                        JOIN client_booster cb ON c.client_ID = cb.client_id 
-                                        JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
-                                        WHERE bs.status = 'All Accepted'");
-                                        while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
-                                            if($boosterRow["client_ID"] != $_SESSION["client_ID"]) {
-                                            $IGN = $boosterRow["username"];
-                                            echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
-                                    ?>
-                                    <!-- Circular Image -->
-                                    <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
+                                        $inboxID = $_SESSION["client_ID"];
+                                        $boosterSession = mysqli_query($conn, "SELECT * FROM client c 
+                                            JOIN client_booster cb ON c.client_ID = cb.client_id 
+                                            JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
+                                            WHERE c.client_id = '$inboxID'");
 
-                                    <!-- Text Container -->
-                                    <div class="d-flex flex-column">
-                                        <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
-                                        <p class="mb-0 text-light">Coach</p> 
-                                    </div>
-                                    </div>
+                                        $processedTrainees = array(); // Array to store processed trainee IDs
+
+                                        while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
+
+                                            // Extract variables for each session
+                                            $traineeID = $boosterRow['traineeID'];
+
+                                            // Check if traineeID has already been processed
+                                            if (!in_array($traineeID, $processedTrainees)) {
+                                                // Add traineeID to processed array
+                                                $processedTrainees[] = $traineeID;
+
+                                                $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
+                                                    JOIN boostsession bs ON c.client_ID = bs.traineeID 
+                                                    WHERE bs.traineeID = '$traineeID'");
+                                                    
+
+                                                    while ($ignRow = mysqli_fetch_assoc($ignSQL)) {
+                                                        // Output the contact list item based on conditions
+                                                        $IGN = htmlspecialchars($ignRow["username"]);
+                                                        if ($ignRow['client_ID'] != $inboxID && $ignRow["status"] == 'All Accepted' && $ignRow["boosterID"] == $boosterRow["boosterID"]) {
+                                                    echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
+                                    ?>
+                                                    <!-- Circular Image -->
+                                                    <img src="resources/img_avatar2.webp" alt="Profile Image" class="rounded-circle" style="width: 50px; height: 50px; margin-right: 15px;">
+
+                                                    <!-- Text Container -->
+                                                    <div class="d-flex flex-column">
+                                                        <?php echo'<strong><p class="mb-0 text-light">'.$IGN.'</p></strong>'; ?>
+                                                        <p class="mb-0 text-light">Student</p> 
+                                                    </div>
+                                                    </div>
                                     <?php 
-                                            }}
+                                                    }
+                                                }
+                                            }   
+                                        }
                                     ?>
                                 
                             </div>
@@ -106,7 +152,19 @@
 
                 // Output message details for each session
                 while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
-                    $IGN = $boosterRow["username"];
+                    $traineeID = $boosterRow['traineeID']; 
+                        $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
+                            JOIN boostsession bs ON c.client_ID = bs.traineeID 
+                            WHERE bs.traineeID = '$traineeID'");
+                        while($ignRow = mysqli_fetch_assoc($ignSQL)) {
+                    
+                            if ($ignRow['client_ID'] != $inboxID && $ignRow["status"] == 'All Accepted' && $ignRow["boosterID"] == $boosterRow["boosterID"]) {
+                            $IGN = htmlspecialchars($ignRow["username"]);
+                            $startTimeFromDB = $ignRow['startTime'];
+                            $endTimeFromDB = $ignRow['endTime'];
+                            $startTimeFormatted = date('h:i A', strtotime($startTimeFromDB));
+                            $endTimeFormatted = date('h:i A', strtotime($endTimeFromDB));
+                            
                     echo '<div class="col-md-9 no-padding position-fixed end-0 top-2 pt-5 mt-5" id="' .$IGN. '" style="display:block;">';
             ?>
 
@@ -121,7 +179,7 @@
                             <img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50" height="50">
 
                             <!-- Username -->
-                            <h5 class="ml-3 mb-0 text-light" id="username"><?php echo'<p>'.$boosterRow["username"].'</p>';?></h5>
+                            <h5 class="ml-3 mb-0 text-light" id="username"><?php echo'<p>'.$IGN.'</p>';?></h5>
                         </div>
 
                         <!-- Content Section -->
@@ -130,22 +188,26 @@
                                 <div class="col-6">
                                     <div class="alert alert-secondary bg-secondary text-white" role="alert">
                                         <div class="mt-3">
-                                        <?php echo'<p>Username: '.$IGN.'</p>';?>
-                                            <p>UID: <?php echo $boosterRow["coach_uid"];?></p>
-                                            <p>DATE start: <?php echo $boosterRow["startDate"];?></p>
-                                            <p>DATE end: <?php echo $boosterRow["endDate"];?></p>
-                                            <p>Schedule start: <?php echo $boosterRow["startTime"];?></p>
-                                            <p>Schedule end: <?php echo $boosterRow["coach_uid"];?></p>
+                                            <?php echo'<p>Game: '.$ignRow["game"].'</p>';?>
+                                            <?php echo'<p>Username: '.$IGN.'</p>';?>
+                                            <p>Date start: <?php echo $ignRow["startDate"];?></p>
+                                            <p>Date end: <?php echo $ignRow["endDate"];?></p>
+                                            <p>Time start: <?php echo $startTimeFormatted?></p>
+                                            <p>Time end: <?php echo $endTimeFormatted?></p>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
                                     <div class="alert alert-success bg-secondary text-white" role="alert">
-                                        <p>Time in Time: TIME</p>
-
-                                        <div class="mt-3">
-                                            <button type="button" class="btn btn-dark mr-2">Time in</button>
-                                            <button type="button" class="btn btn-dark">Time out</button>
+                                        <div class="mt-3"> 
+                                            <?php
+                                                $ignTime = $ignRow["boostSessionID"];
+                                                echo '<form method="post" autocomplete="off" name="TimeInOut">';
+                                                echo '<input name="timeID" type="hidden" value="' . $ignTime . '">';
+                                                echo '<button type="submit" class="btn btn-dark mr-2" name="timeIn">Time in</button>';
+                                                echo '<button type="submit" class="btn btn-dark" name="timeOut">Time out</button>';
+                                                echo '</form>';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>
@@ -153,8 +215,29 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="alert alert-primary bg-secondary text-white" role="alert">
-                                        <p>Total Time: TIME</p>
-                                        <p>Payment Due: $1000000</p>
+                                        <?php 
+                                                   $totalTimeQuery = "
+                                                   SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(TIMEDIFF(end_time, start_time)))) AS total_time
+                                                   FROM boostsessiontime 
+                                                   WHERE boostsession_id = '$ignTime'
+                                               ";
+                                       
+                                               $result = mysqli_query($conn, $totalTimeQuery);
+                                               
+                                               if ($result) {
+                                                    $row = mysqli_fetch_assoc($result);
+                                                    $totalTime = $row['total_time'];                             
+                                                    $timeInSeconds = strtotime($totalTime) - strtotime('00:00:00');
+                                                    $hours = $timeInSeconds / 3600;
+                                                    $costPerHour = $boosterRow["price"]; // Rate per hour
+                                                    $totalCost = $hours * $costPerHour;
+                                                    $totalCost = round($totalCost, 2);
+                                                    echo'<p>Total Time: '.$totalTime.'</p>';
+                                                    echo'<p>Payment Due: $'.$totalCost.'</p>';
+                                               }
+                                        ?>
+                                        
+                                        
 
                                         <div class="mt-3">
                                             <button type="button" id="finish-coaching" class="btn btn-dark">Finish Coaching</button>
@@ -168,7 +251,7 @@
                 </div>
             </div>
             <?php 
-                }
+                        }}}
             ?>
 
         </div>
@@ -217,5 +300,8 @@
         });
     }
 </script>
+
+
+
 </body>
 </html>
