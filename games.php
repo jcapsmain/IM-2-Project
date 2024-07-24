@@ -44,7 +44,8 @@
         $sessionStartTime = $_POST["startTime"];
         $sessionEndTime = $_POST["endTime"];
         $sessiontrainerID = $_SESSION["client_ID"];
-        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boostsession WHERE traineeID = '$sessiontrainerID' AND game = '$games'");
+        $sessionRegisterDuplicate = mysqli_query($conn ,"SELECT * FROM boostsession WHERE traineeID = '$sessiontrainerID' 
+        AND game = '$games' AND ((status = 'All Accepted') OR (status = 'Coach Accepted'))");
         if(mysqli_num_rows($sessionRegisterDuplicate) > 0) {
             echo "<script> alert('You already have a coach'); </script>";
             
@@ -106,8 +107,9 @@
                     $regionResult = $conn->query($clientRegionQuery);
                     $clientRegion = $regionResult->fetch_assoc()["region"];
 
-                    $gamesQuerry = "SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID JOIN game g ON cb.game = g.gameDescription JOIN 
-                    game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE game = '$games' AND c.client_ID != '$sessionID' AND cb.status = 'Available' 
+                    $gamesQuerry = "SELECT * FROM boostsession bs RIGHT JOIN client_booster cb ON bs.boosterID = cb.client_booster_id JOIN client c ON cb.client_id = c.client_ID JOIN
+                    game g ON cb.game = g.gameDescription JOIN game_info gi ON g.game_id = gi.gameID AND cb.gamerank = gi.gameRank WHERE cb.game = '$games' 
+                    AND c.client_ID != '$sessionID' AND cb.status = 'Available' AND (bs.status != 'All Accepted' OR bs.status IS NULL)
                     GROUP BY cb.client_booster_id 
                     ORDER BY gi.gameinfoID DESC, cb.client_booster_id ASC, c.region = '$clientRegion' DESC";
 

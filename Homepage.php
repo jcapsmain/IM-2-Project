@@ -83,7 +83,7 @@
                         <?php echo '<img src="' . $imageSrc . '" class="card-img" alt="' . htmlspecialchars($gameName) . '">'; ?>
                             <div class="card-img-overlay transparent-background">
                                 <h5 class="card-title"><?php echo $gameRows["gameDescription"]; ?></h5>
-                                <p class="card-text">Available Coaches: <?php echo $gameRows["availCoach"]; ?></p>
+                                <p class="card-text">Total Coaches: <?php echo $gameRows["availCoach"]; ?></p>
                             </div>
                         </div>
                     </a>

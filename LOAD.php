@@ -86,7 +86,7 @@
                                     <!-- Text Container -->
                                     <div class="d-flex flex-column">
                                         <?php echo'<strong><p class="mb-0 text-light">'.$boosterRow["username"].'</p></strong>'; ?>
-                                        <p class="mb-0 text-light">Time</p> 
+                                        <p class="mb-0 text-light">Coach</p> 
                                     </div>
                                     </div>
                                     <?php 
