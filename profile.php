@@ -1,49 +1,59 @@
 <?php
     ob_start();
+    session_start(); // Ensure session is started
 
     require 'config.php';
     include 'navbar.php';
 
     $id = $_SESSION["client_ID"];
-    $result = mysqli_query($conn ,"SELECT * FROM client WHERE client_id = '$id'");
+    $result = mysqli_query($conn, "SELECT * FROM client WHERE client_id = '$id'");
     $row = mysqli_fetch_assoc($result);
 
     if(isset($_POST["edit-submit"])) {
         $editFirstname = $_POST["fname"];
         $editLastname = $_POST["lname"];
-        $editcontact = $_POST["contact"];
+        $editContact = $_POST["contact"];
         $editBirthdate = $_POST["date"];
         $editRegion = $_POST["region"];
-    
-        $query = "UPDATE client SET fname = '$editFirstname', lname = '$editLastname', phoneNumber = '$editcontact', dateofbirth = '$editBirthdate', region = '$editRegion' WHERE client_ID = '$id'";
-        mysqli_query($conn,$query);
-        if($query) {
-            echo"<script> alert('Edit Succesful'); </script>";
-            header("location: profile.php");
+        
+        // Handle profile picture upload
+        if (isset($_FILES['profilePicture']) && $_FILES['profilePicture']['error'] == UPLOAD_ERR_OK) {
+            $uploadDir = 'uploads/';
+            $uploadFile = $uploadDir . basename($_FILES['profilePicture']['name']);
+            
+            if (move_uploaded_file($_FILES['profilePicture']['tmp_name'], $uploadFile)) {
+                // Update database with new profile picture path
+                $profilePicture = $uploadFile;
+                $query = "UPDATE client SET fname = '$editFirstname', lname = '$editLastname', phoneNumber = '$editContact', dateofbirth = '$editBirthdate', region = '$editRegion', profilePicture = '$profilePicture' WHERE client_ID = '$id'";
+            } else {
+                echo "<script>alert('Failed to upload profile picture');</script>";
+            }
+        } else {
+            // Update without changing the profile picture
+            $query = "UPDATE client SET fname = '$editFirstname', lname = '$editLastname', phoneNumber = '$editContact', dateofbirth = '$editBirthdate', region = '$editRegion' WHERE client_ID = '$id'";
         }
-        else {
-            echo"<script> alert('Edit Not Succesful'); </script>";
+        
+        if (mysqli_query($conn, $query)) {
+            echo "<script>alert('Edit Successful');</script>";
+            header("location: profile.php");
+        } else {
+            echo "<script>alert('Edit Not Successful');</script>";
         }
     }
 
-    if(isset($_POST["edit-bio"])) {
-        $editFirstname = $_POST["bio"];
-    
-        $query = "UPDATE client SET bio = '$editFirstname' WHERE client_id = '$id'";
-        mysqli_query($conn,$query);
-        if($query) {
-            echo"<script> alert('Edit Succesful'); </script>";
+    if (isset($_POST["edit-bio"])) {
+        $editBio = $_POST["bio"];
+        
+        $query = "UPDATE client SET bio = '$editBio' WHERE client_id = '$id'";
+        if (mysqli_query($conn, $query)) {
+            echo "<script>alert('Edit Successful');</script>";
             header("location: profile.php");
-        }
-        else {
-            echo"<script> alert('Edit Not Succesful'); </script>";
+        } else {
+            echo "<script>alert('Edit Not Successful');</script>";
         }
     }
 
-    ob_end_flush()
-
-    
-
+    ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +69,7 @@
 
     <div class="container mt-4">
         <div class="profile-header p-4 rounded d-flex align-items-center mb-4">
-            <img src="genaldgwaps.jpg" alt="Profile Icon" class="profile-icon mr-4" width="150" height="150">
+            <img src="<?php echo $row["profilePicture"] ? $row["profilePicture"] : 'genaldgwaps.jpg'; ?>" alt="Profile Icon" class="profile-icon mr-4" width="150" height="150">
             <div class="profile-info">
                 <h1 id="profile-name"><?php echo $row["username"]; ?></h1>
                 <p id="profile-firstname">First Name: <?php echo $row["fname"]; ?></p>
@@ -67,7 +77,7 @@
                 <p id="profile-contact">Contact: <?php echo $row["phoneNumber"]; ?></p>
                 <p id="date-of-birth">Birthdate: <?php echo $row["dateofbirth"]; ?></p>
                 <p id="profile-email">Email: <?php echo $row["email"]; ?></p>
-                <p id="profile-birthday">Region: <?php echo $row["region"]; ?></p>
+                <p id="profile-region">Region: <?php echo $row["region"]; ?></p>
                 
                 <button class="btn edit-profile-btn" onclick="openEditProfileOverlay()">Edit Profile</button>
                 <button class="btn upload-profile-btn">Upload Profile</button>
@@ -85,7 +95,7 @@
         <div class="overlay-content p-4 rounded text-center">
             <span class="close-btn" onclick="closeEditProfileOverlay()">&times;</span>
             <h2>Edit Profile</h2>
-            <form id="edit-form" class="edit-form" method="post" autocomplete="off" name="edit-register">
+            <form id="edit-form" class="edit-form" method="post" autocomplete="off" name="edit-register" enctype="multipart/form-data">
                 <div class="form-group">
                     <label for="edit-name">First Name:</label>
                     <input type="text" id="edit-fname" name="fname" class="form-control" value="<?php echo $row["fname"]; ?>" required>
@@ -95,11 +105,11 @@
                     <input type="text" id="edit-lname" name="lname" class="form-control" value="<?php echo $row["lname"];?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="edit-age">Contact Number:</label>
+                    <label for="edit-contact">Contact Number:</label>
                     <input type="number" id="edit-phoneNumber" name="contact" class="form-control" value="<?php echo $row["phoneNumber"];?>" required>
                 </div>
                 <div class="form-group">
-                    <label for="edit-gender">Birthdate:</label>
+                    <label for="edit-date">Birthdate:</label>
                     <input type="date" id="edit-birthday" name="date" class="form-control" value="<?php echo $row["dateofbirth"];?>" required>
                 </div>
                 <div class="form-group">
@@ -110,9 +120,13 @@
                         <option value="Europe">Europe</option>
                         <option value="Asia">Asia</option>
                         <option value="Oceania">Oceania</option>
-                        <option value="Africa">Antartica</option>
-                        <option value="Australia">Africa</option>
+                        <option value="Africa">Africa</option>
+                        <option value="Australia">Australia</option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="profilePicture">Profile Picture:</label>
+                    <input type="file" id="profilePicture" name="profilePicture" class="form-control" accept="image/*">
                 </div>
                 <button type="submit" class="btn save-profile-btn" name="edit-submit">Save Profile</button>
             </form>
@@ -124,7 +138,7 @@
         <div class="overlay-content p-4 rounded text-center">
             <span class="close-btn" onclick="closeEditBioOverlay()">&times;</span>
             <h2>Edit Bio</h2>
-            <form id="edit-bio-form" class="edit-form" method="post" autocomplete="off" name="edit-bio"">
+            <form id="edit-bio-form" class="edit-form" method="post" autocomplete="off" name="edit-bio">
                 <div class="form-group">
                     <label for="edit-bio-text">Bio:</label>
                     <textarea id="edit-bio-text" name="bio" class="form-control" rows="4" required></textarea>
@@ -151,20 +165,6 @@
         function closeEditBioOverlay() {
             document.getElementById('edit-bio-overlay').classList.remove('active');
         }
-
     </script>
-
-                                        <!-- <div class="mb-3 text-center">
-                                    <div class="image-preview position-relative" style="cursor: pointer;">
-                                        <img id="imagePreview" src="https://via.placeholder.com/150" alt="Profile Image" class="rounded-circle" style="width: 150px; height: 150px;">
-                                        Hidden file input to trigger file selection 
-                                        <input type="file" class="form-control" id="imageUpload" name="imageUpload" accept="image/*" required style="display: none;">
-                                        Button styled as a link to appear as text 
-                                        <label for="imageUpload" class="btn btn-link position-absolute top-50 start-50 translate-middle p-0">
-                                            Upload Profile Image
-                                        </label>
-                                    </div>
-                                </div> -->
-
 </body>
 </html>
