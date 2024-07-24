@@ -44,6 +44,11 @@ if (isset($_POST["upload-profile"])) {
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
+    // Check if the uploads directory exists, if not create it
+    if (!is_dir($target_dir)) {
+        mkdir($target_dir, 0755, true);
+    }
+
     // Check if image file is an actual image or fake image
     $check = getimagesize($_FILES["profileImage"]["tmp_name"]);
     if ($check !== false) {
@@ -154,7 +159,6 @@ ob_end_flush();
                         <option value="Oceania" <?php if($row["region"] == "Oceania") echo "selected"; ?>>Oceania</option>
                         <option value="Africa" <?php if($row["region"] == "Africa") echo "selected"; ?>>Africa</option>
                         <option value="Australia" <?php if($row["region"] == "Australia") echo "selected"; ?>>Australia</option>
-                        <option value="Antarctica" <?php if($row["region"] == "Antarctica") echo "selected"; ?>>Antarctica</option>
                     </select>
                 </div>
                 <button type="submit" class="btn save-profile-btn" name="edit-submit">Save Profile</button>
