@@ -39,6 +39,7 @@
             display: flex;
             min-height: 100vh;
             margin: 0;
+            
         }
         .sidebar {
             background-color: #102b3f;
@@ -102,6 +103,8 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
         .form-group label {
             color: #e0e6ed;
@@ -118,6 +121,19 @@
             height: 150px;
             border-radius: 10px;
             object-fit: cover;
+        }
+        .modal-profile-pic.enlarged {
+            transform: scale(1.5);
+            z-index: 1000;
+            position: fixed;
+            top: 50%;
+            border-radius: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vh; /* Set the width to 50% of the viewport height */
+            height: 100vh; /* Set the height to 50% of the viewport height */
+            object-fit: contain;
+            background-color: rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
@@ -181,6 +197,7 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th class="text-center">Profile Picture</th>
+                        <th class="text-center">Username</th>
                         <th class="text-center">Coach IGN</th>
                         <th class="text-center">Application Date</th>
                         <th class="text-center">Game</th>
@@ -192,9 +209,10 @@
                 <tbody>
                 <?php
                     $rowNumberRequest = 0;
-                    $clientBoosterRequest = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status = 'Pending' ORDER BY client_booster_id ASC");
+                    $clientBoosterRequest = mysqli_query($conn ,"SELECT * FROM client_booster cb JOIN client c ON cb.client_id = c.client_ID WHERE status = 'Pending' ORDER BY client_booster_id ASC");
                     while ($boosterRowsRequest = mysqli_fetch_assoc($clientBoosterRequest)) {
                         $boosterIGNRequest = $boosterRowsRequest['IGN'];
+                        $boosterIGNusername = $boosterRowsRequest['username'];
                         $boosterUIDRequest = $boosterRowsRequest['coach_uid'];
                         $gameRequest = $boosterRowsRequest['game'];
                         $gameRankRequest = $boosterRowsRequest['gamerank'];
@@ -208,6 +226,7 @@
                     <tr>
                         <th scope="row" class="text-center"><?php echo $boosterRowsRequest['client_booster_id'] ?></th>
                         <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td class="text-center"><?php echo $boosterIGNusername; ?></td>
                         <td class="text-center"><?php echo $boosterIGNRequest; ?></td>
                         <td class="text-center"><?php echo $applicationDateRequest ?></td>
                         <td class="text-center"><?php echo $gameRequest ?></td>
@@ -221,7 +240,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="reviewModalLabelRequest">Request Details: <?php echo $boosterIGNRequest; ?></h5>
+                                        <h5 class="modal-title" id="reviewModalLabelRequest">Request Details: <?php echo $boosterIGNusername; ?></h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -237,9 +256,9 @@
                                         <p><strong>Price:</strong> <?php echo $priceRequest; ?></p>
                                         <p><strong>Status:</strong> <?php echo $statusRequest; ?></p>
                                         <p><strong>UID Screenshot:</strong></p>
-                                        <img src="<?php echo $uidScreenshotRequest ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <img src="<?php echo $uidScreenshotRequest ?>" alt="UID Screenshot" class="modal-profile-pic" onclick="toggleImageSize(this)">
                                         <p><strong>Game Rank Screenshot:</strong></p>
-                                        <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
+                                        <img src="<?php echo $gameRankScreenshotRequest ?>" alt="Game Rank Screenshot" class="modal-profile-pic" onclick="toggleImageSize(this)">
                                     </div>
                                     <div class="modal-footer">
                                         <form method="post" autocomplete="off" name="coach-reg">
@@ -247,9 +266,7 @@
                                             <input type="hidden" name="coach_id" value="<?php echo $boosterRowsRequest['client_booster_id']; ?>">
                                             <button type="submit" class="btn btn-secondary" name="acceptRequest">Accept</button>
                                             <button type="submit" class="btn btn-secondary" name="rejectRequest">Reject</button>
-                                            <button type="button" class="btn btn-secondary"data-dismiss="modal">Close</button>
                                         </form>
-
                                     </div>
                                 </div>
                             </div>
@@ -274,6 +291,7 @@
                     <tr>
                         <th class="text-center">#</th>
                         <th class="text-center">Profile Picture</th>
+                        <th class="text-center">Username</th>
                         <th class="text-center">Coach IGN</th>
                         <th class="text-center">Application Date</th>
                         <th class="text-center">Game</th>
@@ -285,12 +303,13 @@
                 <tbody>
                 <?php
                     $rowNumber = 0;
-                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client_booster WHERE status != 'Pending' ORDER BY client_booster_id ASC");
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client c JOIN client_booster cb ON c.client_ID = cb.client_id WHERE status != 'Pending' ORDER BY client_booster_id ASC");
                     while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
                         $boosterIGN = $boosterRows['IGN'];
                         $boosterUID = $boosterRows['coach_uid'];
                         $game = $boosterRows['game'];
                         $gameRank = $boosterRows['gamerank'];
+                        $username = $boosterRows['username'];
                         $status = $boosterRows['status'];
                         $price = $boosterRows['price'];
                         $applicationDate = $boosterRows['upload_Date'];
@@ -301,6 +320,7 @@
                     <tr>
                         <th scope="row" class="text-center"><?php echo $boosterRows['client_booster_id'] ?></th>
                         <td class="text-center"><img src="coach1.jpg" alt="CoachOne" class="profile-pic"></td>
+                        <td class="text-center"><?php echo $username; ?></td>
                         <td class="text-center"><?php echo $boosterIGN; ?></td>
                         <td class="text-center"><?php echo $applicationDate ?></td>
                         <td class="text-center"><?php echo $game ?></td>
@@ -330,9 +350,9 @@
                                         <p><strong>Price:</strong> <?php echo $price; ?></p>
                                         <p><strong>Status:</strong> <?php echo $status; ?></p>
                                         <p><strong>UID Screenshot:</strong></p>
-                                        <img src="<?php echo $uidScreenshot ?>" alt="UID Screenshot" class="modal-profile-pic">
+                                        <img src="<?php echo $uidScreenshot ?>" alt="UID Screenshot" class="modal-profile-pic" onclick="toggleImageSize(this)">
                                         <p><strong>Game Rank Screenshot:</strong></p>
-                                        <img src="<?php echo $gameRankScreenshot ?>" alt="Game Rank Screenshot" class="modal-profile-pic">
+                                        <img src="<?php echo $gameRankScreenshot ?>" alt="Game Rank Screenshot" class="modal-profile-pic" onclick="toggleImageSize(this)">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -542,6 +562,12 @@
                 });
             });
         });
+    </script>
+
+    <script>
+        function toggleImageSize(img) {
+            img.classList.toggle('enlarged');
+        }
     </script>
 </body>
 </html>
