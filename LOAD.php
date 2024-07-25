@@ -109,7 +109,7 @@
                                             JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
                                             WHERE c.client_id = '$inboxID'");
 
-                                        $processedTrainees = array(); // Array to store processed trainee IDs
+                                        
 
                                         while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
 
@@ -117,9 +117,7 @@
                                             $traineeID = $boosterRow['traineeID'];
 
                                             // Check if traineeID has already been processed
-                                            if (!in_array($traineeID, $processedTrainees)) {
-                                                // Add traineeID to processed array
-                                                $processedTrainees[] = $traineeID;
+                                            
 
                                                 $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
                                                     JOIN boostsession bs ON c.client_ID = bs.traineeID 
@@ -145,7 +143,7 @@
                                                     }
                                                 }
                                             }   
-                                        }
+                                        
 
                                         $boosterSession1 = mysqli_query($conn, "SELECT * FROM client c 
                                             JOIN client_booster cb ON c.client_ID = cb.client_id 

@@ -69,8 +69,8 @@
         <div class="container mt-5">
             <div class="row">
                 <?php
-                    $gameQuerry = mysqli_query($conn ,"SELECT g.gameDescription, COUNT(client_booster_id) AS availCoach, g.image_path 
-                    FROM game g JOIN client_booster cb ON g.gameDescription = cb.game WHERE cb.status = 'Available' GROUP BY g.gameDescription ORDER BY g.gameDescription ASC");
+                    $gameQuerry = mysqli_query($conn ,"SELECT *, COUNT(client_booster_id) AS availCoach
+                    FROM game g LEFT JOIN client_booster cb ON g.gameDescription = cb.game WHERE cb.status = 'Available' OR cb.status IS NULL GROUP BY g.gameDescription ORDER BY g.gameDescription ASC");
                     while ($gameRows = mysqli_fetch_assoc($gameQuerry)) {
                         // Process each row of game data here
                         $gameName = urlencode($gameRows['gameDescription']);

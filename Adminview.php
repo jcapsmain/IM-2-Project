@@ -20,6 +20,47 @@
 
     }
 
+    if(isset($_POST["deleteGame"])) {
+        $gameID = $_POST["gameId"];
+        $DeleteQuery = "DELETE FROM game WHERE game_id = '$gameID'";
+        mysqli_query($conn, $DeleteQuery);
+
+    }
+
+
+    if(isset($_POST["addGame"])) {
+        // Assuming $conn is your database connection object
+    
+        // Get game name from form
+        $gameName = $_POST["gameName"];
+    
+        // File upload handling
+        $gameImg = $_FILES['gameImg'];
+        $gameImgName = $_FILES["gameImg"]["name"];
+        $imgdir = "resources/Main_Content/" . $gameImgName;
+    
+        // Function to check if file is an image
+        function is_image_file($filename) {
+            $image_info = @getimagesize($filename['tmp_name']);
+            return $image_info !== false && strpos($image_info['mime'], 'image/') === 0;
+        }
+
+        if (!empty($gameImg) && is_image_file($gameImg)) {
+
+            if (move_uploaded_file($_FILES["gameImg"]["tmp_name"], $imgdir)) {
+                $adminId = $_SESSION["moderator_id"]; 
+    
+                $addGame = "INSERT INTO game (gameDescription, image_path, uploaded_by) VALUES ('$gameName', '$imgdir', '$adminId')";
+                mysqli_query($conn,$addGame);
+
+
+            } else {
+                echo "<script>alert('Error Uploading File');</script>";
+            }
+        } else {
+            echo "<script>alert('Invalid file or file is not an image');</script>";
+        }
+    }
 
 ?>
 
@@ -140,7 +181,7 @@
 <body>
     <div class="sidebar">
         <h4 class="text-light">Admin Panel</h4>
-        <a href="#accountReports">Reports</a>
+        <!-- <a href="#accountReports">Reports</a> -->
         <a href="#coachRequest">Coach Request</a>
         <a href="#coachReviews">Coach Review</a>
         <a href="#modifyGame">Game Review</a>
@@ -148,7 +189,7 @@
     </div>
 
     <!-- Account Reports -->
-    <div class="content" id="accountReports">
+    <!-- <div class="content" id="accountReports">
         <div class="header">
             <h1>Account Reports</h1>
         </div>
@@ -184,7 +225,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
 
 
     <!-- Coach Request -->
@@ -304,7 +345,8 @@
                 <tbody>
                 <?php
                     $rowNumber = 0;
-                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client c JOIN client_booster cb ON c.client_ID = cb.client_id WHERE status != 'Pending' ORDER BY client_booster_id ASC");
+                    $clientBooster = mysqli_query($conn ,"SELECT * FROM client c JOIN client_booster cb ON c.client_ID = cb.client_id WHERE status
+                     != 'Pending' ORDER BY client_booster_id ASC");
                     while ($boosterRows = mysqli_fetch_assoc($clientBooster)) {
                         $boosterIGN = $boosterRows['IGN'];
                         $boosterUID = $boosterRows['coach_uid'];
@@ -377,30 +419,36 @@
             <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
         <div class="mt-4">
-            <div class="game-box">
-    <div class="row">
-        <div class="col-md-3">
-            <img src="game1.jpg" alt="League of Legends">
-        </div>
-        <div class="col-md-9">
-            <h3>League of Legends</h3>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal1">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </div>
-    </div>
-</div>
-<div class="game-box">
-    <div class="row">
-        <div class="col-md-3">
-            <img src="game2.jpg" alt="Dota 2">
-        </div>
-        <div class="col-md-9">
-            <h3>Dota 2</h3>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#editGameModal2">Edit</button>
-            <button class="btn btn-danger">Delete</button>
-        </div>
-    </div>
-</div>
+            <?php
+                $rowNumber = 0;
+                $gameMod = mysqli_query($conn ,"SELECT * FROM game");
+                while ($gameRow = mysqli_fetch_assoc($gameMod)) {
+                    $gameName = $gameRow['gameDescription'];
+                    $gameImg = $gameRow['image_path'];
+                    $gameID = $gameRow ['game_id'];
+                    
+                    
+            ?>
+                <div class="game-box">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <?php echo'<img src="'.$gameImg.'" alt="League of Legends">'; ?>
+                        </div>
+                        <div class="col-md-9">
+                        <?php echo '<h3>' . $gameName . '</h3>'; 
+                            
+                            echo '<form method="post" autocomplete="off" name="deleteGamE">';
+                            echo '<input type="hidden" name="gameId" value="'.$gameID.'">';
+                            echo '<button class="btn btn-danger" name="deleteGame">Delete</button>';
+
+                        ?>
+                        </div>
+                    </div>
+                </div>
+            <?php 
+                }
+            ?>
+            
 
     <!-- Report Modal 1 -->
     <div class="modal fade" id="reportModal1" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
@@ -461,16 +509,16 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form method="post" autocomplete="off" name="addGamE" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="gameName">Game Name</label>
-                            <input type="text" class="form-control" id="gameName" placeholder="Enter game name">
+                            <input type="text" class="form-control" id="gameName" placeholder="Enter game name" name="gameName">
                         </div>
                         <div class="form-group">
                             <label for="gameImage">Game Image</label>
-                            <input type="file" class="form-control" id="gameImage">
+                            <input type="file" class="form-control-file" id="gameImage" name="gameImg" accept="image/*">
                         </div>
-                        <button type="submit" class="btn btn-primary">Add Game</button>
+                        <button type="submit" class="btn btn-primary" name="addGame">Add Game</button>
                     </form>
                 </div>
             </div>

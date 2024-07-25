@@ -55,7 +55,7 @@
                         JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
                         WHERE c.client_id = '$inboxID'");
 
-                    $processedTrainees = array(); // Array to store processed trainee IDs
+                    
 
                     while ($boosterRow = mysqli_fetch_assoc($boosterSession)) {
 
@@ -63,9 +63,7 @@
                         $traineeID = $boosterRow['traineeID'];
 
                         // Check if traineeID has already been processed
-                        if (!in_array($traineeID, $processedTrainees)) {
-                            // Add traineeID to processed array
-                            $processedTrainees[] = $traineeID;
+
 
                             $ignSQL = mysqli_query($conn, "SELECT * FROM client c 
                                 JOIN boostsession bs ON c.client_ID = bs.traineeID 
@@ -74,7 +72,7 @@
                             while ($ignRow = mysqli_fetch_assoc($ignSQL)) {
                                 // Output the contact list item based on conditions
                                 if ($ignRow['client_ID'] != $inboxID && $ignRow["status"] == 'On hold' && $ignRow["boosterID"] == $boosterRow["boosterID"]) {
-                                    $IGN = htmlspecialchars($ignRow["username"]);
+                                    $IGN = htmlspecialchars($ignRow["username"]) . " " . htmlspecialchars($ignRow["game"]);
                                     echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
                                     echo '<div class="contact-info ml-3">';
                                     echo '<h5>' . $IGN . '</h5>';
@@ -87,7 +85,7 @@
                                  
                             }
                         }
-                    }
+                    
                     $boosterSession1 = mysqli_query($conn, "SELECT * FROM client c 
                         JOIN client_booster cb ON c.client_ID = cb.client_id 
                         JOIN boostsession bs ON bs.boosterID = cb.client_booster_id 
@@ -96,7 +94,7 @@
                     while ($boosterRow1 = mysqli_fetch_assoc($boosterSession1)) {
 
                     if ($boosterRow1["status"] == 'Coach Accepted' && $boosterRow1["client_id"] != $_SESSION["client_ID"]) {
-                        $IGN = htmlspecialchars($boosterRow1["username"]);
+                        $IGN = htmlspecialchars($boosterRow1["username"]). " " . htmlspecialchars($boosterRow1["game"]);
                         echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
                         echo '<div class="contact-info ml-3">';
                         echo '<h5>' . $IGN . '</h5>';
@@ -104,7 +102,7 @@
                         echo '</div>';
                         echo '</div>';
                     } else if ($boosterRow1["status"] == 'Coach Rejected' && $boosterRow1["client_id"] != $_SESSION["client_ID"]) {
-                        $IGN = htmlspecialchars($boosterRow1["username"]);
+                        $IGN = htmlspecialchars($boosterRow1["username"]). " " . htmlspecialchars($boosterRow1["game"]);
                         echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
                         echo '<div class="contact-info ml-3">';
                         echo '<h5>' . $IGN . '</h5>';
@@ -135,7 +133,7 @@
                     $endTimeFromDB = $ignRow['endTime'];
                     $startTimeFormatted = date('h:i A', strtotime($startTimeFromDB));
                     $endTimeFormatted = date('h:i A', strtotime($endTimeFromDB));
-                    $IGN = htmlspecialchars($ignRow["username"]);
+                    $IGN = htmlspecialchars($ignRow["username"]) . " " . htmlspecialchars($ignRow["game"]);
                     $sessID = $ignRow["boostSessionID"];
                     echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
                     echo '<div class="message-header p-3 border-bottom bg-secondary">';
@@ -176,7 +174,7 @@
                 $sessID1 = $boosterRow1["boostSessionID"];
 
             if($boosterRow1["status"] == 'Coach Accepted' && $boosterRow1["client_id"] != $_SESSION["client_ID"] ) {
-                    $IGN = htmlspecialchars($boosterRow1["username"]);
+                    $IGN = htmlspecialchars($boosterRow1["username"]). " " . htmlspecialchars($boosterRow1["game"]);
                     $sessID = $boosterRow1["boostSessionID"];
                     echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
                     echo '<div class="message-header p-3 border-bottom bg-secondary">';
@@ -187,7 +185,7 @@
                     echo '<h1 id="game-name">' . $boosterRow1["game"] . '</h1>';
                     echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
                     echo '<div class="user-info mt-3">';
-                    echo '<p>Your request has been accepted by ' . $IGN . '.</p>';
+                    echo '<p>Your request has been accepted by ' . $boosterRow1["username"] . '.</p>';
                     echo '<p>Contact me at: ' . $boosterRow1["email"] . '.</p>';
                     echo '<p id="additional-info" class="mt-3"></p>';
                     echo '</div>';
@@ -204,7 +202,7 @@
                     echo '</div>';
                 }
                 else if($boosterRow1["status"] == 'Coach Rejected') {
-                    $IGN = htmlspecialchars($boosterRow1["username"]);
+                    $IGN = htmlspecialchars($boosterRow1["username"]). " " . htmlspecialchars($boosterRow1["game"]);
                     echo '<div class="col-9 position-fixed end-0 top-0 pt-5 mt-5" id="' . $IGN . '" style="display:block;">';
                     echo '<div class="message-header p-3 border-bottom bg-secondary">';
                     echo '<img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50">';
@@ -214,7 +212,7 @@
                     echo '<h1 id="game-name">' . $boosterRow1["game"] . '</h1>';
                     echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
                     echo '<div class="user-info mt-3">';
-                    echo '<p>Your request has been rejected by ' . $IGN . '.</p>';
+                    echo '<p>Your request has been rejected by ' . $boosterRow1["username"] . '.</p>';
                     echo '<p id="additional-info" class="mt-3"></p>';
                     echo '</div>';
                     echo '<div class="action-buttons mt-4" id="action-buttons">';
