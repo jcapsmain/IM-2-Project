@@ -52,6 +52,15 @@
         echo "<script>alert(\"Time end at $timestampend\");</script>";
        
     }
+
+    if (isset($_POST['finishCoaching'])) {
+        $sessID = $_POST['idsession'];
+        $finishQuery = "UPDATE boostsession SET status = 'Done' WHERE boostSessionID = '$sessID'";
+        mysqli_query($conn, $finishQuery);
+        echo "<script>alert('Congratulations, Well Done');</script>";
+
+       
+    }
 ?>
 
 <style>
@@ -272,7 +281,13 @@
                                         
 
                                         <div class="mt-3">
-                                            <button type="button" id="finish-coaching" class="btn btn-dark">Finish Coaching</button>
+                                        <?php
+
+                                                echo '<form method="post" autocomplete="off" name="finishCoach">';
+                                                echo '<input name="idsession" type="hidden" value="' . $ignTime . '">';
+                                                echo '<button type="submit" id="finish-coaching" class="btn btn-dark" name="finishCoaching">Finish Coaching</button>';
+                                                echo '</form> ';
+                                            ?>
                                         </div>
                                     </div>
                                 </div>

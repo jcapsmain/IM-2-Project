@@ -144,6 +144,7 @@
         <a href="#coachRequest">Coach Request</a>
         <a href="#coachReviews">Coach Review</a>
         <a href="#modifyGame">Game Review</a>
+        <a href="logout.php">Back to page</a>
     </div>
 
     <!-- Account Reports -->
@@ -376,7 +377,7 @@
             <button class="btn btn-primary" data-toggle="modal" data-target="#addGameModal">ADD GAME</button>
         </div>
         <div class="mt-4">
-            <<div class="game-box">
+            <div class="game-box">
     <div class="row">
         <div class="col-md-3">
             <img src="game1.jpg" alt="League of Legends">
@@ -468,10 +469,6 @@
                         <div class="form-group">
                             <label for="gameImage">Game Image</label>
                             <input type="file" class="form-control" id="gameImage">
-                        </div>
-                        <div class="form-group">
-                            <label for="gameDescription">Game Description</label>
-                            <textarea class="form-control" id="gameDescription" rows="3" placeholder="Enter game description"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Add Game</button>
                     </form>
