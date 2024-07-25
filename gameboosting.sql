@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 22, 2024 at 01:48 AM
+-- Generation Time: Jul 25, 2024 at 04:55 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,14 +69,35 @@ CREATE TABLE `boostsession` (
 --
 
 INSERT INTO `boostsession` (`boostSessionID`, `traineeID`, `boosterID`, `game`, `gameRank`, `startDate`, `endDate`, `startTime`, `endTime`, `status`) VALUES
-(1, 2, 1, 'League of Legends', 'Iron', '2024-07-19', '2024-07-20', '10:00:00', '12:00:00', 'All Accepted'),
-(2, 3, 1, 'League of Legends', 'Iron', '2024-07-21', '2024-07-22', '10:00:00', '12:00:00', 'Coach Accepted'),
-(3, 4, 1, 'League of Legends', 'Iron', '2024-07-23', '2024-07-24', '10:00:00', '12:00:00', 'On hold'),
-(4, 5, 1, 'League of Legends', 'Iron', '2024-07-25', '2024-07-26', '10:00:00', '12:00:00', 'Coach Rejected'),
-(5, 1, 31, 'Dota 2', 'Herald', '2024-07-31', '2024-08-01', '13:00:00', '15:00:00', 'All Accepted'),
-(6, 1, 27, 'Counter Strike 2', 'Gold Nova', '2024-07-21', '2024-07-22', '07:30:00', '17:30:00', 'On hold'),
-(7, 1, 27, 'Counter Strike 2', 'Gold Nova', '2024-07-21', '2024-07-22', '07:30:00', '17:30:00', 'On hold'),
-(8, 2, 66, 'Chess', 'Between 1000 and 1199', '2024-07-21', '2024-07-22', '13:00:00', '15:00:00', 'On hold');
+(1, 1, 27, 'Counter Strike 2', 'Gold Nova', '0000-00-00', '0000-00-00', '14:13:00', '02:34:00', 'On hold'),
+(2, 1, 67, 'Chess', 'Below 1000', '1234-04-23', '0000-00-00', '01:24:00', '15:12:00', 'On hold'),
+(3, 1, 60, 'Rainbow Six Siege', 'Copper', '0123-03-12', '0123-03-12', '14:13:00', '00:31:00', 'All Accepted'),
+(4, 2, 66, 'Chess', 'Below 1000', '3224-12-23', '1234-04-21', '14:34:00', '02:42:00', 'On hold'),
+(5, 2, 68, 'Valorant', 'Gold', '2024-03-12', '2024-03-13', '16:31:00', '20:02:00', 'Done'),
+(6, 61, 66, 'Chess', 'Below 1000', '2024-03-12', '2024-04-12', '14:13:00', '16:13:00', 'Coach Accepted'),
+(7, 61, 56, 'Overwatch 2', 'Gold', '2402-03-12', '4203-03-21', '02:34:00', '16:23:00', 'Coach Accepted');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `boostsessiontime`
+--
+
+CREATE TABLE `boostsessiontime` (
+  `id` int(11) NOT NULL,
+  `boostsession_id` int(11) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `boostsessiontime`
+--
+
+INSERT INTO `boostsessiontime` (`id`, `boostsession_id`, `start_time`, `end_time`) VALUES
+(1, 3, '2024-07-25 00:04:20', '2024-07-25 00:04:20'),
+(2, 3, '2024-07-25 00:05:20', '2024-07-25 00:10:07'),
+(3, 5, '2024-07-25 01:32:09', '2024-07-25 01:37:02');
 
 -- --------------------------------------------------------
 
@@ -160,7 +181,9 @@ INSERT INTO `client` (`client_ID`, `username`, `fname`, `lname`, `password`, `ph
 (56, 'example', 'exam', 'ple', '202cb962ac59075b964b07152d234b70', '213512322', 'example@mail.com', '2003-10-29', 'Europe', 'hello'),
 (57, '1', '27', 'Counter Strike 2', 'Master Guardian', '2024-03-12', '2004-04-12', '0000-00-00', '', 'hello'),
 (58, 'franzGuessr', 'franz', 'Guessr', '4297f44b13955235245b2497399d7a93', '09297783232', 'franz@mail.com', '2002-09-21', 'Europe', 'hello'),
-(59, 'Trying', 'Try', 'Ying', '4297f44b13955235245b2497399d7a93', '09297718273', 'ying@mail.com', '2002-10-02', 'Asia', 'hello');
+(59, 'Trying', 'Try', 'Ying', '4297f44b13955235245b2497399d7a93', '09297718273', 'ying@mail.com', '2002-10-02', 'Asia', 'hello'),
+(60, 'glenn123', 'glenn', 'pepito', '202cb962ac59075b964b07152d234b70', '09287671990', 'glenn@mail.com', '2007-12-29', 'South America', 'hello'),
+(61, 'Testing123', 'Testing123', 'Testing123', '202cb962ac59075b964b07152d234b70', '09234124', 'TESTING123@MAIL.COM', '1999-12-23', 'Asia', 'hello');
 
 -- --------------------------------------------------------
 
@@ -251,7 +274,9 @@ INSERT INTO `client_booster` (`client_booster_id`, `IGN`, `client_id`, `coach_ui
 (62, 'Jonhyy', 1, '1231', 'Counter Strike 2', 'Master Guardian', 'Array', 'Array', 10.00, '2024-07-18', 'Available'),
 (64, 'StriiNGSHii', 1, '212341234', 'Tekken 8', 'Tekken God', 'im2.drawio (2).png', '3NF.png', 101.00, '2024-07-20', 'Pending'),
 (66, 'JohnnyASD', 1, '123121', 'Chess', 'International Master', 'im2.drawio (1).png', 'im2.drawio (2).png', 10.00, '2024-07-20', 'Available'),
-(67, 'TryYing', 59, '123123123', 'Chess', 'FIDE Master', 'im2.drawio (2).png', 'Prospectus.png', 102.00, '2024-07-22', 'Pending');
+(67, 'TryYing', 59, '123123123', 'Chess', 'FIDE Master', 'im2.drawio (2).png', 'Prospectus.png', 102.00, '2024-07-22', 'Available'),
+(68, 'DragonRank', 56, 'ExCASH#TOPUP', 'Valorant', 'Radiant', 'uid-valo.webp', '3mefpb3li7m51.webp', 8.00, '2024-07-25', 'Available'),
+(69, 'Testing123', 61, 'Dotasdf324', 'Dota 2', 'Immortal', 'im2.drawio (1).png', 'im2.drawio (1).png', 10.00, '2024-07-25', 'Available');
 
 -- --------------------------------------------------------
 
@@ -505,6 +530,13 @@ ALTER TABLE `boostsession`
   ADD KEY `boosterID` (`boosterID`);
 
 --
+-- Indexes for table `boostsessiontime`
+--
+ALTER TABLE `boostsessiontime`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `boostsession_id` (`boostsession_id`);
+
+--
 -- Indexes for table `client`
 --
 ALTER TABLE `client`
@@ -545,25 +577,31 @@ ALTER TABLE `moderator`
 -- AUTO_INCREMENT for table `boostsession`
 --
 ALTER TABLE `boostsession`
-  MODIFY `boostSessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `boostSessionID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `boostsessiontime`
+--
+ALTER TABLE `boostsessiontime`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `client`
 --
 ALTER TABLE `client`
-  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `client_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `client_booster`
 --
 ALTER TABLE `client_booster`
-  MODIFY `client_booster_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `client_booster_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `game`
 --
 ALTER TABLE `game`
-  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `game_info`
@@ -587,6 +625,12 @@ ALTER TABLE `moderator`
 ALTER TABLE `boostsession`
   ADD CONSTRAINT `boostsession_ibfk_1` FOREIGN KEY (`traineeID`) REFERENCES `client` (`client_ID`),
   ADD CONSTRAINT `boostsession_ibfk_2` FOREIGN KEY (`boosterID`) REFERENCES `client_booster` (`client_booster_id`);
+
+--
+-- Constraints for table `boostsessiontime`
+--
+ALTER TABLE `boostsessiontime`
+  ADD CONSTRAINT `boostsessiontime_ibfk_1` FOREIGN KEY (`boostsession_id`) REFERENCES `boostsession` (`boostSessionID`);
 
 --
 -- Constraints for table `client_booster`
