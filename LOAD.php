@@ -126,7 +126,7 @@
 
                                                     while ($ignRow = mysqli_fetch_assoc($ignSQL)) {
                                                         // Output the contact list item based on conditions
-                                                        $IGN = htmlspecialchars($ignRow["username"]);
+                                                        $IGN = htmlspecialchars($ignRow["username"]) . "Coach" . htmlspecialchars($ignRow["game"]);
                                                         if ($ignRow['client_ID'] != $inboxID && $ignRow["status"] == 'All Accepted' && $ignRow["boosterID"] == $boosterRow["boosterID"]) {
                                                     echo'<div class="d-flex align-items-center contact p-3 border-bottom" onclick="showMessage(\'' . htmlspecialchars($IGN, ENT_QUOTES) . '\');">';
                                     ?>
@@ -135,7 +135,7 @@
 
                                                     <!-- Text Container -->
                                                     <div class="d-flex flex-column">
-                                                        <?php echo'<strong><p class="mb-0 text-light">'.$IGN.'</p></strong>'; ?>
+                                                        <?php echo'<strong><p class="mb-0 text-light">'.$ignRow["username"].'</p></strong>'; ?>
                                                         <p class="mb-0 text-light">Student</p> 
                                                     </div>
                                                     </div>
@@ -190,7 +190,7 @@
                         while($ignRow = mysqli_fetch_assoc($ignSQL)) {
                     
                             if ($ignRow['client_ID'] != $inboxID && $ignRow["status"] == 'All Accepted' && $ignRow["boosterID"] == $boosterRow["boosterID"]) {
-                            $IGN = htmlspecialchars($ignRow["username"]);
+                            $IGN = htmlspecialchars($ignRow["username"]) . "Coach" . htmlspecialchars($ignRow["game"]);
                             $startTimeFromDB = $ignRow['startTime'];
                             $endTimeFromDB = $ignRow['endTime'];
                             $startTimeFormatted = date('h:i A', strtotime($startTimeFromDB));
@@ -210,7 +210,7 @@
                             <img id="profile-image" src="resources/img_avatar2.webp" alt="User Image" class="rounded-circle" width="50" height="50">
 
                             <!-- Username -->
-                            <h5 class="ml-3 mb-0 text-light" id="username"><?php echo'<p>'.$IGN.'</p>';?></h5>
+                            <h5 class="ml-3 mb-0 text-light" id="username"><?php echo'<p>'.$ignRow["username"].'</p>';?></h5>
                         </div>
 
                         <!-- Content Section -->
@@ -220,7 +220,7 @@
                                     <div class="alert alert-secondary bg-secondary text-white" role="alert">
                                         <div class="mt-3">
                                             <?php echo'<p>Game: '.$ignRow["game"].'</p>';?>
-                                            <?php echo'<p>Username: '.$IGN.'</p>';?>
+                                            <?php echo'<p>Username: '.$ignRow["username"].'</p>';?>
                                             <p>Date start: <?php echo $ignRow["startDate"];?></p>
                                             <p>Date end: <?php echo $ignRow["endDate"];?></p>
                                             <p>Time start: <?php echo $startTimeFormatted?></p>
