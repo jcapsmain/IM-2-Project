@@ -75,7 +75,7 @@
                                     $IGN = htmlspecialchars($ignRow["username"]) . " " . htmlspecialchars($ignRow["game"]);
                                     echo '<div class="contact p-3 border-bottom" onclick="showMessage(\'' . $IGN . '\');">';
                                     echo '<div class="contact-info ml-3">';
-                                    echo '<h5>' . $IGN . '</h5>';
+                                    echo '<h5>' . $ignRow["username"] . '</h5>';
                                     echo '<p>Coaching Request</p>';
                                     echo '</div>';
                                     echo '</div>';
@@ -144,7 +144,7 @@
                     echo '<h1 id="game-name">' . $boosterRow["game"] . '</h1>';
                     echo '<img id="sender-profile-image" src="resources/img_avatar2.webp" alt="Sender Profile Picture" class="rounded-circle" width="100">';
                     echo '<div class="user-info mt-3">';
-                    echo '<p><strong>Username:</strong> <span id="ign">' . $IGN . '</span></p>';
+                    echo '<p><strong>Username:</strong> <span id="ign">' . $ignRow["username"] . '</span></p>';
                     echo '<p><strong>Game Rank:</strong> <span id="uid">' . $ignRow["gameRank"] . '</span></p>';
                     echo '<p><strong>Starting Date:</strong> <span id="uid">' . $ignRow["startDate"] . '</span></p>';
                     echo '<p><strong>Ending Date:</strong> <span id="uid">' . $ignRow["endDate"] . '</span></p>';
